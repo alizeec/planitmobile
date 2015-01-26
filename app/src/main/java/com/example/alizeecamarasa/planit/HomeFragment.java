@@ -89,30 +89,8 @@ public class HomeFragment extends ListFragment {
 
         @Override
         protected void onPostExecute(List<Event> events) {
-            final List<Event> listevents = events;
-
-
-
-            if(events!=null)
-               /* setListAdapter(new ArrayAdapter<Event>(mContext, android.R.layout.simple_list_item_2,events){
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent){
-                        TwoLineListItem row;
-                        if(convertView == null){
-                            LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                            row = (TwoLineListItem)inflater.inflate(android.R.layout.simple_list_item_2, null);
-                        }else{
-                            row = (TwoLineListItem)convertView;
-                        }
-                        Event data = listevents.get(position);
-                        row.getText1().setText(data.getTitle());
-                        row.getText2().setText(data.getDescription());
-
-                        return row;
-                    }
-                });*/
-                setListAdapter(new CustomArrayAdapter(mContext,events));
-
+        if(events!=null)
+            setListAdapter(new CustomArrayAdapter(mContext,events));
         }
     }
 }

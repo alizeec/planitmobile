@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
+import com.example.alizeecamarasa.planit.module.Module;
+
 import android.widget.ArrayAdapter;
 
 import java.util.List;
@@ -31,7 +33,7 @@ import java.util.List;
 /**
  * Created by Yoann on 05/10/2014.
  */
-public class EventFragment extends Fragment {
+public class EventFragment extends ListFragment  {
 
     /**
      * TODO : 1. override onCreateView method and load layout file
@@ -39,6 +41,7 @@ public class EventFragment extends Fragment {
      * TODO : 3. add private instance members for views
      * TODO : 2. override onActivityCreated method, get views and push job data in views
      */
+    private Context mContext;
 
     private TextView name;
     private TextView description;
@@ -62,7 +65,7 @@ public class EventFragment extends Fragment {
         //get arguments send by the activity
         Bundle args = getArguments();
         // get application context
-        Context context=getActivity();
+        mContext =(EventActivity)getActivity();
         ActionBar actionbar=getActivity().getActionBar();
         actionbar.setCustomView(R.layout.custom_bar);
         actionbar.setDisplayOptions(android.app.ActionBar.DISPLAY_SHOW_CUSTOM, android.app.ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -86,6 +89,10 @@ public class EventFragment extends Fragment {
         if(mEvent!=null) {
             description.setText(mEvent.getDescription());
             titleActionBar.setText(mEvent.getTitle());
+            if(mEvent.getModules()!=null){
+                setListAdapter(new ModulesArrayAdapter(mContext,mEvent.getModules()));
+        }
+
 
         }
     }

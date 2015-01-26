@@ -58,7 +58,7 @@ public class Event {
         event.setDescription(obj.optString("description"));
 
         JSONArray array = obj.getJSONArray("modules");
-        ArrayList<Module> modules = new ArrayList<Module>(array.length());
+        List<Module> modules = new ArrayList<Module>(array.length());
         for(int i = 0 ; i < array.length(); i++){
             JSONObject object=array.getJSONObject(i);
             modules.add(Module.fromJson(object));

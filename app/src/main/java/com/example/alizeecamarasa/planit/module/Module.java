@@ -61,4 +61,8 @@ public class Module {
     public void setSlug(String slug) {
         this.slug = slug;
     }
+
+    public String toString() {
+        return name;
+    }
 }

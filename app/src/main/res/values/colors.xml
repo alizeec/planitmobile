@@ -3,5 +3,11 @@
     <color name="bg_list">#f4f4f4</color>
         <color name="titlebackgroundcolor">#3232CD</color>
         <color name="titletextcolor">#FFFF00</color>
+        <color name="guest">#1d89cf</color>
+        <color name="place">#f9de2f</color>
+        <color name="budget">#857198</color>
+        <color name="todo">#ff9f37</color>
+        <color name="transport">#dc4888</color>
+
 
 </resources>
