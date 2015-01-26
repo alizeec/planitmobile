@@ -1,77 +1,118 @@
 package com.example.alizeecamarasa.planit;
 
-import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TwoLineListItem;
 
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class HomeFragment extends Fragment {
-    /**
-     * TODO : 1. override onCreateView method and load layout file
-     * TODO : 2. implement the view in the layout file
-     * TODO : 3. add private instance members for views
-     * TODO : 2. override onActivityCreated method, get views and push job data in views
-     */
+import com.example.alizeecamarasa.planit.events.Event;
+import com.example.alizeecamarasa.planit.events.EventAPI;
 
-    private LinearLayout event;
-    private TextView title_event;
-    private ImageView photo_event;
-    private TextView descr_event;
+import org.apache.http.message.BasicNameValuePair;
+
+/**
+ * Created by Yoann on 03/10/2014.
+ */
+public class HomeFragment extends ListFragment {
+    private Context mContext;
+    HomeTask mTask;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // load the view
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // get the application context
+        mContext = (HomeActivity)getActivity();
+        // get the job list
+        //List<Job> jobs = JobsContent.JOBS;
 
-        //get arguments send by the activity
-        Bundle args = getArguments();
-        // get application context
-        Context context=getActivity();
-
-        View parent = getView();
-        event = (LinearLayout)parent.findViewById(R.id.event);
-        title_event = (TextView)parent.findViewById(R.id.title_event);
-        photo_event = (ImageView)parent.findViewById(R.id.photo_event);
-        descr_event = (TextView)parent.findViewById(R.id.descr_event);
-
-
-        //job = JobsContent.findJob(args.getString("job_id"));
+        // display the job list
+        mTask = new HomeTask();
+        mTask.execute();
+        //setListAdapter(new ArrayAdapter<Job>(mContext, android.R.layout.simple_list_item_1, jobs.doInBackground()));
+    }
 
 
 
-        title_event.setText("Titre");
-        descr_event.setText("description");
-        //detail_2.setText(mJob.getLocation());
-        //detail_3.setText(mJob.getDuration());
-        //detail_4.setText(mJob.getStart());
-        //description_content.setText(mJob.getDescription());
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // get the selected job
+        Event selectedEvent = (Event)getListView().getItemAtPosition(position);
+        Intent intent= new Intent(mContext,EventActivity.class);
+        intent.putExtra("event_id",selectedEvent.getId());
+        startActivity(intent);
+        // delegate click to the activity
+        //mContext.onJobSelected(selectedJob.getId());
+    }
 
-        /*
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTask.cancel(true);
 
-        setHasOptionsMenu(true);
+    }
 
-        mSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showJobApplyDialog();
+    class HomeTask extends AsyncTask<Void, Void, List<Event>> {
+
+        @Override
+        protected List<Event> doInBackground(Void... params) {
+            List<Event> events= null;
+            try {
+                return events = EventAPI.getEvents(getActivity());
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+            return null;
+        }
 
-        JobDetailTask task = new JobDetailTask();
-        task.execute(args.getString("job_id"));*/
+        @Override
+        protected void onPostExecute(List<Event> events) {
+            final List<Event> listevents = events;
+
+
+
+            if(events!=null)
+               /* setListAdapter(new ArrayAdapter<Event>(mContext, android.R.layout.simple_list_item_2,events){
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent){
+                        TwoLineListItem row;
+                        if(convertView == null){
+                            LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            row = (TwoLineListItem)inflater.inflate(android.R.layout.simple_list_item_2, null);
+                        }else{
+                            row = (TwoLineListItem)convertView;
+                        }
+                        Event data = listevents.get(position);
+                        row.getText1().setText(data.getTitle());
+                        row.getText2().setText(data.getDescription());
+
+                        return row;
+                    }
+                });*/
+                setListAdapter(new CustomArrayAdapter(mContext,events));
+
+        }
     }
 }
