@@ -3,15 +3,19 @@ package com.example.alizeecamarasa.planit.events;
 import android.media.Image;
 import android.net.Uri;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.example.alizeecamarasa.planit.module.Module;
 /**
  * Created by alizeecamarasa on 30/12/14.
  */
@@ -25,6 +29,7 @@ public class Event {
     private Date begin_date;
     private Date end_date;
     private long counter_day;
+    private List<Module> modules;
 
     public Event(String id, String title,String slug, String description,Date begin_date, Date end_date) {
         this.id = id;
@@ -51,6 +56,14 @@ public class Event {
         event.setTitle(obj.optString("name"));
         event.setSlug(obj.optString("slug"));
         event.setDescription(obj.optString("description"));
+
+        JSONArray array = obj.getJSONArray("modules");
+        ArrayList<Module> modules = new ArrayList<Module>(array.length());
+        for(int i = 0 ; i < array.length(); i++){
+            JSONObject object=array.getJSONObject(i);
+            modules.add(Module.fromJson(object));
+        }
+        event.setModules(modules);
 
         String begin_date =obj.optString("begin_date");
         String end_date =obj.optString("end_date");
@@ -138,5 +151,13 @@ public class Event {
     @Override
     public String toString() {
         return title;
+    }
+
+    public List<Module> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<Module> modules) {
+        this.modules = modules;
     }
 }
