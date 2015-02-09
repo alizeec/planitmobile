@@ -12,23 +12,11 @@ import java.util.concurrent.TimeUnit;
  * Created by alizeecamarasa on 26/01/15.
  */
 public class Module {
-    private int id;
-    private String name;
-    private String slug;
-    private int int_type;
+    protected int id;
+    protected String name;
+    protected String slug;
+    protected int int_type;
 
-
-    public static Module fromJson (JSONObject obj) throws JSONException {
-
-        Module event = new Module();
-
-        event.setId(Integer.parseInt(obj.optString("id")));
-        event.setName(obj.optString("name"));
-        event.setSlug(obj.optString("slug"));
-        event.setInt_type(Integer.parseInt(obj.optString("int_type")));
-
-        return event;
-    }
 
     public int getId() {
         return id;

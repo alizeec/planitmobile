@@ -91,7 +91,7 @@ public class SimpleRestApi {
 
         int read = 0;
         while((read = reader.read(buffer))>0){
-            builder.append(buffer);
+            builder.append(buffer, 0, read);
         }
 
         return builder.toString();

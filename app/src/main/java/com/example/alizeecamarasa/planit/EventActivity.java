@@ -9,6 +9,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.alizeecamarasa.planit.events.Event;
+import com.example.alizeecamarasa.planit.events.EventAPI;
+import com.example.alizeecamarasa.planit.events.EventService;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Yoann on 05/10/2014.
  */
@@ -25,13 +33,10 @@ public class EventActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
-
         // if save instance state bundle is not null (orientation change, ...) then the fragment is automatically reloaded
-        if(savedInstanceState == null) {
+ /*       if(savedInstanceState == null) {
 
-            //Get job id in intent extra
             String id = getIntent().getStringExtra("event_id");
-            //add job id in the fragment bundle (a package)
             Bundle bundle = new Bundle();
             bundle.putString("event_id",id);
 
@@ -43,7 +48,7 @@ public class EventActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_event_layout, fragment)
                     .commit();
-        }
+        }*/
     }
 
     @Override

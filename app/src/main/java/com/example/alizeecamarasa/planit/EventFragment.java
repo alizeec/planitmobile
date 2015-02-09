@@ -2,45 +2,35 @@ package com.example.alizeecamarasa.planit;
 
 
 import android.app.ActionBar;
-import android.app.DialogFragment;
-import android.content.ClipData;
+
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
+
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.support.v4.app.ListFragment;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
+import com.example.alizeecamarasa.planit.events.EventService;
 import com.example.alizeecamarasa.planit.module.Module;
 
 import android.widget.ArrayAdapter;
 
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Yoann on 05/10/2014.
  */
-public class EventFragment extends ListFragment  {
+public class EventFragment extends Fragment  {
 
-    /**
-     * TODO : 1. override onCreateView method and load layout file
-     * TODO : 2. implement the view in the layout file
-     * TODO : 3. add private instance members for views
-     * TODO : 2. override onActivityCreated method, get views and push job data in views
-     */
     private Context mContext;
 
     private TextView name;
@@ -64,6 +54,7 @@ public class EventFragment extends ListFragment  {
 
         //get arguments send by the activity
         Bundle args = getArguments();
+        String id = args.getString("event_id");
         // get application context
         mContext =(EventActivity)getActivity();
         ActionBar actionbar=getActivity().getActionBar();
@@ -77,46 +68,30 @@ public class EventFragment extends ListFragment  {
 
         setHasOptionsMenu(true);
 
+        EventService service = EventAPI.getInstance();
+        service.getEvent(id, new Callback<Event>() {
+            @Override
+            public void success(Event event, Response response) {
+                System.out.println(event);
+                if (event != null)
+                    updateView(event);
+            }
 
-        EventTask task = new EventTask();
-        task.execute(args.getString("event_id"));
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 
 
 
 
     private void updateView (Event event){
-        if(mEvent!=null) {
-            description.setText(mEvent.getDescription());
-            titleActionBar.setText(mEvent.getTitle());
-            if(mEvent.getModules()!=null){
-                setListAdapter(new ModulesArrayAdapter(mContext,mEvent.getModules()));
-        }
-
-
-        }
-    }
-
-
-
-    class EventTask extends AsyncTask<String, Void, Event> {
-        public boolean error;
-        @Override
-        protected Event doInBackground(String... ids) {
-            Event event= null;
-            try {
-                return event = EventAPI.getEvent(getActivity(),ids[0]);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Event event) {
-            mEvent = event;
-            updateView(event);
+            description.setText(event.getDescription());
+            titleActionBar.setText(event.getName());
+            if(event.getModules()!=null){
+                //setListAdapter(new ModulesArrayAdapter(mContext,event.getModules()));
 
         }
     }

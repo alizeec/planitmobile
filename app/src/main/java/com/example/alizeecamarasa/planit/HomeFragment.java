@@ -23,15 +23,19 @@ import java.util.concurrent.TimeUnit;
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
+import com.example.alizeecamarasa.planit.events.EventService;
 
 import org.apache.http.message.BasicNameValuePair;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Yoann on 03/10/2014.
  */
 public class HomeFragment extends ListFragment {
     private Context mContext;
-    HomeTask mTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,13 +48,22 @@ public class HomeFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         // get the application context
         mContext = (HomeActivity)getActivity();
-        // get the job list
-        //List<Job> jobs = JobsContent.JOBS;
 
-        // display the job list
-        mTask = new HomeTask();
-        mTask.execute();
-        //setListAdapter(new ArrayAdapter<Job>(mContext, android.R.layout.simple_list_item_1, jobs.doInBackground()));
+        // display the event list
+        EventService service = EventAPI.getInstance();
+        service.listEvents("3" , new Callback<List<Event>>(){
+            @Override
+            public void success(List<Event> events, Response response){
+                if(events!=null)
+                    setListAdapter(new CustomArrayAdapter(mContext,events));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                System.out.println("erreur");
+                error.printStackTrace();
+            }
+        });
     }
 
 
@@ -66,31 +79,5 @@ public class HomeFragment extends ListFragment {
         //mContext.onJobSelected(selectedJob.getId());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mTask.cancel(true);
 
-    }
-
-    class HomeTask extends AsyncTask<Void, Void, List<Event>> {
-
-        @Override
-        protected List<Event> doInBackground(Void... params) {
-            List<Event> events= null;
-            try {
-                return events = EventAPI.getEvents(getActivity());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Event> events) {
-        if(events!=null)
-            setListAdapter(new CustomArrayAdapter(mContext,events));
-        }
-    }
 }

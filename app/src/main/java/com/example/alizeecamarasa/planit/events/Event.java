@@ -22,71 +22,30 @@ import com.example.alizeecamarasa.planit.module.Module;
 public class Event {
     private static final SimpleDateFormat ISO_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
-    private String id;
-    private String title;
-    private String slug;
-    private String description;
-    private Date begin_date;
-    private Date end_date;
-    private long counter_day;
-    private List<Module> modules;
+    protected String id;
+    protected String name;
+    protected String slug;
+    protected String description;
+    protected Date begin_date;
+    protected Date end_date;
+    protected long counter_day;
+    protected List<Module> modules;
 
-    public Event(String id, String title,String slug, String description,Date begin_date, Date end_date) {
+    public Event(String id, String name,String slug, String description,Date begin_date, Date end_date) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.slug = slug;
         this.description = description;
         this.begin_date = begin_date;
         this.end_date = end_date;
     }
 
-    public Event(int id, String title,String slug, String description,Date begin_date, Date end_date) {
-        this(Integer.toString(id), title,slug, description,begin_date,end_date);
+    public Event(int id, String name,String slug, String description,Date begin_date, Date end_date) {
+        this(Integer.toString(id), name,slug, description,begin_date,end_date);
     }
 
     public Event(){
 
-    }
-
-    public static Event fromJson (JSONObject obj) throws JSONException{
-
-        Event event = new Event();
-
-        event.setId(obj.optString("id"));
-        event.setTitle(obj.optString("name"));
-        event.setSlug(obj.optString("slug"));
-        event.setDescription(obj.optString("description"));
-
-        JSONArray array = obj.getJSONArray("modules");
-        List<Module> modules = new ArrayList<Module>(array.length());
-        for(int i = 0 ; i < array.length(); i++){
-            JSONObject object=array.getJSONObject(i);
-            modules.add(Module.fromJson(object));
-        }
-        event.setModules(modules);
-
-        String begin_date =obj.optString("begin_date");
-        String end_date =obj.optString("end_date");
-
-        if(begin_date!=null) {
-            try {
-                event.setBeginDate(ISO_FORMAT.parse(begin_date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        if(end_date!=null) {
-            try {
-                event.setEndDate(ISO_FORMAT.parse(end_date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        Date cDate = new Date();
-        Long timeDiff = event.getBeginDate().getTime() - cDate.getTime();
-        int day = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
-        event.setCounterDay(day);
-        return event;
     }
 
     public String getId() {
@@ -97,12 +56,12 @@ public class Event {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSlug() {
@@ -150,7 +109,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return title;
+        return name;
     }
 
     public List<Module> getModules() {

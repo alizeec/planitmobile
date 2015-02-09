@@ -14,7 +14,9 @@ import com.example.alizeecamarasa.planit.events.EventAPI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by alizeecamarasa on 26/01/15.
@@ -55,13 +57,17 @@ public class CustomArrayAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.txtName.setText(eventList.get(position).getTitle());
+        holder.txtName.setText(eventList.get(position).getName());
         holder.txtDescription.setText(eventList.get(position).getDescription());
-        if(eventList.get(position).getCounterDay() >= 0){
-            holder.txtDate.setText("J - "+String.valueOf(eventList.get(position).getCounterDay()));
+        Date cDate = new Date();
+        Long timeDiff = eventList.get(position).getBeginDate().getTime() - cDate.getTime();
+        int day = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
+
+        if(day >= 0){
+            holder.txtDate.setText("J - "+day);
         }
         else {
-            holder.txtDate.setText("J + "+String.valueOf(-1*(eventList.get(position).getCounterDay())));
+            holder.txtDate.setText("J + "+(-1)*day);
         }
 
 

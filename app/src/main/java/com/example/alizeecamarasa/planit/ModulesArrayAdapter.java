@@ -79,7 +79,7 @@ public class ModulesArrayAdapter extends BaseAdapter {
             break;
 
         }
-        img.setBounds( 0, 0, 60, 60 );  // set the image size
+        img.setBounds( -20, 0, 120, holder.txtName.getMeasuredHeight() );  // set the image size
         holder.txtName.setCompoundDrawables( img, null, null, null );
 
         return convertView;

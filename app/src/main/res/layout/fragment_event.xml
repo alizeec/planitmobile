@@ -28,18 +28,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu ante et odio sodales luctus. Nullam vitae hendrerit elit. Sed porttitor justo enim, ut posuere ante lacinia sit amet. Phasellus dapibus purus turpis, ut feugiat felis hendrerit quis. Aliquam maximus in augue eu auctor. Morbi vel nisl turpis."
-                android:gravity="center"
                 android:layout_gravity="center_vertical|right"
                 android:id="@+id/descr_event"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="30dp"/>
 
             <ListView
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/bg_list"/>
+            />
 
         </LinearLayout>
 
