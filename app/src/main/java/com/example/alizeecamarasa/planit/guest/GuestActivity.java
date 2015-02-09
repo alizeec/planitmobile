@@ -55,6 +55,7 @@ public class GuestActivity extends Activity {
     ExpandableListView expListView;
     Activity context;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,16 +68,20 @@ public class GuestActivity extends Activity {
 
     private void createGroupList() {
         GuestModuleService service = GuestModuleAPI.getInstance();
-        service.getModule("2", new Callback<GuestModule>() {
+        service.getModule("4", new Callback<GuestModule>() {
             @Override
             public void success(GuestModule module, Response response) {
                 if (module != null) {
                     groupList = module.getType_guest();
                     createCollection();
+
                     expListView = (ExpandableListView) findViewById(R.id.laptop_list);
+                    expListView.setGroupIndicator (null);
+
 
                     final TypeGuestArrayAdapter expListAdapter = new TypeGuestArrayAdapter(context, groupList, laptopCollection);
                     expListView.setAdapter(expListAdapter);
+
 
                     //setGroupIndicatorToRight();
 
@@ -104,6 +109,8 @@ public class GuestActivity extends Activity {
         });
 
     }
+
+
 
    private void createCollection() {
         // preparing laptops collection(child)

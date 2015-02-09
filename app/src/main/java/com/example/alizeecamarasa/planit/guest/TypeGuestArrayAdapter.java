@@ -3,8 +3,12 @@ package com.example.alizeecamarasa.planit.guest;
 import java.util.List;
 import java.util.Map;
 
+import com.example.alizeecamarasa.planit.CustomArrayAdapter;
 import com.example.alizeecamarasa.planit.R;
+import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 
 import android.app.Activity;
@@ -21,6 +25,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
     private Activity context;
@@ -36,7 +44,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return laptopCollections.get(laptops.get(groupPosition)).get(childPosition);
+        return laptopCollections.get(laptops.get(groupPosition)).get(childPosition).getId();
     }
 
     public Object getChildFirstname(int groupPosition, int childPosition) {
@@ -82,6 +90,20 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                                 List<Guest> child =
                                         laptopCollections.get(laptops.get(groupPosition));
                                 child.remove(childPosition);
+                                // supression en BDD de l'invité
+                                GuestService service = GuestAPI.getInstance();
+                                service.deleteGuest((String) getChild(groupPosition, childPosition),new  Callback<Guest>(){
+                                    @Override
+                                    public void success(Guest o, Response response) {
+                                        System.out.println("success");
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        System.out.println("erreur");
+                                        error.printStackTrace();
+                                    }
+                                });
                                 notifyDataSetChanged();
                             }
                         });
@@ -136,7 +158,6 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         }
         TextView label = (TextView) convertView.findViewById(R.id.laptop);
         TextView txtprice = (TextView) convertView.findViewById(R.id.price);
-        label.setTypeface(null, Typeface.BOLD);
         label.setText(laptopName);
         txtprice.setText(price+" €/pers");
         return convertView;

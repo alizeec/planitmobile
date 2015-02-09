@@ -15,6 +15,4 @@ import retrofit.http.Path;
 public interface GuestModuleService {
     @GET("/modules/{id_module}")
     void getModule(@Path("id_module") String id_module, Callback<GuestModule> cb);
-
-
 }
