@@ -1,5 +1,7 @@
 package com.example.alizeecamarasa.planit.module;
 
+import com.example.alizeecamarasa.planit.events.Event;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ public class Module {
     protected String name;
     protected String slug;
     protected int int_type;
+    private Event event;
 
 
     public int getId() {
@@ -52,5 +55,13 @@ public class Module {
 
     public String toString() {
         return name;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

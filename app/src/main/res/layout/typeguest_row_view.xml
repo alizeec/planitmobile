@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="#FFF"
+    android:layout_marginTop="18dp"
 >
 
     <TextView
-        android:id="@+id/laptop"
+        android:id="@+id/label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_list">#f4f4f4</color>
+    <color name="bg_list">#EEEEEE</color>
         <color name="titlebackgroundcolor">#3232CD</color>
         <color name="titletextcolor">#FFFF00</color>
         <color name="guest">#1d89cf</color>

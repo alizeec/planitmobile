@@ -15,4 +15,11 @@
     <string name="drawer_close">Closed</string>
     <!-- END hamburger -->
 
+    <!-- module guest -->
+    <string name="name_module_guest">Gestion des invitations</string>
+    <string name="paying">Événement payant</string>
+    <string name="type_guest">Ajouter un type d\'invité</string>
+    <string name="payment_mean">Ajouter un moyen de paiement</string>
+    <!-- END module guest -->
+
 </resources>

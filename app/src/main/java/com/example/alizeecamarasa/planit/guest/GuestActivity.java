@@ -1,19 +1,11 @@
 package com.example.alizeecamarasa.planit.guest;
 
-import android.app.ActionBar;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 
-import com.example.alizeecamarasa.planit.EventActivity;
-import com.example.alizeecamarasa.planit.EventFragment;
 import com.example.alizeecamarasa.planit.R;
 
 import java.util.List;
@@ -23,25 +15,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 
-import com.example.alizeecamarasa.planit.events.Event;
-import com.example.alizeecamarasa.planit.events.EventAPI;
-import com.example.alizeecamarasa.planit.events.EventService;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
-import com.example.alizeecamarasa.planit.guest.GuestModuleAPI;
-import com.example.alizeecamarasa.planit.guest.GuestModuleService;
 
-
-import com.example.alizeecamarasa.planit.guest.TypeGuestArrayAdapter;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -51,59 +34,51 @@ public class GuestActivity extends Activity {
 
     List<TypeGuest> groupList;
     List<Guest> childList;
-    Map<TypeGuest, List<Guest>> laptopCollection;
+    Map<TypeGuest, List<Guest>> guestCollection;
     ExpandableListView expListView;
     Activity context;
-
+    GuestModuleService service;
+    GuestModule mModule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guest);
         context = this;
+        service = GuestModuleAPI.getInstance();
         createGroupList();
 
     }
 
 
     private void createGroupList() {
-        GuestModuleService service = GuestModuleAPI.getInstance();
-        service.getModule("4", new Callback<GuestModule>() {
+
+        // appel au service, retourne le module
+        service.getModule("6", new Callback<GuestModule>() {
             @Override
             public void success(GuestModule module, Response response) {
                 if (module != null) {
-                    groupList = module.getType_guest();
+                    mModule = module;
+                    groupList = mModule.getType_guest();
                     createCollection();
 
                     expListView = (ExpandableListView) findViewById(R.id.laptop_list);
                     expListView.setGroupIndicator (null);
 
-
-                    final TypeGuestArrayAdapter expListAdapter = new TypeGuestArrayAdapter(context, groupList, laptopCollection);
+                    final TypeGuestArrayAdapter expListAdapter = new TypeGuestArrayAdapter(context, groupList, guestCollection, module);
                     expListView.setAdapter(expListAdapter);
+                    // si l'événement est payant, on coche la checkbox
+                    if(module.isPayable()==true){
+                        CheckBox paying = (CheckBox)findViewById(R.id.checkbox_paying);
+                        paying.setChecked(true);
+                    }
 
-
-                    //setGroupIndicatorToRight();
-
-                    expListView.setOnChildClickListener(new OnChildClickListener() {
-
-                        public boolean onChildClick(ExpandableListView parent, View v,
-                                                    int groupPosition, int childPosition, long id) {
-                            final String selected = (String) expListAdapter.getChild(
-                                    groupPosition, childPosition);
-                            Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG)
-                                    .show();
-
-                            return true;
-                        }
-                    });
                 }
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                System.out.println("erreur");
                 error.printStackTrace();
             }
         });
@@ -112,13 +87,14 @@ public class GuestActivity extends Activity {
 
 
 
+
    private void createCollection() {
         // preparing laptops collection(child)
-        laptopCollection = new LinkedHashMap<TypeGuest, List<Guest>>();
+        guestCollection = new LinkedHashMap<TypeGuest, List<Guest>>();
 
         for (TypeGuest type : groupList) {
                 loadChild(type.getGuests());
-            laptopCollection.put(type, childList);
+            guestCollection.put(type, childList);
         }
     }
 
@@ -152,4 +128,44 @@ public class GuestActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_guest, menu);
         return true;
     }*/
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_paying:
+                if (checked) {
+                    service.changePayable(mModule.getId(), 1, new Callback<JSONObject>() {
+                        @Override
+                        public void success(JSONObject module, Response response) {
+                            System.out.println("success, result: " + module);
+                            Toast.makeText(context, "L'événement est payant!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+
+                else {
+                    service.changePayable(mModule.getId(), 0, new Callback<JSONObject>() {
+                        @Override
+                        public void success(JSONObject module, Response response) {
+                            System.out.println("success, result: " + module);
+                            Toast.makeText(context, "L'événement est gratuit!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                        }
+                    });
+                }
+                break;
+
+        }
+    }
 }
