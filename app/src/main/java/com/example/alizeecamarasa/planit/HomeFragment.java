@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TwoLineListItem;
+import android.app.ListFragment;
+
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,6 @@ public class HomeFragment extends ListFragment {
 
             @Override
             public void failure(RetrofitError error) {
-                System.out.println("erreur");
                 error.printStackTrace();
             }
         });
@@ -70,13 +70,10 @@ public class HomeFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // get the selected job
         Event selectedEvent = (Event)getListView().getItemAtPosition(position);
         Intent intent= new Intent(mContext,EventActivity.class);
         intent.putExtra("event_id",selectedEvent.getId());
         startActivity(intent);
-        // delegate click to the activity
-        //mContext.onJobSelected(selectedJob.getId());
     }
 
 

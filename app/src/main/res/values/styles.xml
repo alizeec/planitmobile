@@ -1,10 +1,94 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="MyCustomTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
+    </style>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:icon">@android:color/transparent</item>
+    <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/darkGrey</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:displayOptions">showHome|useLogo</item>
+    </style>
 
+    <style name="titlesPages">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">@color/blue</item>
+        <item name="android:textColor">@color/titleColor</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
+    <style name="inputStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
+    <style name="labelInput">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="inputValue">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">@color/darkGrey</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="featureBox">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/darkGrey2</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="seekbarText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">20</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
+
+    <style name="fullSizeLabel">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/darkGrey</item>
+    </style>
+
+    <style name="seekbar">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">80</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">50</item>
+    </style>
+
+
+    <style name="subTitlesPages">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:background">@color/lightGrey2</item>
+        <item name="android:textColor">@color/darkGrey2</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">20dp</item>
     </style>
 
 </resources>

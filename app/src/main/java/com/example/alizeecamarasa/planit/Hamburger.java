@@ -1,59 +1,87 @@
 package com.example.alizeecamarasa.planit;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.alizeecamarasa.planit.adapters.HamburgerAdapter;
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventService;
+import com.example.alizeecamarasa.planit.guest.Guest.Guest;
+import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by alizeecamarasa on 08/02/15.
- */
-public class Hamburger extends Activity {
-    private ArrayList<String> mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
 
+public class Hamburger extends ActionBarActivity {
+
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
+    private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
+    private String mActivityTitle;
+    // liste des noms des événements
+    private String[] list;
+    private Activity mActivity;
+    // map contenant <Nom,id> des événements
+    private Map<String,String> mapEvents;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hamburger);
 
-        mPlanetTitles = new ArrayList<String>();
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        mActivity = this;
+        mapEvents = new LinkedHashMap<String, String>();
+        addDrawerItems();
+        setupDrawer();
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void addDrawerItems() {
+        // récupération de la liste des événements
         EventService service = EventAPI.getInstance();
         service.listEvents("3" , new Callback<List<Event>>(){
             @Override
             public void success(List<Event> events, Response response){
-                if(events!=null)
-                    for (Event event : events){
-                        mPlanetTitles.add(event.getName());
+                if(events!=null) {
+                    list = new String[events.size()];
+                    // remplissage de la liste
+                    for (int i = 0; i < events.size(); i++) {
+                        list[i] = events.get(i).getName();
+                        mapEvents.put(events.get(i).getName(), events.get(i).getId());
+
                     }
+                    mAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_1, list);
+                    mDrawerList.setAdapter(mAdapter);
+                }
+
             }
 
             @Override
@@ -61,70 +89,79 @@ public class Hamburger extends Activity {
                 error.printStackTrace();
             }
         });
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mPlanetTitles));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+        // clic sur un item
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String idEvent= mapEvents.get(parent.getItemAtPosition(position));
+                Intent intent= new Intent(getBaseContext(),EventActivity.class);
+                intent.putExtra("event_id",idEvent);
+                startActivity(intent);
             }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
         };
 
-        // Set the drawer toggle as the DrawerListener
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
+
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
-
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-        // Create a new fragment and specify the planet to show based on position
-        Fragment fragment = new EventFragment();
-        Bundle args = new Bundle();
-        args.putInt("id", position);
-        fragment.setArguments(args);
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles.get(position));
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
-    }
-
-
 }

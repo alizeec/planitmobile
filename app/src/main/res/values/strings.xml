@@ -11,8 +11,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- hamburger -->
-    <string name="drawer_open">Opened</string>
-    <string name="drawer_close">Closed</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <!-- END hamburger -->
 
     <!-- module guest -->

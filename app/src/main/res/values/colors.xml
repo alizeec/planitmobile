@@ -9,6 +9,22 @@
         <color name="todo">#ff9f37</color>
         <color name="transport">#dc4888</color>
 
+    <color name="white">#FFF</color>
+    <color name="darkGrey">#242b31</color>
+    <color name="darkGrey2">#2a3137</color>
+    <color name="black">#000</color>
+    <color name="blue">#2fc1b4</color>
+    <color name="titleColor">#295862</color>
+    <color name="lightGrey">#adadad</color>
+    <color name="lightGrey2">#d0d0d0</color>
+    <color name="lightGrey3">#f6f6f6</color>
+    <color name="green">#99cd00</color>
+    <color name="darkerGreen">#8dbc01</color>
+    <color name="greyInput">#20262c</color>
+    <color name="darkGreyInput">#151a1f</color>
+    <color name="red">#ff4747</color>
+    <color name="darkerRed">#ce3a3a</color>
+
 
 
 </resources>

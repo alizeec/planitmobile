@@ -139,7 +139,6 @@ public class GuestActivity extends Activity {
                     service.changePayable(mModule.getId(), 1, new Callback<JSONObject>() {
                         @Override
                         public void success(JSONObject module, Response response) {
-                            System.out.println("success, result: " + module);
                             Toast.makeText(context, "L'événement est payant!", Toast.LENGTH_SHORT).show();
                         }
 
@@ -154,7 +153,6 @@ public class GuestActivity extends Activity {
                     service.changePayable(mModule.getId(), 0, new Callback<JSONObject>() {
                         @Override
                         public void success(JSONObject module, Response response) {
-                            System.out.println("success, result: " + module);
                             Toast.makeText(context, "L'événement est gratuit!", Toast.LENGTH_SHORT).show();
                         }
 
