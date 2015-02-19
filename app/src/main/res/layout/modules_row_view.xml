@@ -4,13 +4,23 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_marginTop="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageModule"
+        android:layout_marginLeft="-2dp"/>
         <TextView android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/name"
             android:gravity="center"
             android:textColor="#FFF"
-            android:drawableLeft="@drawable/logo"
             android:textAllCaps="true"
+            android:layout_marginLeft="-2dp"
         />
+    </LinearLayout>
 </LinearLayout>

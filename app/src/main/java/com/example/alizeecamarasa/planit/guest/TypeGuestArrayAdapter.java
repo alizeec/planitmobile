@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.alizeecamarasa.planit.R;
+import com.example.alizeecamarasa.planit.guest.Guest.ChangeGuest;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
 import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
 import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
@@ -13,13 +14,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -32,6 +41,11 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     private List<TypeGuest> listTypeGuest;
     private GuestModule module;
 
+    private ImageView delete;
+    private ImageView modify;
+    private ImageView send;
+    private Drawable img_send_disable;
+
     public TypeGuestArrayAdapter(Activity context, List<TypeGuest> listTypeGuest,
                                  Map<TypeGuest, List<Guest>> guestCollections, GuestModule module) {
         this.context = context;
@@ -42,8 +56,8 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition).getId();
+    public Guest getChild(int groupPosition, int childPosition) {
+        return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition);
     }
 
     // retourne le prénom d'un invité
@@ -60,6 +74,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     public Object getChildEmail(int groupPosition, int childPosition) {
         return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition).getEmail();
     }
+
 
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
@@ -83,14 +98,14 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         TextView txtEmail = (TextView) convertView.findViewById(R.id.email);
 
         // supression d'un invité
-        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+        delete = (ImageView) convertView.findViewById(R.id.delete);
         delete.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("Voulez vous supprimer cet invité?");
                 builder.setCancelable(false);
-                builder.setPositiveButton("Yes",
+                builder.setPositiveButton("OUI",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 List<Guest> child =
@@ -98,7 +113,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
                                 // supression en BDD de l'invité
                                 GuestService service = GuestAPI.getInstance();
-                                service.deleteGuest((String) getChild(groupPosition, childPosition),new  Callback<Guest>(){
+                                service.deleteGuest((String) getChild(groupPosition, childPosition).getId(),new  Callback<Guest>(){
                                     @Override
                                     public void success(Guest o, Response response) {
                                         System.out.println("success");
@@ -114,7 +129,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                                 notifyDataSetChanged();
                             }
                         });
-                builder.setNegativeButton("No",
+                builder.setNegativeButton("NON",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -122,8 +137,82 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                         });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
             }
         });
+
+
+
+
+        // modification d'un invité
+        modify = (ImageView) convertView.findViewById(R.id.modify);
+        modify.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                //adding new event : starting new Event activity
+                Intent myIntent = new Intent(context, ChangeGuest.class);
+                myIntent.putExtra("guest",getChild(groupPosition,childPosition));
+                myIntent.putExtra("type_guest",(String) getGroup(groupPosition).getId());
+                context.startActivity(myIntent);
+            };
+
+
+        });
+
+
+        // envoi du mail
+        send = (ImageView) convertView.findViewById(R.id.send);
+        img_send_disable = context.getResources().getDrawable( R.drawable.send_disable);
+        if (getChild(groupPosition,childPosition).getSent()==1) {
+            send.setImageDrawable(img_send_disable);
+        }
+        send.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                if(getChild(groupPosition,childPosition).getSent()==0)
+                    builder.setMessage(R.string.question_mail1);
+                else
+                    builder.setMessage(R.string.question_mail2);
+                builder.setCancelable(false);
+                builder.setPositiveButton("OUI",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                List<Guest> child =
+                                        guestCollections.get(listTypeGuest.get(groupPosition));
+
+                                // envoi du mail
+                                GuestService service = GuestAPI.getInstance();
+                                service.sendInvitGuest((String) getChild(groupPosition, childPosition).getId(), new Callback<JSONObject>() {
+                                    @Override
+                                    public void success(JSONObject o, Response response) {
+                                        Toast.makeText(context, R.string.mail_sent, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        error.printStackTrace();
+                                    }
+                                });
+
+                            }
+                        });
+                builder.setNegativeButton("NON",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+
+            }
+        });
+
+
+
 
         txtFirstname.setText(firstname);
         txtLastname.setText(lastname);
@@ -136,7 +225,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     }
 
     //donne le nom du type d'invité
-    public Object getGroup(int groupPosition) {
+    public Object getGroupLabel(int groupPosition) {
         return listTypeGuest.get(groupPosition).getLabel();
     }
 
@@ -159,10 +248,12 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
+    public TypeGuest getGroup(int groupPosition) { return listTypeGuest.get(groupPosition); }
+
     //renseigne les têtes de listes
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String laptopName = (String) getGroup(groupPosition);
+        String laptopName = (String) getGroupLabel(groupPosition);
         Long price = getGroupPrice(groupPosition, module);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
@@ -170,6 +261,8 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.typeguest_row_view,
                     null);
         }
+
+
         // récupère les view
         TextView label = (TextView) convertView.findViewById(R.id.label);
         TextView txtprice = (TextView) convertView.findViewById(R.id.price);
@@ -192,4 +285,6 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }

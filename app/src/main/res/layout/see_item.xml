@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:id="@+id/name"
+     />
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkGrey">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!--  Quantité -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Quantité : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/quantity"/>
+                </LinearLayout>
+                <!--  END Quantité  -->
+
+                <!--  En Stock -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="En stock : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/stock"/>
+                </LinearLayout>
+                <!--  END Stock  -->
+
+                <!--  A Acheter -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="A acheter : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/tobuy"/>
+                </LinearLayout>
+                <!--  END A Acheter  -->
+
+                <!--  Prix unitaire -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Prix unitaire : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/unit_price"/>
+                </LinearLayout>
+                <!--  END Prix unitaire  -->
+
+                <!--  Prix total -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Prix total : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/total_price"/>
+                </LinearLayout>
+                <!--  END Prix total  -->
+
+                <!--  Consommé -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Consommé : "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:id="@+id/consummate"/>
+                </LinearLayout>
+                <!--  END Consommé  -->
+
+                <!--  Acheté? -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Acheté : "/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/bought"/>
+                </LinearLayout>
+                <!--  END Acheté?  -->
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Supprimer"
+            android:background="@color/bg_list"
+            android:textColor="@color/black"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1"
+            android:layout_marginRight="1dp"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retour"
+            android:background="@color/bg_list"
+            android:textColor="@color/black"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="1dp"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

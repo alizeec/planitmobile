@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/changeguest" />
+    <!--  END title of page -->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : first guest -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Prénom"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestFirstname"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  second input : last guest -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Nom"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestLastname"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  third input : email -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Email"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestEmail"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+                <!--  4th input : confirmed -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="3">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Confirmation"/>
+
+                    <SeekBar
+                        android:id="@+id/seekbar1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:max="2"
+                        android:progress="0" />
+                </LinearLayout>
+                <!--  END first input  -->
+
+                <!--  5th input : payed -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Payé"/>
+
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/payed"/>
+                </LinearLayout>
+                <!--  END first input  -->
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/changeGuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifier"
+                android:background="@color/app_color"
+                android:textColor="@color/white"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

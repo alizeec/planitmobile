@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     tools:context="fr.ygo.jobboard.ItemFragment">
 
-    <ListView
-        android:id="@android:id/list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_list"/>
+        android:layout_height="wrap_content">
+
+        <Button android:id="@+id/addEvent"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp"
+            android:text="@string/addevent"
+            android:background="@color/app_color"
+            android:layout_alignParentTop="true"/>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_list"
+            android:layout_below="@+id/addEvent"
+            />
+
+
+    </RelativeLayout>
 
 </FrameLayout>

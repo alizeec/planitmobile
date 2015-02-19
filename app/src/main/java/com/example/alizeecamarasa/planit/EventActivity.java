@@ -1,6 +1,11 @@
 package com.example.alizeecamarasa.planit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -9,12 +14,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-
+import android.view.View;
+import android.widget.LinearLayout;
 
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventService;
+
+import java.util.Random;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -25,17 +33,9 @@ import retrofit.client.Response;
  */
 public class EventActivity extends Hamburger {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // load the view, désérialise la vue
-        //setContentView(R.layout.activity_event);
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-
-
 
         // if save instance state bundle is not null (orientation change, ...) then the fragment is automatically reloaded
        if(savedInstanceState == null) {
@@ -51,8 +51,6 @@ public class EventActivity extends Hamburger {
            FragmentManager fragmentManager = getFragmentManager();
            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
            fragmentTransaction.replace(R.id.content_frame,fragment).commit();
-
-           
 
        }
     }

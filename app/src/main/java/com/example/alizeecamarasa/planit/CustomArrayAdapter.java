@@ -59,16 +59,8 @@ public class CustomArrayAdapter extends BaseAdapter {
 
         holder.txtName.setText(eventList.get(position).getName());
         holder.txtDescription.setText(eventList.get(position).getDescription());
-        Date cDate = new Date();
-        Long timeDiff = eventList.get(position).getBeginDate().getTime() - cDate.getTime();
-        int day = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
 
-        if(day >= 0){
-            holder.txtDate.setText("J - "+day);
-        }
-        else {
-            holder.txtDate.setText("J + "+(-1)*day);
-        }
+        holder.txtDate.setText(eventList.get(position).getTimeDiff());
 
 
 

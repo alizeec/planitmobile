@@ -5,28 +5,18 @@
     android:orientation="horizontal"
     android:background="#FFF"
     android:layout_marginTop="18dp"
->
+    >
 
     <TextView
         android:id="@+id/label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:textColor="@color/guest"
+        android:textColor="@color/expenses"
         android:textAllCaps="true"
         android:text="Amis IMAC"
-        android:drawableLeft="@drawable/border_blue"
+        android:drawableLeft="@drawable/border_red"
         android:gravity="center"
         />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:layout_weight="2"
-        android:text="3"
-        android:gravity="center"
-        android:textColor="@color/guest"
-    />
 </LinearLayout>

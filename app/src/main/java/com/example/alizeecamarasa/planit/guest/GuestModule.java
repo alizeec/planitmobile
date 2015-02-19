@@ -15,7 +15,7 @@ import java.util.List;
 public class GuestModule extends Module implements Serializable {
     private int max_guests;
     private boolean payable;
-    private List<TypeGuest> type_guest;
+    private List<TypeGuest> typesguests;
     private int mData;
 
     public int getMax_guests() {
@@ -35,11 +35,11 @@ public class GuestModule extends Module implements Serializable {
     }
 
     public List<TypeGuest> getType_guest() {
-        return type_guest;
+        return typesguests;
     }
 
     public void setType_guest(List<TypeGuest> type_guest) {
-        this.type_guest = type_guest;
+        this.typesguests = type_guest;
     }
 
 }

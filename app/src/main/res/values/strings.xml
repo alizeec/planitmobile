@@ -2,24 +2,59 @@
 <resources>
 
     <string name="app_name">PlanIt</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+
 
     <!-- hamburger -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <!-- END hamburger -->
 
+    <!-- List Event -->
+    <string name="addevent">AJOUTER UN ÉVÉNEMENT</string>
+    <string name="create_event_error_msg">Tous les champs sont requis</string>
+
+    <!-- END List Event -->
+
+    <!--  Event -->
+    <string name="guests"> inscrits</string>
+    <string name="expenses">Dépenses</string>
+    <string name="inflow">Apports</string>
+    <string name="income">Apports</string>
+    <string name="cost">Dépenses</string>
+    <string name="total">Total</string>
+    <!-- END Event -->
+
     <!-- module guest -->
     <string name="name_module_guest">Gestion des invitations</string>
     <string name="paying">Événement payant</string>
     <string name="type_guest">Ajouter un type d\'invité</string>
     <string name="payment_mean">Ajouter un moyen de paiement</string>
+    <string name="add_guest">Ajouter un invité</string>
+    <string name="empty_cat">Il n\'y a aucun invité de type </string>
+        <!-- modif guest -->
+        <string name="changeguest">MODIFIER UN INVITÉ</string>
+        <string name="confirmed_waiting">En attente de réponse</string>
+        <string name="confirmed_yes">A accepté</string>
+        <string name="confirmed_no">A décliné</string>
+        <string name="payed_yes">A payé</string>
+        <string name="payed_no">En attente de paiement</string>
+        <string name="error_email">Veuillez entrer un email valide</string>
+        <!-- END modif guest -->
+        <!-- send mail  -->
+        <string name="mail_sent">Mail envoyé</string>
+        <string name="question_mail1">Envoyer l\'invitation?</string>
+        <string name="question_mail2">Envoyer l\'invitation une nouvelle fois?</string>
+        <!-- END send mail -->
     <!-- END module guest -->
+
+    <!-- BUDGET -->
+    <string name="name_module_budget">Gestion du budget</string>
+    <string name="add_expense">Ajouter une dépense</string>
+    <string name="add_infow">Ajouter un apport</string>
+    <!-- END BUDGET -->
 
 </resources>

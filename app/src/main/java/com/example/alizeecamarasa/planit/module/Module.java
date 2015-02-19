@@ -17,8 +17,8 @@ public class Module {
     protected int id;
     protected String name;
     protected String slug;
-    protected int int_type;
-    private Event event;
+    protected int inttype;
+    //private Event event;
 
 
     public int getId() {
@@ -38,11 +38,11 @@ public class Module {
     }
 
     public int getInt_type() {
-        return int_type;
+        return inttype;
     }
 
     public void setInt_type(int int_type) {
-        this.int_type = int_type;
+        this.inttype = int_type;
     }
 
     public String getSlug() {
@@ -57,11 +57,11 @@ public class Module {
         return name;
     }
 
-    public Event getEvent() {
+/*    public Event getEvent() {
         return event;
     }
 
     public void setEvent(Event event) {
         this.event = event;
-    }
+    }*/
 }

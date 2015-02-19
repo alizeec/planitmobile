@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/addevent" />
+    <!--  END title of page -->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : name event -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Nom de l'événement"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputEventName"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  2nd input : date event début -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <!--  input  -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:layout_weight="1"
+                    android:layout_width="0dip">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Date de début"/>
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:id="@+id/inputEventDateBegin"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"/>
+                </LinearLayout>
+
+                <!--  calendar button -->
+                <ImageButton
+                    android:id="@+id/dateCalendarBegin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:src="@drawable/calendar_button"
+                    android:background="@color/darkGrey"
+                    android:contentDescription="Calendar"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+            <!--  END 2nd input -->
+
+            <!--  3rd input : date event end -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <!--  input  -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:layout_weight="1"
+                    android:layout_width="0dip">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Date de fin"/>
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:id="@+id/inputEventDateEnd"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="7dp"/>
+                </LinearLayout>
+
+                <!--  calendar button -->
+                <ImageButton
+                    android:id="@+id/dateCalendarEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:src="@drawable/calendar_button"
+                    android:background="@color/darkGrey"
+                    android:contentDescription="Calendar"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp" />
+
+            </LinearLayout>
+            <!--  END 3rd input -->
+
+
+
+            <!--  4th input : description -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Description"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:singleLine="false"
+                    android:lines="7"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:id="@+id/inputEventDescription"/>
+            </LinearLayout>
+            <!--  END 4th input  -->
+
+            <Button
+                android:id="@+id/validateNewEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ajouter"
+                android:background="@color/app_color"
+                android:textColor="@color/white"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

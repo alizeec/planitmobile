@@ -1,16 +1,6 @@
 package com.example.alizeecamarasa.planit.events;
 
-import android.media.Image;
-import android.net.Uri;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -30,18 +20,20 @@ public class Event {
     protected Date end_date;
     protected long counter_day;
     protected List<Module> modules;
+    private String image;
 
-    public Event(String id, String name,String slug, String description,Date begin_date, Date end_date) {
+    public Event(String id, String name,String slug, String description,Date begin_date, Date end_date, String image) {
         this.id = id;
         this.name = name;
         this.slug = slug;
         this.description = description;
         this.begin_date = begin_date;
         this.end_date = end_date;
+        this.image = image;
     }
 
-    public Event(int id, String name,String slug, String description,Date begin_date, Date end_date) {
-        this(Integer.toString(id), name,slug, description,begin_date,end_date);
+    public Event(int id, String name,String slug, String description,Date begin_date, Date end_date, String image) {
+        this(Integer.toString(id), name,slug, description,begin_date,end_date,image);
     }
 
     public Event(){
@@ -118,5 +110,29 @@ public class Event {
 
     public void setModules(List<Module> modules) {
         this.modules = modules;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getTimeDiff(){
+        Date cDate = new Date();
+        String dateDiff;
+        Long timeDiff = getBeginDate().getTime() - cDate.getTime();
+        int day = (int) TimeUnit.MILLISECONDS.toDays(timeDiff);
+
+        if(day >= 0){
+            dateDiff ="J - "+day;
+        }
+        else {
+            dateDiff="J + "+(-1)*day;
+        }
+
+        return dateDiff;
     }
 }

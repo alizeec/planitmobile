@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_list">#EEEEEE</color>
-        <color name="titlebackgroundcolor">#3232CD</color>
-        <color name="titletextcolor">#FFFF00</color>
-        <color name="guest">#1d89cf</color>
-        <color name="place">#f9de2f</color>
-        <color name="budget">#857198</color>
-        <color name="todo">#ff9f37</color>
-        <color name="transport">#dc4888</color>
+    <color name="titlebackgroundcolor">#3232CD</color>
+    <color name="titletextcolor">#FFFF00</color>
+    <color name="guest">#1d89cf</color>
+    <color name="place">#f9de2f</color>
+    <color name="budget">#857198</color>
+    <color name="todo">#ff9f37</color>
+    <color name="transport">#dc4888</color>
+    <color name="app_color">#61c0a5</color>
+    <color name="titleColor">#ffcecece</color>
+    <color name="expenses">#e66454</color>
+
+
+    <!--PROGRESS BAR-->
+    <color name="default_screen_bg">#f9f9f9</color>
+    <color name="rounded_container_bg">#222222</color>
+    <color name="rounded_container_border">#3b3f44</color>
+    <color name="light_gray_header_color">#646663</color>
+    <!--END PROGRESS BAR-->
 
     <color name="white">#FFF</color>
     <color name="darkGrey">#242b31</color>
     <color name="darkGrey2">#2a3137</color>
     <color name="black">#000</color>
     <color name="blue">#2fc1b4</color>
-    <color name="titleColor">#295862</color>
     <color name="lightGrey">#adadad</color>
     <color name="lightGrey2">#d0d0d0</color>
     <color name="lightGrey3">#f6f6f6</color>

@@ -5,11 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="PlanItApplication"
-        android:icon="@drawable/logo"
+        android:logo="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@style/MyCustomTheme"
-        android:allowBackup="true" >
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+    >
 
         <activity android:name=".EventActivity" >
             <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,23 @@
         <activity android:name=".Hamburger">
             <action android:name="android.intent.action.MAIN" />
         </activity>
+
+        <activity android:name=".events.AddEvent">
+            <action android:name="android.intent.action.MAIN" />
+        </activity>
+
+        <activity android:name=".guest.Guest.ChangeGuest">
+            <action android:name="android.intent.action.MAIN" />
+        </activity>
+
+        <activity android:name=".budget.BudgetActivity">
+            <action android:name="android.intent.action.MAIN" />
+        </activity>
+
+        <activity android:name=".budget.Item.SeeItem">
+            <action android:name="android.intent.action.MAIN" />
+        </activity>
+
     </application>
 
 </manifest>

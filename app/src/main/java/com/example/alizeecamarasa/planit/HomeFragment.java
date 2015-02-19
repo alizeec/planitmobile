@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TwoLineListItem;
 import android.app.ListFragment;
@@ -25,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventService;
+import com.example.alizeecamarasa.planit.events.AddEvent;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -51,6 +53,20 @@ public class HomeFragment extends ListFragment {
         mContext = (HomeActivity)getActivity();
 
         // display the event list
+        updateView();
+
+        //adding new event : starting new Event activity
+        Button addEvent = (Button) getView().findViewById(R.id.addEvent);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent myIntent = new Intent(getActivity().getApplicationContext(), AddEvent.class);
+                HomeFragment.this.startActivity(myIntent);
+            }
+        });
+    }
+
+    public void updateView(){
         EventService service = EventAPI.getInstance();
         service.listEvents("3" , new Callback<List<Event>>(){
             @Override
@@ -76,5 +92,10 @@ public class HomeFragment extends ListFragment {
         startActivity(intent);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateView();
+    }
 
 }

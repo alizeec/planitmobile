@@ -43,21 +43,4 @@ public class EventAPI {
         return singleton;
 
     }
-
-
-
-    private static final String API_BASE_URL = "http://jobboard-api.herokuapp.com/api/";
-
-    public static boolean postApply (Context context, String jobId, String email, String message) throws IOException, JSONException {
-        JSONObject object = new JSONObject();
-        object.put("job",jobId);
-        object.put("email", email);
-        object.put("message", message);
-        object.put("name", "Android");
-
-        Pair<Integer, String> response = SimpleRestApi.post(API_BASE_URL + "applies", object.toString());
-
-        return response.first == 200;
-    }
-
 }
