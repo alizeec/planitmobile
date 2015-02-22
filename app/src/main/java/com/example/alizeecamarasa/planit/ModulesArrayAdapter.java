@@ -79,12 +79,13 @@ public class ModulesArrayAdapter extends BaseAdapter {
                 holder.txtName.setBackgroundColor(Color.rgb(255,159,55));
             break;
             default:
-                img = context.getResources().getDrawable( R.drawable.toto_picto);
+                img= context.getResources().getDrawable( R.drawable.add_module_picto);
+                holder.txtName.setBackgroundColor(Color.rgb(226,225,225));
+                holder.txtName.setTextColor(Color.rgb(97,97,97));
             break;
-
         }
-        img.setBounds( -20, 0, 120, holder.txtName.getMeasuredHeight() );  // set the image size
-        holder.image.setImageDrawable(img);
+            img.setBounds( -20, 0, 120, holder.txtName.getMeasuredHeight() );  // set the image size
+            holder.image.setImageDrawable(img);
 
         return convertView;
     }

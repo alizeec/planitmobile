@@ -27,4 +27,7 @@ public interface GuestModuleService {
     @FormUrlEncoded
     @PUT("/guestsmodules/{id_module}/payable")
     void changePayable(@Path(value="id_module",encode=false) int id_module,@Field("payable") int payable, Callback<JSONObject> cb);
+
+    @GET("/guestsmodules/{module_id}/inscriptionlink")
+    void getURL(@Path("module_id") String id_module, Callback<String> cb);
 }

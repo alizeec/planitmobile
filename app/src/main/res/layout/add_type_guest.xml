@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/addtypeguest"
+        android:textColor="@color/guest"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : label -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/label_typeguest"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputTypeGuestLabel"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  2nd input : price -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/price_typeguest"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputTypeGuestPrice"/>
+            </LinearLayout>
+            <!--  END 2nd input -->
+
+            <!--  3rd input : message -->
+            <LinearLayout
+                style="@style/inputStyle"
+                android:id="@+id/layoutMessage"
+                >
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/message"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:singleLine="false"
+                    android:lines="7"
+                    android:gravity="top|left"
+                    android:hint="@string/message_hint"
+                    android:inputType="textMultiLine"
+                    android:id="@+id/inputTypeGuestMessage"/>
+            </LinearLayout>
+            <!--  END 3rd input -->
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        style="@style/Button"
+        android:id="@+id/validatenewtypeguest"
+        android:text="Ajouter"
+        android:background="@color/guest"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
+</LinearLayout>

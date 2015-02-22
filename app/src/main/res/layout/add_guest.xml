@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/add_guest"
+        android:textColor="@color/guest"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : firstname -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Prénom"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestFirstname"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  2nd input : lastname -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Nom"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestLastname"/>
+            </LinearLayout>
+            <!--  END 2nd input -->
+
+            <!--  3rd input : date event end -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Email"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputGuestEmail"/>
+            </LinearLayout>
+            <!--  END 3rd input -->
+            <!-- 4th input : guest type -->
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/spinner_prompt" />
+            <!-- END 4th input -->
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        style="@style/Button"
+        android:id="@+id/validatenewguest"
+        android:text="Ajouter"
+        android:background="@color/guest"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>
+</LinearLayout>

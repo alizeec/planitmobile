@@ -13,6 +13,9 @@
         android:text="@string/changeguest" />
     <!--  END title of page -->
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -109,21 +112,16 @@
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/changeGuest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Modifier"
-                android:background="@color/app_color"
-                android:textColor="@color/white"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_gravity="center"/>
-
         </LinearLayout>
     </ScrollView>
+    <Button
+        style="@style/Button"
+        android:id="@+id/changeGuest"
+        android:text="Modifier"
+        android:background="@color/guest"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
 </LinearLayout>

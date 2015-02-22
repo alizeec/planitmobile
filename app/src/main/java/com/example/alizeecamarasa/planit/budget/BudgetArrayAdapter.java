@@ -1,7 +1,9 @@
 package com.example.alizeecamarasa.planit.budget;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -9,16 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.alizeecamarasa.planit.R;
+import com.example.alizeecamarasa.planit.budget.Item.ChangeItem;
 import com.example.alizeecamarasa.planit.budget.Item.Item;
 import com.example.alizeecamarasa.planit.budget.Item.SeeItem;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
 import com.example.alizeecamarasa.planit.guest.Guest.ChangeGuest;
+import com.example.alizeecamarasa.planit.guest.Guest.Guest;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
+
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by alizeecamarasa on 18/02/15.
@@ -96,22 +109,34 @@ public class BudgetArrayAdapter extends BaseExpandableListAdapter {
 
         TextView txtName = (TextView) convertView.findViewById(R.id.name);
         TextView txtPrice = (TextView) convertView.findViewById(R.id.totalPrice);
+        ImageView zoom = (ImageView) convertView.findViewById(R.id.zoom);
 
 
         txtName.setText(name);
         if( getGroupLabel(groupPosition) == "Apports" ){
-            txtPrice.setText("+"+amount+" €");
+            txtPrice.setText("+" + amount + " €");
+            zoom.setVisibility(View.INVISIBLE);
         }
         else {
-            txtPrice.setText("-"+price+" €");
+            txtPrice.setText("-" + price + " €");
+            zoom.setVisibility(View.VISIBLE);
         }
 
         // voir le détail
-        ImageView zoom = (ImageView) convertView.findViewById(R.id.zoom);
         zoom.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //adding new event : starting new Event activity
                 Intent myIntent = new Intent(context, SeeItem.class);
+                myIntent.putExtra("item", getChild(groupPosition, childPosition));
+                context.startActivity(myIntent);
+            }
+        });
+
+        // modifier un item
+        ImageView modify = (ImageView) convertView.findViewById(R.id.modify);
+        modify.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, ChangeItem.class);
                 myIntent.putExtra("item", getChild(groupPosition, childPosition));
                 if( getGroupLabel(groupPosition) == "Apports" ){
                     myIntent.putExtra("type", "inflow");
@@ -119,7 +144,67 @@ public class BudgetArrayAdapter extends BaseExpandableListAdapter {
                 else {
                     myIntent.putExtra("type", "expense");
                 }
-                context.startActivity(myIntent);
+                context.startActivityForResult(myIntent, 3);
+            }
+        });
+
+        // supprimer un item
+        ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Voulez vous supprimer cet article?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OUI",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                List<Item> child =
+                                        itemCollections.get(listTypeBudget.get(groupPosition));
+
+                                // supression en BDD de l'invité
+                                BudgetModuleService service = BudgetModuleAPI.getInstance();
+                                if( getGroupLabel(groupPosition) == "Apports" ) {
+                                    service.deleteInflow(getChild(groupPosition, childPosition).getId(), new Callback<JSONObject>() {
+                                        @Override
+                                        public void success(JSONObject o, Response response) {
+                                            System.out.println("success");
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            System.out.println("erreur");
+                                            error.printStackTrace();
+                                        }
+                                    });
+                                }
+                                else {
+                                    service.deleteExpense(getChild(groupPosition, childPosition).getId(), new Callback<JSONObject>() {
+                                        @Override
+                                        public void success(JSONObject o, Response response) {
+                                            System.out.println("success");
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            System.out.println("erreur");
+                                            error.printStackTrace();
+                                        }
+                                    });
+                                }
+                                child.remove(childPosition);
+                                notifyDataSetChanged();
+                            }
+                        });
+                builder.setNegativeButton("NON",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
             }
         });
 
@@ -149,6 +234,7 @@ public class BudgetArrayAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String label = (String) getGroupLabel(groupPosition);
+
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

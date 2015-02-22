@@ -6,8 +6,11 @@ import android.os.Parcelable;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 import com.example.alizeecamarasa.planit.module.Module;
 
+import org.json.JSONException;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by alizeecamarasa on 02/02/15.
@@ -16,7 +19,7 @@ public class GuestModule extends Module implements Serializable {
     private int max_guests;
     private boolean payable;
     private List<TypeGuest> typesguests;
-    private int mData;
+    private boolean moduletype;
 
     public int getMax_guests() {
         return max_guests;
@@ -42,4 +45,24 @@ public class GuestModule extends Module implements Serializable {
         this.typesguests = type_guest;
     }
 
+    public String getIdTypeGuestwithLabel(String label){
+        try{
+            for(TypeGuest type : typesguests){
+                if( type.getLabel().equals(label)){
+                    return type.getId();
+                }
+            }
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        return label;
+    }
+
+    public boolean isModuletype() {
+        return moduletype;
+    }
+
+    public void setModuletype(boolean moduletype) {
+        this.moduletype = moduletype;
+    }
 }

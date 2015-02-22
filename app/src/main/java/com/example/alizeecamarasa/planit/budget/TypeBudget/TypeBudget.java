@@ -2,12 +2,13 @@ package com.example.alizeecamarasa.planit.budget.TypeBudget;
 
 import com.example.alizeecamarasa.planit.budget.Item.Item;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by alizeecamarasa on 18/02/15.
  */
-public class TypeBudget {
+public class TypeBudget implements Serializable {
     private int id;
     private String name;
     private List<Item> expenses;
@@ -34,5 +35,9 @@ public class TypeBudget {
 
     public void setItems(List<Item> expenses) {
         this.expenses = expenses;
+    }
+
+    public String toString(){
+        return this.name;
     }
 }

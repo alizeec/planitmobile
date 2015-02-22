@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/change_inflow"
+        android:textAllCaps="true"
+        android:textColor="@color/budget"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/content"
+            >
+
+            <!-- RECAP -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Récapitulatif"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/budget"
+                android:layout_marginTop="20dp"/>
+
+            <!--  Label -->
+            <LinearLayout
+                style="@style/inputStyle"
+                android:gravity="center"
+            >
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Nom : "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/labelRecap"/>
+            </LinearLayout>
+            <!--  END Label  -->
+
+            <!--  Montant -->
+            <LinearLayout
+                style="@style/inputStyle"
+                android:gravity="center"
+            >
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Montant : "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/amountRecap"/>
+            </LinearLayout>
+            <!--  END Montant  -->
+
+            <!-- RECAP -->
+
+            <!-- MODIFICATION -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Modification"
+                android:textAllCaps="true"
+                android:textColor="@color/budget"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+             />
+
+            <!--  first input : label -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/label_inflow"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputLabel"/>
+
+            </LinearLayout>
+                <!--  END first input  -->
+            <!--  second input : amount -->
+            <LinearLayout
+                style="@style/inputStyle"
+            >
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/amount"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputAmount"/>
+            </LinearLayout>
+            <!--  END second input  -->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_alignParentBottom="true">
+            <Button
+                android:id="@+id/modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valider"
+                android:background="@color/budget"
+                android:textColor="@color/white"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="1dp"
+                android:layout_gravity="center"/>
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Retour"
+                android:background="@color/budget"
+                android:textColor="@color/white"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="1dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

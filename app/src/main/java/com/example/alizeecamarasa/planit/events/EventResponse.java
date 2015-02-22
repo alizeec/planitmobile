@@ -27,8 +27,12 @@ public class EventResponse {
     }
 
     public String getBalance() {
-        if(balance.equals("Empty") || balance == null)
+        if(balance == null) {
+            balance ="0";
+        }
+        if(balance != null && balance.equals("Empty") )
             balance = "0";
+
         return balance;
     }
 

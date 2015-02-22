@@ -1,33 +1,26 @@
 package com.example.alizeecamarasa.planit.events;
 
-        import java.io.IOException;
         import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
         import java.util.Calendar;
         import java.util.Date;
         import java.util.Locale;
 
+        import android.app.Activity;
         import android.app.DatePickerDialog;
-        import android.app.TimePickerDialog;
         import android.content.Intent;
-        import android.os.AsyncTask;
         import android.os.Bundle;
         import android.view.View;
-        import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.DatePicker;
         import android.widget.EditText;
         import android.widget.ImageButton;
         import android.widget.Spinner;
         import android.widget.TextView;
-        import android.widget.TimePicker;
         import android.widget.Toast;
 
         import com.example.alizeecamarasa.planit.BaseActivity;
-        import com.example.alizeecamarasa.planit.EventActivity;
         import com.example.alizeecamarasa.planit.HomeActivity;
         import com.example.alizeecamarasa.planit.R;
-        import com.google.gson.Gson;
 
         import org.json.JSONException;
         import org.json.JSONObject;
@@ -37,11 +30,9 @@ package com.example.alizeecamarasa.planit.events;
         import retrofit.client.Response;
         import retrofit.mime.TypedByteArray;
         import retrofit.mime.TypedInput;
-        import retrofit.mime.TypedString;
 
 
-public class AddEvent extends BaseActivity {
-    private Spinner spinnerTypeEvent;
+public class AddEvent extends Activity {
     private Calendar calendarBegin;
     private Calendar calendarEnd;
     private TextView dateEventBegin;
@@ -51,22 +42,13 @@ public class AddEvent extends BaseActivity {
     private EditText eventName;
     private EditText eventDescription;
     private Button validate;
-    private Date valDateStart;
-    private Date valDateEnd;
 
-    private TextView text_date;
-    private DatePicker date_picker;
-    private Button button;
-
-    private int year;
-    private int month;
-    private int day;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_event);
+        setContentView(R.layout.add_event);
 
         eventName = (EditText) findViewById(R.id.inputEventName);
         eventDescription = (EditText) findViewById(R.id.inputEventDescription);

@@ -12,41 +12,74 @@
         android:icon="@drawable/ic_launcher"
     >
 
-        <activity android:name=".EventActivity" >
-            <action android:name="android.intent.action.MAIN" />
+        <!-- GÉNÉRAL -->
+        <activity android:name=".Hamburger"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        <!-- END GÉNÉRAL -->
+
+        <!-- PAGE D'ACCUEIL -->
         <activity
-            android:name=".HomeActivity" >
+            android:name=".HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- END PAGE D'ACCUEIL -->
 
-        <activity android:name=".guest.GuestActivity">
-            <action android:name="android.intent.action.MAIN" />
+
+        <!-- PAGE EVENT -->
+        <activity android:name=".EventActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <activity android:name=".Hamburger">
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".events.AddEvent"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END PAGE EVENT -->
+
+
+        <!-- PAGE MODULE GUEST -->
+        <activity android:name=".guest.GuestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <activity android:name=".events.AddEvent">
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".guest.Guest.AddGuest"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <activity android:name=".guest.Guest.ChangeGuest">
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".guest.Guest.ChangeGuest"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <activity android:name=".budget.BudgetActivity">
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".guest.TypeGuest.AddTypeGuest"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END MODULE GUEST -->
+
+        <!-- MODULE BUDGET -->
+        <activity android:name=".budget.BudgetActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <activity android:name=".budget.Item.SeeItem">
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".budget.Item.SeeItem"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
+
+        <activity android:name=".budget.Item.AddItem"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+
+        <activity android:name=".budget.Item.ChangeItem"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END MODULE BUDGET -->
+
+
 
     </application>
 

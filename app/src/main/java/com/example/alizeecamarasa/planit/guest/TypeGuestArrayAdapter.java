@@ -162,6 +162,10 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
         // envoi du mail
         send = (ImageView) convertView.findViewById(R.id.send);
+        System.out.println(module.isModuletype());
+        if(module.isModuletype()== true){
+            send.setVisibility(View.GONE);
+        }
         img_send_disable = context.getResources().getDrawable( R.drawable.send_disable);
         if (getChild(groupPosition,childPosition).getSent()==1) {
             send.setImageDrawable(img_send_disable);
@@ -210,9 +214,6 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
             }
         });
-
-
-
 
         txtFirstname.setText(firstname);
         txtLastname.setText(lastname);
@@ -268,7 +269,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         TextView txtprice = (TextView) convertView.findViewById(R.id.price);
 
         label.setText(laptopName);
-        if(price != 0){
+        if(module.isPayable() == true){
             txtprice.setText(String.valueOf(price)+" €/pers");
         }
         else {

@@ -1,6 +1,7 @@
 package com.example.alizeecamarasa.planit.events;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,7 @@ public class Event {
     protected Date begin_date;
     protected Date end_date;
     protected long counter_day;
-    protected List<Module> modules;
+    protected ArrayList<Module> modules;
     private String image;
 
     public Event(String id, String name,String slug, String description,Date begin_date, Date end_date, String image) {
@@ -108,7 +109,7 @@ public class Event {
         return modules;
     }
 
-    public void setModules(List<Module> modules) {
+    public void setModules(ArrayList<Module> modules) {
         this.modules = modules;
     }
 

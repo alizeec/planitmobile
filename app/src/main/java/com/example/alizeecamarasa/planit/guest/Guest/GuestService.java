@@ -25,4 +25,7 @@ public interface GuestService {
 
     @POST("/guests/{id_guest}/mails")
     void sendInvitGuest(@Path("id_guest") String id_guest,Callback<JSONObject> cb);
+
+    @POST("/guests/{typeguest_id}")
+    void addGuest(@Path("typeguest_id") String typeguest_id,@Body TypedInput data, Callback<JSONObject> cb);
 }

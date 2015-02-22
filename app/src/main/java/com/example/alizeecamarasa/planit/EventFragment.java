@@ -43,6 +43,7 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -141,10 +142,20 @@ public class EventFragment extends ListFragment {
         nbguests.setText(event.getNb_guest() + " " + getString(R.string.guests));
         expenses.setText(getString(R.string.expenses)+"\n"+event.getBalance());
         inflows.setText(getString(R.string.inflow)+"\n"+event.getBalance());
+        Module addModule = new Module();
+        addModule.setName("Ajouter un module");
+        addModule.setInt_type(6);
         if(event.getEvent().getModules()!=null){
-          setListAdapter(new ModulesArrayAdapter(mContext,event.getEvent().getModules()));
-
+           event.getEvent().getModules().add(addModule);
         }
+        else {
+            ArrayList<Module> newlist = new ArrayList<Module>();
+            newlist.add(addModule);
+            event.getEvent().setModules(newlist);
+        }
+
+        setListAdapter(new ModulesArrayAdapter(mContext,event.getEvent().getModules()));
+
         //GraphicalView chartView = PieChart.getNewInstance(getActivity(), 10, 20);
         //piechart.addView(chartView);
 

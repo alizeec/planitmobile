@@ -2,7 +2,10 @@ package com.example.alizeecamarasa.planit.budget.Item;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.alizeecamarasa.planit.R;
@@ -15,18 +18,18 @@ public class SeeItem extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Item item = (Item)getIntent().getSerializableExtra("item");
-        String type = getIntent().getStringExtra("type");
-        System.out.println(type);
-        if(type.equals("expense")){
-            System.out.println("coucou");
-            setContentView(R.layout.see_item);
-
+       // String type = getIntent().getStringExtra("type");
+        //if(type.equals("expense")){
+            setContentView(R.layout.see_expense);
             chargeExpenseView(item);
-        }
+        /*}
+        else if (type.equals("inflow")){
+            setContentView(R.layout.see_inflow);
+            chargeInflowView(item);
+        }*/
     }
 
     public void chargeExpenseView(Item item){
-        System.out.println("coucou");
 
         TextView txtName = (TextView) findViewById(R.id.name);
         TextView txtQuantity = (TextView) findViewById(R.id.quantity);
@@ -35,7 +38,8 @@ public class SeeItem extends Activity {
         TextView txtUnit_price = (TextView) findViewById(R.id.unit_price);
         TextView txtTotal_price = (TextView) findViewById(R.id.total_price);
         TextView txtConsummate = (TextView) findViewById(R.id.consummate);
-        CheckBox cbBought = (CheckBox) findViewById(R.id.bought);
+        RadioButton cbBought = (RadioButton) findViewById(R.id.bought);
+        Button back = (Button) findViewById(R.id.back);
 
         String name = item.getName();
         float quantity = item.getQuantity();
@@ -59,6 +63,35 @@ public class SeeItem extends Activity {
         else
             cbBought.setChecked(false);
 
-        System.out.println("ici");
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
+
+   /* public void chargeInflowView(Item item){
+
+        TextView txtName = (TextView) findViewById(R.id.name);
+        TextView txtAmount= (TextView) findViewById(R.id.amount);
+        Button back = (Button) findViewById(R.id.back);
+
+        String name = item.getName();
+        float amount = item.getAmount();
+
+
+        txtName.setText(name);
+        txtAmount.setText(String.valueOf(amount)+" €");
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }*/
+
 }

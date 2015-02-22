@@ -3,12 +3,13 @@ package com.example.alizeecamarasa.planit.guest.TypeGuest;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
 import com.example.alizeecamarasa.planit.module.Module;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by alizeecamarasa on 06/02/15.
  */
-public class TypeGuest {
+public class TypeGuest implements Serializable {
     private String id;
     private String label;
     private String message;
@@ -63,4 +64,9 @@ public class TypeGuest {
     public void setGuests(List<Guest> guests) {
         this.guests = guests;
     }
+
+    public String toString(){
+        return this.label;
+    }
+
 }

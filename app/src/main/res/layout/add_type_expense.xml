@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/add_type_expense"
+        android:textAllCaps="true"
+        android:textColor="@color/expenses"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkGrey">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!--  first input : label -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/label_type_expense"/>
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/inputTypeExpenseLabel"/>
+                </LinearLayout>
+                <!--  END first input  -->
+
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            style="@style/Button"
+            android:id="@+id/validatenewtypeexpense"
+            android:text="Ajouter"
+            android:background="@color/expenses"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

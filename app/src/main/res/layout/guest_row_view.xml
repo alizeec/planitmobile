@@ -62,14 +62,6 @@
         android:weightSum="9"
         >
         <ImageView
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/delete"
-            android:contentDescription="@string/app_name"
-            android:layout_weight="3"/>
-        <ImageView
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,6 +69,15 @@
             android:src="@drawable/send"
             android:contentDescription="@string/app_name"
             android:layout_weight="3"/>
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/delete_guest"
+            android:contentDescription="@string/app_name"
+            android:layout_weight="3"/>
+
         <ImageView
             android:id="@+id/modify"
             android:layout_width="wrap_content"

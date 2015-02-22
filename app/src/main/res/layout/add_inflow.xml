@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/add_infow"
+        android:textAllCaps="true"
+        android:textColor="@color/budget"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : label -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/label_expense"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputInflowLabel"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  2nd input : amount -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/amount"
+                    />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputInflowAmount"
+                    android:hint="@string/hint_unit_money"/>
+            </LinearLayout>
+            <!--  END 2nd input -->
+        </LinearLayout>
+    </ScrollView>
+        <Button
+            style="@style/Button"
+            android:id="@+id/validatenewitem"
+            android:text="Ajouter"
+            android:background="@color/budget"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

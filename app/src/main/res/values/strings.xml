@@ -35,6 +35,9 @@
     <string name="payment_mean">Ajouter un moyen de paiement</string>
     <string name="add_guest">Ajouter un invité</string>
     <string name="empty_cat">Il n\'y a aucun invité de type </string>
+    <string name="suscribe">Mode inscription</string>
+    <string name="invite">Mode invitation</string>
+
         <!-- modif guest -->
         <string name="changeguest">MODIFIER UN INVITÉ</string>
         <string name="confirmed_waiting">En attente de réponse</string>
@@ -49,12 +52,55 @@
         <string name="question_mail1">Envoyer l\'invitation?</string>
         <string name="question_mail2">Envoyer l\'invitation une nouvelle fois?</string>
         <!-- END send mail -->
+
+        <!-- add guest -->
+        <string name="addguest">AJOUTER UN INVITÉ</string>
+        <string name="spinner_prompt">Choisissez un type d\'invité</string>
+        <!-- end add guest -->
+
+        <!-- add typeguest -->
+        <string name="addtypeguest">AJOUTER UN TYPE D\'INVITÉ</string>
+        <string name="label_typeguest">Nom du type d\'invité</string>
+        <string name="message"> Message</string>
+        <string name="message_hint">(qui sera dans le mail d\'invitation)</string>
+        <string name="price_typeguest"> Prix </string>
+        <!-- end add typeguest -->
+
+        <!-- get URL -->
+        <string name="get_url">Générer l\'URL d\'inscription</string>
+        <string name="copy">URL copié dans le presse papier</string>
+        <!-- end get URL-->
     <!-- END module guest -->
+
+
 
     <!-- BUDGET -->
     <string name="name_module_budget">Gestion du budget</string>
     <string name="add_expense">Ajouter une dépense</string>
+    <string name="change_expense">Modifier une dépense</string>
     <string name="add_infow">Ajouter un apport</string>
+    <string name="change_inflow">Modifier un apport</string>
+    <string name="add_type_expense">Ajouter une catégorie de dépense</string>
+    <string name="hint_unit_money">en €</string>
+    <string name="empty_list_budget">Il n\'y a aucun article de ce type</string>
+
+    <!-- add expense -->
+        <string name="label_expense">Nom</string>
+        <string name="unit">Unité</string>
+        <string name="unit_hint">Litres, Grammes, Boites, ...</string>
+        <string name="unit_price">Prix unitaire</string>
+        <string name="stock">Quantité en stock</string>
+        <string name="quantity">Quantité totale</string>
+        <string name="consummate">Quantité consommée</string>
+        <!-- end add expense -->
+        <!-- add inflow -->
+        <string name="label_inflow">Nom</string>
+        <string name="amount">Montant</string>
+        <!-- end add inflow -->
+        <!-- add type expense-->
+        <string name="label_type_expense">Nom</string>
+        <!-- end add type expense -->
+
     <!-- END BUDGET -->
 
 </resources>

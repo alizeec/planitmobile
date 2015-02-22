@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/add_expense"
+        android:textAllCaps="true"
+        android:textColor="@color/expenses"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : label -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/label_expense"/>
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputExpenseLabel"/>
+            </LinearLayout>
+            <!--  END first input  -->
+
+            <!--  2nd input : unit -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/unit"
+                />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputExpenseUnit"
+                    android:hint="@string/unit_hint"/>
+            </LinearLayout>
+            <!--  END 2nd input -->
+
+            <!--  3rd input : price -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/unit_price"
+                />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputExpensePrice"
+                    android:hint="@string/hint_unit_money"
+                    />
+            </LinearLayout>
+            <!--  END 3rd input -->
+
+            <!--  4th input : stock -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/stock"
+                    />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputExpenseStock"
+                    android:hint="@string/hint_unit_money"
+                    />
+            </LinearLayout>
+            <!--  END 4th input -->
+
+            <!--  5th input : quantiyt -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/quantity"
+
+                    />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/inputExpenseQuantity"
+                    android:hint="@string/hint_unit_money"
+                    />
+            </LinearLayout>
+            <!--  END 5th input -->
+
+            <!-- 6th input : expense type -->
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+             />
+            <!-- END 6th input -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        style="@style/Button"
+        android:id="@+id/validatenewitem"
+        android:text="Ajouter"
+        android:background="@color/expenses"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>
+</LinearLayout>
