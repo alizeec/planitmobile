@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/bg_list">
 
         <Button android:id="@+id/addEvent"
             android:textSize="14dp"
@@ -25,7 +26,7 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_list"
+            android:background="@color/white"
             android:layout_below="@+id/addEvent"
             />
 

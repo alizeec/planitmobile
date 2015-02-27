@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -17,19 +16,14 @@ public class SeeItem extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Item item = (Item)getIntent().getSerializableExtra("item");
-       // String type = getIntent().getStringExtra("type");
-        //if(type.equals("expense")){
-            setContentView(R.layout.see_expense);
-            chargeExpenseView(item);
-        /*}
-        else if (type.equals("inflow")){
-            setContentView(R.layout.see_inflow);
-            chargeInflowView(item);
-        }*/
+        ItemBudget itemBudget = (ItemBudget)getIntent().getSerializableExtra("item");
+
+        setContentView(R.layout.see_expense);
+        chargeExpenseView(itemBudget);
+
     }
 
-    public void chargeExpenseView(Item item){
+    public void chargeExpenseView(ItemBudget itemBudget){
 
         TextView txtName = (TextView) findViewById(R.id.name);
         TextView txtQuantity = (TextView) findViewById(R.id.quantity);
@@ -41,15 +35,15 @@ public class SeeItem extends Activity {
         RadioButton cbBought = (RadioButton) findViewById(R.id.bought);
         Button back = (Button) findViewById(R.id.back);
 
-        String name = item.getName();
-        float quantity = item.getQuantity();
-        String unit = item.getUnit();
-        float stock = item.getStock();
+        String name = itemBudget.getName();
+        float quantity = itemBudget.getQuantity();
+        String unit = itemBudget.getUnit();
+        float stock = itemBudget.getStock();
         float tobuy = quantity - stock;
-        float unit_price = item.getPrice();
+        float unit_price = itemBudget.getPrice();
         float total_price = tobuy*unit_price;
-        float consummate = item.getConsummate();
-        boolean bought = item.isBought();
+        float consummate = itemBudget.getConsummate();
+        boolean bought = itemBudget.isBought();
 
         txtName.setText(name);
         txtQuantity.setText(String.valueOf(quantity)+" "+unit);
@@ -71,27 +65,4 @@ public class SeeItem extends Activity {
             }
         });
     }
-
-
-   /* public void chargeInflowView(Item item){
-
-        TextView txtName = (TextView) findViewById(R.id.name);
-        TextView txtAmount= (TextView) findViewById(R.id.amount);
-        Button back = (Button) findViewById(R.id.back);
-
-        String name = item.getName();
-        float amount = item.getAmount();
-
-
-        txtName.setText(name);
-        txtAmount.setText(String.valueOf(amount)+" €");
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }*/
-
 }

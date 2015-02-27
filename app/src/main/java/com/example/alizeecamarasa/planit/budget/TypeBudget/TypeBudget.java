@@ -1,6 +1,6 @@
 package com.example.alizeecamarasa.planit.budget.TypeBudget;
 
-import com.example.alizeecamarasa.planit.budget.Item.Item;
+import com.example.alizeecamarasa.planit.budget.Item.ItemBudget;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public class TypeBudget implements Serializable {
     private int id;
     private String name;
-    private List<Item> expenses;
+    private List<ItemBudget> expenses;
 
     public int getId() {
         return id;
@@ -29,11 +29,11 @@ public class TypeBudget implements Serializable {
         this.name = name;
     }
 
-    public List<Item> getItems() {
+    public List<ItemBudget> getItems() {
         return expenses;
     }
 
-    public void setItems(List<Item> expenses) {
+    public void setItems(List<ItemBudget> expenses) {
         this.expenses = expenses;
     }
 

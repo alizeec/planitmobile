@@ -15,20 +15,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -60,17 +55,14 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition);
     }
 
-    // retourne le prénom d'un invité
     public Object getChildFirstname(int groupPosition, int childPosition) {
         return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition).getFirstname();
     }
 
-    // retourne le nom d'un invité
     public Object getChildLastname(int groupPosition, int childPosition) {
         return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition).getLastname();
     }
 
-    // retourne l'email d'un invité
     public Object getChildEmail(int groupPosition, int childPosition) {
         return guestCollections.get(listTypeGuest.get(groupPosition)).get(childPosition).getEmail();
     }
@@ -81,7 +73,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
     }
 
 
-    // renseigne les données des invités dans la view
+    // put data in the view
     public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final String firstname = (String) getChildFirstname(groupPosition, childPosition);
@@ -97,7 +89,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         TextView txtLastname = (TextView) convertView.findViewById(R.id.lastname);
         TextView txtEmail = (TextView) convertView.findViewById(R.id.email);
 
-        // supression d'un invité
+        // delete guest
         delete = (ImageView) convertView.findViewById(R.id.delete);
         delete.setOnClickListener(new OnClickListener() {
 
@@ -111,7 +103,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                                 List<Guest> child =
                                         guestCollections.get(listTypeGuest.get(groupPosition));
 
-                                // supression en BDD de l'invité
+                                // delete in BDD
                                 GuestService service = GuestAPI.getInstance();
                                 service.deleteGuest((String) getChild(groupPosition, childPosition).getId(),new  Callback<Guest>(){
                                     @Override
@@ -125,6 +117,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                                         error.printStackTrace();
                                     }
                                 });
+                                // delete in view
                                 child.remove(childPosition);
                                 notifyDataSetChanged();
                             }
@@ -144,12 +137,12 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
 
 
-        // modification d'un invité
+        // modify a guest
         modify = (ImageView) convertView.findViewById(R.id.modify);
         modify.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                //adding new event : starting new Event activity
+                //open the change guest form
                 Intent myIntent = new Intent(context, ChangeGuest.class);
                 myIntent.putExtra("guest",getChild(groupPosition,childPosition));
                 myIntent.putExtra("type_guest",(String) getGroup(groupPosition).getId());
@@ -160,9 +153,8 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         });
 
 
-        // envoi du mail
+        // send email
         send = (ImageView) convertView.findViewById(R.id.send);
-        System.out.println(module.isModuletype());
         if(module.isModuletype()== true){
             send.setVisibility(View.GONE);
         }
@@ -185,11 +177,11 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                                 List<Guest> child =
                                         guestCollections.get(listTypeGuest.get(groupPosition));
 
-                                // envoi du mail
+                                // send email from API
                                 GuestService service = GuestAPI.getInstance();
-                                service.sendInvitGuest((String) getChild(groupPosition, childPosition).getId(), new Callback<JSONObject>() {
+                                service.sendInvitGuest((String) getChild(groupPosition, childPosition).getId(), new Callback<Response>() {
                                     @Override
-                                    public void success(JSONObject o, Response response) {
+                                    public void success(Response o, Response response) {
                                         Toast.makeText(context, R.string.mail_sent, Toast.LENGTH_SHORT).show();
                                     }
 
@@ -225,12 +217,10 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
         return guestCollections.get(listTypeGuest.get(groupPosition)).size();
     }
 
-    //donne le nom du type d'invité
     public Object getGroupLabel(int groupPosition) {
         return listTypeGuest.get(groupPosition).getLabel();
     }
 
-    // donne le prix
     public Long getGroupPrice(int groupPosition,GuestModule module) {
         if(module.isPayable()==true){
             return listTypeGuest.get(groupPosition).getPrice();
@@ -251,7 +241,7 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
 
     public TypeGuest getGroup(int groupPosition) { return listTypeGuest.get(groupPosition); }
 
-    //renseigne les têtes de listes
+    //pu data in list headers
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String laptopName = (String) getGroupLabel(groupPosition);
@@ -263,8 +253,6 @@ public class TypeGuestArrayAdapter extends BaseExpandableListAdapter {
                     null);
         }
 
-
-        // récupère les view
         TextView label = (TextView) convertView.findViewById(R.id.label);
         TextView txtprice = (TextView) convertView.findViewById(R.id.price);
 

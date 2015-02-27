@@ -1,35 +1,20 @@
 package com.example.alizeecamarasa.planit.guest.Guest;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.alizeecamarasa.planit.BaseActivity;
-import com.example.alizeecamarasa.planit.HomeActivity;
 import com.example.alizeecamarasa.planit.R;
-import com.example.alizeecamarasa.planit.events.EventAPI;
-import com.example.alizeecamarasa.planit.events.EventService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -74,7 +59,7 @@ public class ChangeGuest extends Activity {
 
         validate = (Button) findViewById(R.id.changeGuest);
 
-        // on met les valeurs actuelles
+        // put current values
         firstname.setText(guest.getFirstname());
         lastname.setText(guest.getLastname());
         email.setText(guest.getEmail());
@@ -85,9 +70,6 @@ public class ChangeGuest extends Activity {
 
         confirmed.setProgress(guest.getConfirmed());
 
-
-
-        //validate + save new event
         changeGuest();
 
     }
@@ -106,10 +88,7 @@ public class ChangeGuest extends Activity {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    //creation of the event : validation + creation in database via parse
     private void changeGuest() {
-
-        //modif et récupération de la seekbar pour l'état de confirmation
         confirmed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
@@ -135,7 +114,6 @@ public class ChangeGuest extends Activity {
             }
         });
 
-        // clic sur le bouton valider
         validate.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -151,16 +129,13 @@ public class ChangeGuest extends Activity {
                     return;
                 }
 
-                //else create parseObject and enter it in database
+                //else change the guest in BDD
                 else {
 
-                    // ajout de l'événement
                     if( payed.isChecked())
                         payedvalue = 1;
                     else
                         payedvalue = 0;
-
-                    // ajout de l'événement
 
                     JSONObject json = new JSONObject();
                     JSONObject guestJson = new JSONObject();
@@ -212,12 +187,10 @@ public class ChangeGuest extends Activity {
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
 
-
-
                     GuestService service = GuestAPI.getInstance();
-                    service.modifyGuest(guest.getId(),in, new Callback<JSONObject>() {
+                    service.modifyGuest(guest.getId(),in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(ChangeGuest.this, "L'invité "+guest.getFirstname()+" "+guest.getLastname()+" a été modifié!", Toast.LENGTH_SHORT).show();
                             finish();
 

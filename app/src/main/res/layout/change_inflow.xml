@@ -109,7 +109,8 @@
 
                 <EditText
                     style="@style/inputValue"
-                    android:id="@+id/inputAmount"/>
+                    android:id="@+id/inputAmount"
+                    android:inputType="numberDecimal"/>
             </LinearLayout>
             <!--  END second input  -->
         </LinearLayout>

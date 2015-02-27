@@ -1,35 +1,42 @@
 package com.example.alizeecamarasa.planit.events;
 
-        import java.text.SimpleDateFormat;
-        import java.util.Calendar;
-        import java.util.Date;
-        import java.util.Locale;
+import java.io.File;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
-        import android.app.Activity;
-        import android.app.DatePickerDialog;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.DatePicker;
-        import android.widget.EditText;
-        import android.widget.ImageButton;
-        import android.widget.Spinner;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.example.alizeecamarasa.planit.BaseActivity;
-        import com.example.alizeecamarasa.planit.HomeActivity;
-        import com.example.alizeecamarasa.planit.R;
+import com.example.alizeecamarasa.planit.HomeActivity;
+import com.example.alizeecamarasa.planit.R;
+import com.google.gson.Gson;
 
-        import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-        import retrofit.Callback;
-        import retrofit.RetrofitError;
-        import retrofit.client.Response;
-        import retrofit.mime.TypedByteArray;
-        import retrofit.mime.TypedInput;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedFile;
+import retrofit.mime.TypedInput;
+import retrofit.mime.TypedString;
 
 
 public class AddEvent extends Activity {
@@ -42,6 +49,8 @@ public class AddEvent extends Activity {
     private EditText eventName;
     private EditText eventDescription;
     private Button validate;
+    private Bitmap imagefile;
+    private TypedFile typedFile;
 
 
 
@@ -54,15 +63,11 @@ public class AddEvent extends Activity {
         eventDescription = (EditText) findViewById(R.id.inputEventDescription);
         validate = (Button) findViewById(R.id.validateNewEvent);
 
-
-
         //manage date picker
         manageDatePicker();
 
-
         //validate + save new event
         createEvent();
-
 
     }
 
@@ -143,8 +148,40 @@ public class AddEvent extends Activity {
         return textview.getText().toString().trim().length() == 0;
     }
 
-    //creation of the event : validation + creation in database via parse
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String selectedImagePath = null;
+        Uri selectedImageUri = data.getData();
+        Cursor cursor = this.getContentResolver().query(selectedImageUri, null, null,null, null);
+        if (cursor == null) {
+            selectedImagePath = selectedImageUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            selectedImagePath = cursor.getString(idx);
+        }
+        File photo = new File(selectedImagePath);
+        typedFile = new TypedFile("application/octet-stream", photo);
+
+
+    }
+
+    //creation of the event : validation + add in BDD
     private void createEvent() {
+        Button image = (Button) findViewById(R.id.inputImage);
+        image.setOnClickListener(new View.OnClickListener() {
+
+             @Override
+             public void onClick(View v) {
+                 Intent photoLibraryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                 photoLibraryIntent.setType("image/*");
+                 startActivityForResult(photoLibraryIntent, 1);
+             }
+         });
+
         validate.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -156,65 +193,21 @@ public class AddEvent extends Activity {
                     return;
                 }
 
-                //else create parseObject and enter it in database
+                //else create event and enter it in database
                 else {
-                    // ajout de l'événement
-                    JSONObject json = new JSONObject();
-                    JSONObject eventJson = new JSONObject();
-                    try {
-                        eventJson.put("name",eventName.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        eventJson.put("description",eventDescription.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        eventJson.put("begin_date",dateEventBegin.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        eventJson.put("end_date",dateEventEnd.getText().toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        eventJson.put("image","image.jpg");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        json.put("event_form",eventJson);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
-
-
-
                     EventService service = EventAPI.getInstance();
-                    service.addEvent(3,in, new Callback<JSONObject>() {
+                    service.addEvent("1",eventName.getText().toString(),eventDescription.getText().toString(),dateEventBegin.getText().toString(),dateEventEnd.getText().toString(),typedFile,  new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
-                            System.out.print(response);
-
+                        public void success(Response response, Response response2) {
+                            finish();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            System.out.println("echec");
+                            finish();
                             error.printStackTrace();
                         }
                     });
-
-
-                    Toast.makeText(AddEvent.this, "Événement "+eventName.getText().toString()+" créé!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(i);
                 }
             }
         });

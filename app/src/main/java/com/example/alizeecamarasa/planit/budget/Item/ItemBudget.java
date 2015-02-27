@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by alizeecamarasa on 18/02/15.
  */
-public class Item implements Serializable{
+public class ItemBudget implements Serializable{
 
     private int id;
     private String name;

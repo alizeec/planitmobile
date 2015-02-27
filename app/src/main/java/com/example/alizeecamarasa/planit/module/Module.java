@@ -1,24 +1,18 @@
 package com.example.alizeecamarasa.planit.module;
 
-import com.example.alizeecamarasa.planit.events.Event;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.io.Serializable;
+
 
 /**
  * Created by alizeecamarasa on 26/01/15.
  */
-public class Module {
+public class Module implements Serializable {
     protected int id;
     protected String name;
     protected String slug;
     protected int inttype;
-    //private Event event;
 
 
     public int getId() {
@@ -57,11 +51,4 @@ public class Module {
         return name;
     }
 
-/*    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }*/
 }

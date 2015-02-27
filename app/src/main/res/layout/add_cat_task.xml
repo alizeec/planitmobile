@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        style="@style/inputStyle">
+
+        <TextView
+            style="@style/labelInput"
+            android:text="@string/category"
+            />
+
+        <EditText
+            style="@style/inputValue"
+            android:id="@+id/category"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="60dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            style="@style/Button"
+            android:layout_height="50dp"
+            android:id="@+id/validatenewcat"
+            android:text="Ajouter"
+            android:background="@color/todo"
+            android:textColor="@color/white"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            />
+        <Button
+            style="@style/Button"
+            android:id="@+id/cancel"
+            android:layout_height="50dp"
+            android:text="Annuler"
+            android:background="@color/todo"
+            android:textColor="@color/white"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+</LinearLayout>

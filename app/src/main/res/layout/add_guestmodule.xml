@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!--  first input : nb_guest max -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/nb_mx_guest"/>
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/nbmaxguest"
+                        android:inputType="numberDecimal"/>
+                </LinearLayout>
+                <!--  END first input  -->
+
+
+                <!-- 2nd input : invite or suscribe -->
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:id="@+id/type_moduleguest">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sur invitation"
+                        android:layout_margin="10dp"
+                        android:id="@+id/invite"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sur inscription"
+                        android:layout_margin="10dp"
+                        android:id="@+id/suscribe"/>
+
+                </RadioGroup>
+                <!-- END 2nd input -->
+
+                <!-- 3rt input : paying? -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/paying"
+                    />
+
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/paying"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_marginTop="60dp"
+                    android:layout_alignParentBottom="true">
+                    <Button
+                        style="@style/Button"
+                        android:id="@+id/validatenewmodule"
+                        android:text="Ajouter"
+                        android:background="@color/guest"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        />
+                    <Button
+                        style="@style/Button"
+                        android:id="@+id/cancel"
+                        android:text="Annuler"
+                        android:background="@color/guest"
+                        android:textColor="@color/white"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+</LinearLayout>

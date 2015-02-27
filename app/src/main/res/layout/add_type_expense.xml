@@ -20,10 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent">
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/darkGrey">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -46,7 +42,6 @@
                 <!--  END first input  -->
 
             </LinearLayout>
-        </ScrollView>
         <Button
             style="@style/Button"
             android:id="@+id/validatenewtypeexpense"

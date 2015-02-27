@@ -4,18 +4,12 @@ package com.example.alizeecamarasa.planit;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.ListFragment;
@@ -28,34 +22,19 @@ import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventResponse;
 import com.example.alizeecamarasa.planit.events.EventService;
 import com.example.alizeecamarasa.planit.guest.GuestActivity;
-import com.example.alizeecamarasa.planit.guest.GuestModule;
+import com.example.alizeecamarasa.planit.module.AddModule;
 import com.example.alizeecamarasa.planit.module.Module;
-import com.example.alizeecamarasa.planit.utils.PieChart;
-import com.example.alizeecamarasa.planit.utils.RoundedTransformation;
+import com.example.alizeecamarasa.planit.todo.TodoActivity;
 import com.squareup.picasso.Picasso;
 
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.model.MultipleCategorySeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.DefaultRenderer;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Random;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by Yoann on 05/10/2014.
- */
+
 public class EventFragment extends ListFragment {
 
     private Context mContext;
@@ -68,16 +47,12 @@ public class EventFragment extends ListFragment {
     private TextView nbguests;
     private TextView inflows;
     private TextView expenses;
-    private ListView list;
-    private  LinearLayout piechart;
+    private Event mEvent;
 
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_event, container, false);
     }
 
@@ -105,21 +80,26 @@ public class EventFragment extends ListFragment {
         nbguests= (TextView)parent.findViewById(R.id.guests);
         inflows= (TextView)parent.findViewById(R.id.inflow);
         expenses= (TextView)parent.findViewById(R.id.expense);
-        //piechart = (LinearLayout) parent.findViewById(R.id.piechart);
-
-
 
 
         setHasOptionsMenu(true);
 
+    }
+
+    // get Event from API
+    @Override
+    public void onStart(){
+        super.onStart();
         EventService service = EventAPI.getInstance();
         service.getEvent(id_event, new Callback<EventResponse>() {
             @Override
             public void success(EventResponse event, Response response) {
-                if (event.getEvent() != null){}
+                if (event.getEvent() != null){
+                    mEvent = event.getEvent();
                     updateView(event);
-            }
+                }
 
+            }
             @Override
             public void failure(RetrofitError error) {
                 error.printStackTrace();
@@ -129,9 +109,7 @@ public class EventFragment extends ListFragment {
 
 
 
-
-
-
+    // update the event
     private void updateView (EventResponse event){
         title.setText(event.getEvent().getName());
         description.setText(event.getEvent().getDescription());
@@ -142,6 +120,8 @@ public class EventFragment extends ListFragment {
         nbguests.setText(event.getNb_guest() + " " + getString(R.string.guests));
         expenses.setText(getString(R.string.expenses)+"\n"+event.getBalance());
         inflows.setText(getString(R.string.inflow)+"\n"+event.getBalance());
+
+        // add a module in order to add a row "Ajouter un module" in the list
         Module addModule = new Module();
         addModule.setName("Ajouter un module");
         addModule.setInt_type(6);
@@ -153,13 +133,7 @@ public class EventFragment extends ListFragment {
             newlist.add(addModule);
             event.getEvent().setModules(newlist);
         }
-
         setListAdapter(new ModulesArrayAdapter(mContext,event.getEvent().getModules()));
-
-        //GraphicalView chartView = PieChart.getNewInstance(getActivity(), 10, 20);
-        //piechart.addView(chartView);
-
-
     }
 
     @Override
@@ -179,22 +153,30 @@ public class EventFragment extends ListFragment {
                 intent.putExtra("module_id",String.valueOf(selectedModule.getId()));
                 startActivity(intent);
                 break;
+            // module Lieu
             case 3:
                 Toast.makeText(mContext, "Module Lieu à venir", Toast.LENGTH_SHORT).show();
                 break;
+            // module Transport
             case 4:
                 Toast.makeText(mContext, "Module Transport à venir", Toast.LENGTH_SHORT).show();
                 break;
+            // module liste de tâches
             case 5:
-                Toast.makeText(mContext, "Module TODO à venir", Toast.LENGTH_SHORT).show();
+                intent= new Intent(mContext,TodoActivity.class);
+                intent.putExtra("module_id",String.valueOf(selectedModule.getId()));
+                startActivity(intent);
                 break;
+            // ajouter un module
+            case 6:
+                intent= new Intent(mContext,AddModule.class);
+                intent.putExtra("event",mEvent);
+                startActivity(intent);
+                break;
+
         }
 
     }
-
-
-
-
 
 }
 

@@ -1,5 +1,6 @@
 package com.example.alizeecamarasa.planit.events;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,29 +8,33 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.example.alizeecamarasa.planit.module.Module;
+
+import retrofit.mime.TypedFile;
+
 /**
  * Created by alizeecamarasa on 30/12/14.
  */
-public class Event {
+public class Event implements Serializable {
     private static final SimpleDateFormat ISO_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     protected String id;
     protected String name;
     protected String slug;
     protected String description;
-    protected Date begin_date;
-    protected Date end_date;
+    protected Date beginDate;
+    protected Date endDate;
     protected long counter_day;
     protected ArrayList<Module> modules;
     private String image;
+    private TypedFile imagefile;
 
     public Event(String id, String name,String slug, String description,Date begin_date, Date end_date, String image) {
         this.id = id;
         this.name = name;
         this.slug = slug;
         this.description = description;
-        this.begin_date = begin_date;
-        this.end_date = end_date;
+        this.beginDate = begin_date;
+        this.endDate = end_date;
         this.image = image;
     }
 
@@ -77,19 +82,19 @@ public class Event {
 
 
     public Date getBeginDate() {
-        return begin_date;
+        return beginDate;
     }
 
     public void setBeginDate(Date begin_date) {
-        this.begin_date = begin_date;
+        this.beginDate = begin_date;
     }
 
     public Date getEndDate() {
-        return end_date;
+        return endDate;
     }
 
     public void setEndDate(Date end_date) {
-        this.end_date = end_date;
+        this.endDate = end_date;
     }
 
     public long getCounterDay() {
@@ -135,5 +140,13 @@ public class Event {
         }
 
         return dateDiff;
+    }
+
+    public TypedFile getImagefile() {
+        return imagefile;
+    }
+
+    public void setImagefile(TypedFile imagefile) {
+        this.imagefile = imagefile;
     }
 }

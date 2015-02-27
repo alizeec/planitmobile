@@ -2,25 +2,19 @@ package com.example.alizeecamarasa.planit.budget.Item;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.R;
-import com.example.alizeecamarasa.planit.budget.BudgetActivity;
 import com.example.alizeecamarasa.planit.budget.BudgetModule;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleAPI;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleService;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
-import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
-import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
-import com.example.alizeecamarasa.planit.guest.GuestModule;
-import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,10 +48,11 @@ public class AddItem extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // get module in order to have typeguest list
+        // get type (inflow or expense)
         String type = getIntent().getStringExtra("type");
 
 
+        // INFLOW
         if (type.equals("inflow")){
             setContentView(R.layout.add_inflow);
             module_id = getIntent().getStringExtra("id");
@@ -68,6 +63,7 @@ public class AddItem extends Activity {
             addInflow();
         }
 
+        // EXPENSE
         else if (type.equals("expense")){
             setContentView(R.layout.add_expense);
             mModule = (BudgetModule)getIntent().getExtras().getSerializable("module");
@@ -110,10 +106,9 @@ public class AddItem extends Activity {
 
 
 
-    //creation of the item :
+    //INFLOW
     private void addInflow() {
 
-        // clic sur le bouton valider
         validate.setOnClickListener(new View.OnClickListener() {
 
 
@@ -126,10 +121,7 @@ public class AddItem extends Activity {
                     return;
                 }
 
-                //else create parseObject and enter it in database
                 else {
-
-                    // ajout de l'événement
 
                     JSONObject json = new JSONObject();
                     JSONObject inflowJson = new JSONObject();
@@ -151,35 +143,32 @@ public class AddItem extends Activity {
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
 
-
-
                     BudgetModuleService service = BudgetModuleAPI.getInstance();
-                    service.addInflow(module_id, in, new Callback<JSONObject>() {
+                    System.out.println("POST inflow");
+                    service.addInflow(module_id, in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(AddItem.this, "L'apport " + name.getText().toString() + " a été ajouté!", Toast.LENGTH_SHORT).show();
                             finish();
-
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
+                            finish();
                         }
 
                     });
                     setResult(1);
-                    finish();
                 }
             }
         });
     }
 
 
-    //creation of the item :
+    //EXPENSE
     private void addExpense() {
 
-        // clic sur le bouton valider
         validate.setOnClickListener(new View.OnClickListener() {
 
 
@@ -194,10 +183,7 @@ public class AddItem extends Activity {
                     return;
                 }
 
-                //else create parseObject and enter it in database
                 else {
-
-                    // ajout de l'événement
 
                     JSONObject json = new JSONObject();
                     JSONObject expenseJson = new JSONObject();
@@ -237,9 +223,9 @@ public class AddItem extends Activity {
 
 
                     BudgetModuleService service = BudgetModuleAPI.getInstance();
-                    service.addExpense(type.getId(), in, new Callback<JSONObject>() {
+                    service.addExpense(type.getId(), in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(AddItem.this, "La dépense " + name.getText().toString() +" a été ajouté!", Toast.LENGTH_SHORT).show();
                             finish();
 
@@ -248,11 +234,11 @@ public class AddItem extends Activity {
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
+                            finish();
                         }
 
                     });
                     setResult(2);
-                    finish();
                 }
             }
         });

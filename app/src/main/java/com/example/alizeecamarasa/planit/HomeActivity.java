@@ -1,21 +1,13 @@
 package com.example.alizeecamarasa.planit;
 
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Window;
-import android.widget.TextView;
 
-/**
- * Created by Yoann on 03/10/2014.
- */
+
+
 public class HomeActivity extends Hamburger {
-    TextView  titleActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

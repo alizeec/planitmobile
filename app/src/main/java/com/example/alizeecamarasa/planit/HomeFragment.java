@@ -2,47 +2,33 @@ package com.example.alizeecamarasa.planit;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TwoLineListItem;
 import android.app.ListFragment;
 
-
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventService;
 import com.example.alizeecamarasa.planit.events.AddEvent;
 
-import org.apache.http.message.BasicNameValuePair;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-/**
- * Created by Yoann on 03/10/2014.
- */
+
 public class HomeFragment extends ListFragment {
     private Context mContext;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // load the view
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -67,12 +53,13 @@ public class HomeFragment extends ListFragment {
     }
 
     public void updateView(){
+        // use API to get the event
         EventService service = EventAPI.getInstance();
-        service.listEvents("3" , new Callback<List<Event>>(){
+        service.listEvents(((PlanItApplication) mContext.getApplicationContext()).USER_ID , new Callback<List<Event>>(){
             @Override
             public void success(List<Event> events, Response response){
                 if(events!=null)
-                    setListAdapter(new CustomArrayAdapter(mContext,events));
+                    setListAdapter(new EventsArrayAdapter(mContext,events));
             }
 
             @Override
@@ -85,6 +72,7 @@ public class HomeFragment extends ListFragment {
 
 
     @Override
+    // call the EventActivity and pass the id
     public void onListItemClick(ListView l, View v, int position, long id) {
         Event selectedEvent = (Event)getListView().getItemAtPosition(position);
         Intent intent= new Intent(mContext,EventActivity.class);
@@ -93,6 +81,7 @@ public class HomeFragment extends ListFragment {
     }
 
     @Override
+    // refresh activity after we add a module
     public void onResume(){
         super.onResume();
         updateView();

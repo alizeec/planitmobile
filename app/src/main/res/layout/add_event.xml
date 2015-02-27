@@ -21,7 +21,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/darkGrey">
+        android:background="@color/toolbar">
 
         <LinearLayout
             android:orientation="vertical"
@@ -76,7 +76,7 @@
                     android:paddingRight="5dp"
                     android:paddingLeft="5dp"
                     android:src="@drawable/calendar_button"
-                    android:background="@color/darkGrey"
+                    android:background="@color/toolbar"
                     android:contentDescription="Calendar"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp" />
@@ -117,7 +117,7 @@
                     android:paddingRight="5dp"
                     android:paddingLeft="5dp"
                     android:src="@drawable/calendar_button"
-                    android:background="@color/darkGrey"
+                    android:background="@color/toolbar"
                     android:contentDescription="Calendar"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp" />
@@ -142,6 +142,32 @@
                     android:gravity="top|left"
                     android:inputType="textMultiLine"
                     android:id="@+id/inputEventDescription"/>
+            </LinearLayout>
+            <!--  END 4th input  -->
+
+            <!--  4th input : description -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="Image"/>
+
+                <Button
+                    style="@style/inputValue"
+                    android:singleLine="false"
+                    android:lines="7"
+                    android:gravity="top|left"
+                    android:text="Choisir une image"
+                    android:id="@+id/inputImage"/>
+
+                <WebView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/comp"
+                    >
+
+                </WebView>
             </LinearLayout>
             <!--  END 4th input  -->
 

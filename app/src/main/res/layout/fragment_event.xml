@@ -20,13 +20,46 @@
         <TextView
             style="@style/titlesPages"
             android:id="@+id/title"
+            android:text="test"
+            android:textAllCaps="true"
          />
         <!--  END title of page -->
+
+    <!-- ACTIONS : supprimer et modifier -->
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+        >
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete_event"
+                android:background="@color/app_color"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/delete_module"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:padding="10dp"
+                android:background="@color/app_color"
+                android:src="@drawable/modify_event"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/modify_module"
+                />
+        </LinearLayout>-->
+        <!-- END ACTIONS -->
+
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -134,7 +167,7 @@
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="360dp"
             android:layout_marginTop="20dp"
         />
 

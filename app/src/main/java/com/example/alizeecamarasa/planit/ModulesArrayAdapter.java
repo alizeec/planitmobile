@@ -3,7 +3,6 @@ package com.example.alizeecamarasa.planit;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +56,7 @@ public class ModulesArrayAdapter extends BaseAdapter {
         Context context= parent.getContext();
         Drawable img;
 
+        // put the good image and color for each module
         switch (moduleList.get(position).getInt_type()){
             case 1:
                 img = context.getResources().getDrawable( R.drawable.guest_picto);

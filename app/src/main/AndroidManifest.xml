@@ -3,6 +3,8 @@
     package="com.example.alizeecamarasa.planit" >
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:logo="@drawable/logo"
@@ -10,6 +12,7 @@
         android:theme="@style/MyCustomTheme"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
+        android:name=".PlanItApplication"
     >
 
         <!-- GÉNÉRAL -->
@@ -39,6 +42,11 @@
 
         <activity android:name=".events.AddEvent"
             android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+
+        <activity android:name=".module.AddModule"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+
         </activity>
         <!-- END PAGE EVENT -->
 
@@ -77,7 +85,17 @@
         <activity android:name=".budget.Item.ChangeItem"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
+
+        <activity android:name=".budget.TypeBudget.AddTypeBudget"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
         <!-- END MODULE BUDGET -->
+
+        <!-- MODULE TO_DO -->
+        <activity android:name=".todo.TodoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END MODULE TO_DO -->
 
 
 

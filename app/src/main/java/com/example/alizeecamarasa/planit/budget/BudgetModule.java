@@ -1,7 +1,6 @@
 package com.example.alizeecamarasa.planit.budget;
 
-import com.example.alizeecamarasa.planit.budget.Item.Inflow;
-import com.example.alizeecamarasa.planit.budget.Item.Item;
+import com.example.alizeecamarasa.planit.budget.Item.ItemBudget;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
 import com.example.alizeecamarasa.planit.module.Module;
 
@@ -16,7 +15,7 @@ public class BudgetModule extends Module implements Serializable {
     private int max_budget;
     private int base;
     private List<TypeBudget> typesexpense;
-    private List<Item> inflows;
+    private List<ItemBudget> inflows;
 
     public int getMax_budget() {
         return max_budget;
@@ -42,11 +41,11 @@ public class BudgetModule extends Module implements Serializable {
         this.typesexpense = typeBudgetList;
     }
 
-    public List<Item> getInflows() {
+    public List<ItemBudget> getInflows() {
         return inflows;
     }
 
-    public void setInflows(List<Item> inflows) {
+    public void setInflows(List<ItemBudget> inflows) {
         this.inflows = inflows;
     }
 }

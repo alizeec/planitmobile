@@ -1,6 +1,7 @@
 package com.example.alizeecamarasa.planit.guest;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 
@@ -18,28 +20,32 @@ import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-
-import com.example.alizeecamarasa.planit.events.AddEvent;
 import com.example.alizeecamarasa.planit.guest.Guest.AddGuest;
-import com.example.alizeecamarasa.planit.guest.Guest.ChangeGuest;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.AddTypeGuest;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
+import com.example.alizeecamarasa.planit.module.ModuleAPI;
+import com.example.alizeecamarasa.planit.module.ModuleService;
+import com.example.alizeecamarasa.planit.utils.Utils;
 
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import retrofit.mime.TypedInput;
 
 public class GuestActivity extends Activity {
 
@@ -58,21 +64,53 @@ public class GuestActivity extends Activity {
         setContentView(R.layout.activity_guest);
         context = this;
         id_module = getIntent().getStringExtra("module_id");
+    }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
         service = GuestModuleAPI.getInstance();
         createGroupList();
-
     }
 
 
     private void createGroupList() {
 
-        // appel au service, retourne le module
+        // get module from API
         service.getModule(id_module, new Callback<GuestModule>() {
             @Override
             public void success(final GuestModule module, Response response) {
                 if (module != null) {
                     mModule = module;
+
+                    // DELETE MODULE
+                    final ModuleService moduleService = ModuleAPI.getInstance();
+                    ImageView delete = (ImageView) findViewById(R.id.delete_module);
+                    delete.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            moduleService.deleteModule(id_module, new Callback<Response>() {
+                                @Override
+                                public void success(Response budgetModule, Response response) {
+                                    finish();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    finish();
+                                    error.printStackTrace();
+                                }
+                            });
+
+                        };
+                    });
+                    // UPDATE MODULE
+                    ImageView update = (ImageView) findViewById(R.id.modify_module);
+                    update.setOnClickListener(new View.OnClickListener() {
+                          public void onClick(View v) {
+                              updateModuleGuest();
+                          }
+                      });
+
 
                     // CAS DES INSCRIPTION / INVITATION
                     // inscription
@@ -110,7 +148,6 @@ public class GuestActivity extends Activity {
                         action.setOnClickListener(new View.OnClickListener() {
 
                             public void onClick(View v) {
-                                //adding new event : starting new Event activity
                                 Intent myIntentGuest = new Intent(context, AddGuest.class);
                                 myIntentGuest.putExtra("module", mModule);
                                 context.startActivity(myIntentGuest);
@@ -122,15 +159,20 @@ public class GuestActivity extends Activity {
                         });
                     }
 
-                    // CRÉATION DE LA LISTE
+                    // BUILD THE LIST
                     groupList = mModule.getType_guest();
                     createCollection();
 
                     expListView = (ExpandableListView) findViewById(R.id.laptop_list);
-                    expListView.setGroupIndicator (null);
                     final TypeGuestArrayAdapter expListAdapter = new TypeGuestArrayAdapter(context, groupList, guestCollection, module);
                     expListView.setAdapter(expListAdapter);
-                    // si le groupe est vide, on affiche un message
+                    int width = getResources().getDisplayMetrics().widthPixels;
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        expListView.setIndicatorBounds(width - Utils.getPixelValue(40,context), width - Utils.getPixelValue(10,context));
+                    } else {
+                        expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40,context), width - Utils.getPixelValue(10,context));
+                    }
+                    // if group is empty, we print message
                     expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
                         @Override
@@ -143,19 +185,19 @@ public class GuestActivity extends Activity {
                         }
                     });
 
-                    // ajout d'un type d'invité, click sur le bouton
+                    // add a type guest
                     Button addTypeGuest = (Button) findViewById(R.id.add_type_guest);
                     addTypeGuest.setOnClickListener(new View.OnClickListener() {
 
                         public void onClick(View v) {
-                            //adding new event : starting new Event activity
                             Intent myIntentTypeGuest = new Intent(context, AddTypeGuest.class);
                             myIntentTypeGuest.putExtra("id_module",id_module);
                             myIntentTypeGuest.putExtra("mode",mModule.isModuletype());
+                            myIntentTypeGuest.putExtra("module",mModule);
                             context.startActivity(myIntentTypeGuest);
                         };
                     });
-                    // si l'événement est payant, on coche la checkbox
+                    // if paying, checkbox is checked
                     if(module.isPayable()==true){
                         CheckBox paying = (CheckBox)findViewById(R.id.checkbox_paying);
                         paying.setChecked(true);
@@ -176,7 +218,7 @@ public class GuestActivity extends Activity {
 
 
    private void createCollection() {
-        // preparing laptops collection(child)
+        // preparing guest collection(child)
         guestCollection = new LinkedHashMap<TypeGuest, List<Guest>>();
 
         for (TypeGuest type : groupList) {
@@ -191,22 +233,86 @@ public class GuestActivity extends Activity {
             childList.add(model);
     }
 
-    private void setGroupIndicatorToRight() {
-        //* Get the screen width *//*
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
+    /* --------------------------------- UPDATE GUEST MODULE -------------------------------------*/
+    public void updateModuleGuest(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_guestmodule);
+        dialog.setTitle(R.string.name_module_guest);
 
-        expListView.setIndicatorBounds(width - getDipsFromPixel(35), width
-                - getDipsFromPixel(5));
-    }
+        final EditText nb_max_guest = (EditText) dialog.findViewById(R.id.nbmaxguest);
+        final RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.type_moduleguest);
+        final CheckBox paying = (CheckBox) dialog.findViewById(R.id.paying);
 
-    // Convert pixel to dip
-    public int getDipsFromPixel(float pixels) {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
+        // put currents data
+        nb_max_guest.setText(String.valueOf(mModule.getMax_guests()));
+        if (mModule.isModuletype() == true){
+            radiogroup.check(R.id.suscribe);
+        }
+        else {
+            radiogroup.check(R.id.invite);
+        }
+        paying.setChecked(mModule.isPayable());
+
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    RadioButton radioChosen = (RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId());
+                    Boolean choice;
+                    if (radioChosen.getText().equals("Sur invitation"))
+                        choice = true;
+                    else
+                        choice = false;
+
+                    JSONObject json = new JSONObject();
+                    JSONObject moduleJson = new JSONObject();
+                    try {
+                        moduleJson.put("moduletype",choice);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        moduleJson.put("maxguests",Float.parseFloat(nb_max_guest.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        moduleJson.put("payable",paying.isChecked());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        json.put("guestsmodule_form",moduleJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
+
+                    GuestModuleService service = GuestModuleAPI.getInstance();
+                    service.updateGuestModule(id_module, in, new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            Toast.makeText(GuestActivity.this, "Le module a bien été modifié!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                        }
+                    });
+                dialog.dismiss();
+                }
+        });
+
+        dialog.show();
     }
 
     public void printURL(String s){
@@ -231,11 +337,9 @@ public class GuestActivity extends Activity {
         switch(view.getId()) {
             case R.id.checkbox_paying:
                 if (checked) {
-                    service.changePayable(mModule.getId(), 1, new Callback<JSONObject>() {
+                    service.changePayable(mModule.getId(), 1, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject module, Response response) {
-                            System.out.println(module);
-                            System.out.println(response);
+                        public void success(Response module, Response response) {
                             Toast.makeText(context, "L'événement est payant!", Toast.LENGTH_SHORT).show();
                         }
 
@@ -247,9 +351,9 @@ public class GuestActivity extends Activity {
                 }
 
                 else {
-                    service.changePayable(mModule.getId(), 0, new Callback<JSONObject>() {
+                    service.changePayable(mModule.getId(), 0, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject module, Response response) {
+                        public void success(Response module, Response response) {
                             Toast.makeText(context, "L'événement est gratuit!", Toast.LENGTH_SHORT).show();
                         }
 
@@ -262,12 +366,6 @@ public class GuestActivity extends Activity {
                 break;
 
         }
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        createGroupList();
     }
 
 }

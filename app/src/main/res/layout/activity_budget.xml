@@ -21,6 +21,17 @@
         android:textSize="18dp"
         />
 
+    <ImageView
+        style="@style/actions"
+        android:src="@drawable/delete_modulebudget"
+        android:layout_marginRight="40dp"
+        android:id="@+id/delete_module"/>
+    <ImageView
+        style="@style/actions"
+        android:src="@drawable/modify_modulebudget"
+        android:layout_marginRight="10dp"
+        android:id="@+id/modify_module"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/add_type_expense"
+        android:groupIndicator="@drawable/group_indicator"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="50dp"
         >

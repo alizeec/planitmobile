@@ -11,18 +11,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventService;
-import com.example.alizeecamarasa.planit.guest.Guest.Guest;
-import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +65,7 @@ public class Hamburger extends ActionBarActivity {
     private void addDrawerItems() {
         // récupération de la liste des événements
         EventService service = EventAPI.getInstance();
-        service.listEvents("3" , new Callback<List<Event>>(){
+        service.listEvents(((PlanItApplication) getApplicationContext()).USER_ID , new Callback<List<Event>>(){
             @Override
             public void success(List<Event> events, Response response){
                 if(events!=null) {
@@ -78,7 +76,14 @@ public class Hamburger extends ActionBarActivity {
                         mapEvents.put(events.get(i).getName(), events.get(i).getId());
 
                     }
-                    mAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_1, list);
+                    mAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_1, list){
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            TextView textView = (TextView) super.getView(position, convertView, parent);
+                            textView.setTextColor(Hamburger.this.getResources().getColor(R.color.white));
+                            return textView;
+                        }
+                    };
                     mDrawerList.setAdapter(mAdapter);
                 }
 
@@ -147,17 +152,11 @@ public class Hamburger extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
-
-        // Activate the navigation drawer toggle
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

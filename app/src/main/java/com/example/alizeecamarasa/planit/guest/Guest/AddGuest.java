@@ -17,8 +17,6 @@ import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -91,10 +89,8 @@ public class AddGuest extends Activity {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
-    //creation of the event : validation + creation in database via parse
+    //add guest in BDD from API
     private void addGuest() {
-
-        // clic sur le bouton valider
         validate.setOnClickListener(new View.OnClickListener() {
 
 
@@ -112,11 +108,8 @@ public class AddGuest extends Activity {
                     return;
                 }
 
-                //else create parseObject and enter it in database
+                //else create guest
                 else {
-
-                    // ajout de l'événement
-
                     JSONObject json = new JSONObject();
                     JSONObject guestJson = new JSONObject();
                     try {
@@ -142,24 +135,21 @@ public class AddGuest extends Activity {
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
 
-
-
                     GuestService service = GuestAPI.getInstance();
-                    service.addGuest(type.getId(), in, new Callback<JSONObject>() {
+                    service.addGuest(type.getId(), in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(AddGuest.this, "L'invité " + firstname.getText().toString() + " " + lastname.getText().toString() + " a été ajouté!", Toast.LENGTH_SHORT).show();
                             finish();
-
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
                             error.printStackTrace();
+                            finish();
                         }
 
                     });
-                    finish();
                 }
             }
         });

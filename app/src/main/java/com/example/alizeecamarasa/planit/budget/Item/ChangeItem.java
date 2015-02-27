@@ -6,14 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.R;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleAPI;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleService;
-import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,15 +33,15 @@ public class ChangeItem extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Item item = (Item)getIntent().getSerializableExtra("item");
+        ItemBudget itemBudget = (ItemBudget)getIntent().getSerializableExtra("item");
         String type = getIntent().getStringExtra("type");
         if(type.equals("expense")){
         setContentView(R.layout.change_expense);
-        changeExpense(item);
+        changeExpense(itemBudget);
         }
         else if (type.equals("inflow")){
             setContentView(R.layout.change_inflow);
-            changeInflow(item);
+            changeInflow(itemBudget);
         }
     }
 
@@ -56,8 +54,8 @@ public class ChangeItem extends Activity {
     }
 
     // IF THE ITEM IS AN INFLOW
-    public void changeInflow(Item item){
-        final Item the_item = item;
+    public void changeInflow(ItemBudget itemBudget){
+        final ItemBudget the_itemBudget = itemBudget;
 
         final TextView txtName = (TextView) findViewById(R.id.labelRecap);
         final TextView txtAmount = (TextView) findViewById(R.id.amountRecap);
@@ -66,8 +64,8 @@ public class ChangeItem extends Activity {
         Button cancel = (Button) findViewById(R.id.cancel);
         Button validate = (Button) findViewById(R.id.modify);
 
-        String name = item.getName();
-        float amount = item.getAmount();
+        String name = itemBudget.getName();
+        float amount = itemBudget.getAmount();
 
         // on mets les valeurs actuelles
         txtName.setText(name);
@@ -116,9 +114,9 @@ public class ChangeItem extends Activity {
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
                     BudgetModuleService service = BudgetModuleAPI.getInstance();
-                    service.changeInflow(the_item.getId(), in, new Callback<JSONObject>() {
+                    service.changeInflow(the_itemBudget.getId(), in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(ChangeItem.this, "L'apport " + txtName.getText().toString() +" a été modifiée!", Toast.LENGTH_SHORT).show();
                         }
 
@@ -141,8 +139,8 @@ public class ChangeItem extends Activity {
     }
 
     //  IF THE ITEM IS AN EXPENSE
-    public void changeExpense(Item item){
-        final Item the_item = item;
+    public void changeExpense(ItemBudget itemBudget){
+        final ItemBudget the_itemBudget = itemBudget;
 
         final EditText txtName = (EditText) findViewById(R.id.inputExpenseLabel);
         final EditText txtPrice = (EditText) findViewById(R.id.inputExpensePrice);
@@ -153,12 +151,12 @@ public class ChangeItem extends Activity {
         Button cancel = (Button) findViewById(R.id.cancel);
         Button validate = (Button) findViewById(R.id.modify);
 
-        final String name = item.getName();
-        float quantity = item.getQuantity();
-        float stock = item.getStock();
-        float unit_price = item.getPrice();
-        float consummate = item.getConsummate();
-        final boolean bought = item.isBought();
+        final String name = itemBudget.getName();
+        float quantity = itemBudget.getQuantity();
+        float stock = itemBudget.getStock();
+        float unit_price = itemBudget.getPrice();
+        float consummate = itemBudget.getConsummate();
+        final boolean bought = itemBudget.isBought();
 
         // on met les valeurs actuelles
         txtName.setText(name);
@@ -236,9 +234,9 @@ public class ChangeItem extends Activity {
                     System.out.println(json);
 
                     BudgetModuleService service = BudgetModuleAPI.getInstance();
-                    service.changeExpense(the_item.getId(), in, new Callback<JSONObject>() {
+                    service.changeExpense(the_itemBudget.getId(), in, new Callback<Response>() {
                         @Override
-                        public void success(JSONObject event, Response response) {
+                        public void success(Response event, Response response) {
                             Toast.makeText(ChangeItem.this, "La dépense " + name +" a été modifiée!", Toast.LENGTH_SHORT).show();
                         }
 

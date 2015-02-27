@@ -23,7 +23,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/darkGrey">
+        android:background="@color/toolbar">
 
         <LinearLayout
             android:orientation="vertical"
@@ -73,6 +73,7 @@
                 <EditText
                     style="@style/inputValue"
                     android:id="@+id/inputExpensePrice"
+                    android:inputType="numberDecimal"
                     android:hint="@string/hint_unit_money"
                     />
             </LinearLayout>
@@ -90,6 +91,7 @@
                 <EditText
                     style="@style/inputValue"
                     android:id="@+id/inputExpenseStock"
+                    android:inputType="numberDecimal"
                     android:hint="@string/hint_unit_money"
                     />
             </LinearLayout>
@@ -108,6 +110,7 @@
                 <EditText
                     style="@style/inputValue"
                     android:id="@+id/inputExpenseQuantity"
+                    android:inputType="numberDecimal"
                     android:hint="@string/hint_unit_money"
                     />
             </LinearLayout>

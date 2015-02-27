@@ -6,6 +6,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="empty_radio">Vous devez selectionner un choix </string>
+
 
 
     <!-- hamburger -->
@@ -26,6 +28,7 @@
     <string name="income">Apports</string>
     <string name="cost">Dépenses</string>
     <string name="total">Total</string>
+    <string name="addmodule">Ajouter un module</string>
     <!-- END Event -->
 
     <!-- module guest -->
@@ -37,6 +40,8 @@
     <string name="empty_cat">Il n\'y a aucun invité de type </string>
     <string name="suscribe">Mode inscription</string>
     <string name="invite">Mode invitation</string>
+    <string name="nb_mx_guest">Nombre maximum d\'invités</string>
+
 
         <!-- modif guest -->
         <string name="changeguest">MODIFIER UN INVITÉ</string>
@@ -83,6 +88,8 @@
     <string name="add_type_expense">Ajouter une catégorie de dépense</string>
     <string name="hint_unit_money">en €</string>
     <string name="empty_list_budget">Il n\'y a aucun article de ce type</string>
+    <string name="max_budget">Budget maximum</string>
+    <string name="base">Apport personnel</string>
 
     <!-- add expense -->
         <string name="label_expense">Nom</string>
@@ -102,5 +109,14 @@
         <!-- end add type expense -->
 
     <!-- END BUDGET -->
+
+    <!-- MODULE TO-DO -->
+    <string name="name_module_todo">Gestion des tâches</string>
+    <string name="add_task">Ajouter une tâche</string>
+    <string name="modify_task">Modifier une tâche</string>
+    <string name="delete_task">Supprimer une tâche</string>
+    <string name="add_cat_task">Ajouter une catégorie</string>
+    <string name="task">Tâche</string>
+    <string name="category">Catégorie</string>
 
 </resources>

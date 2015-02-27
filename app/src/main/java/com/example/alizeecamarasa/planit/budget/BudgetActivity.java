@@ -2,22 +2,32 @@ package com.example.alizeecamarasa.planit.budget;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
 import com.example.alizeecamarasa.planit.R;
 import com.example.alizeecamarasa.planit.budget.Item.AddItem;
-import com.example.alizeecamarasa.planit.budget.Item.Item;
+import com.example.alizeecamarasa.planit.budget.Item.ItemBudget;
+import com.example.alizeecamarasa.planit.budget.TypeBudget.AddTypeBudget;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
+import com.example.alizeecamarasa.planit.guest.GuestModuleAPI;
+import com.example.alizeecamarasa.planit.guest.GuestModuleService;
+import com.example.alizeecamarasa.planit.module.ModuleAPI;
+import com.example.alizeecamarasa.planit.module.ModuleService;
+import com.example.alizeecamarasa.planit.utils.Utils;
 
 
 import org.json.JSONException;
@@ -40,13 +50,14 @@ import retrofit.mime.TypedInput;
 public class BudgetActivity extends Activity {
 
     List<TypeBudget> groupList;
-    List<Item> childList;
-    Map<TypeBudget, List<Item>> itemCollection;
+    List<ItemBudget> childList;
+    Map<TypeBudget, List<ItemBudget>> itemCollection;
     ExpandableListView expListView;
     Activity context;
     BudgetModuleService service;
     BudgetModule mModule;
     String id_module;
+
 
   @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +65,6 @@ public class BudgetActivity extends Activity {
         setContentView(R.layout.activity_budget);
         context = this;
         id_module = getIntent().getStringExtra("module_id");
-
 
         service = BudgetModuleAPI.getInstance();
         createGroupList();
@@ -64,7 +74,7 @@ public class BudgetActivity extends Activity {
 
     private void createGroupList() {
 
-        // appel au service, retourne le module
+        // get module from API
         service.getModule(id_module, new Callback<BudgetModule>() {
             @Override
             public void success(BudgetModule module, Response response) {
@@ -73,7 +83,7 @@ public class BudgetActivity extends Activity {
 
                     groupList = mModule.getTypeBudgetList();
 
-                    // ajout des apports en fin de liste
+                    // add inflows at the end of the list
                     TypeBudget apports = new TypeBudget();
                     apports.setName("Apports");
                     apports.setItems(mModule.getInflows());
@@ -82,11 +92,16 @@ public class BudgetActivity extends Activity {
                     createCollection();
 
                     expListView = (ExpandableListView) findViewById(R.id.budget_list);
-                    expListView.setGroupIndicator (null);
                     final BudgetArrayAdapter expListAdapter = new BudgetArrayAdapter(context, groupList, itemCollection, module);
                     expListView.setAdapter(expListAdapter);
+                    int width = getResources().getDisplayMetrics().widthPixels;
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10,context));
+                    } else {
+                        expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40,context), width - Utils.getPixelValue(10,context));
+                    }
 
-                    // si le groupe est vide, on affiche un message
+                    // if group is empty, we print a message
                     expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
                         @Override
@@ -98,11 +113,31 @@ public class BudgetActivity extends Activity {
                         }
                     });
 
-                    // ajout d'un apport
+                    // DELETE MODULE
+                    final ModuleService moduleService = ModuleAPI.getInstance();
+                    ImageView delete = (ImageView) findViewById(R.id.delete_module);
+                    delete.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            moduleService.deleteModule(id_module, new Callback<Response>() {
+                                @Override
+                                public void success(Response budgetModule, Response response) {
+                                    finish();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    finish();
+                                    error.printStackTrace();
+                                }
+                            });
+
+                        };
+                    });
+
+                    // ADD AN INFLOW (other activity)
                     Button inflow = (Button) findViewById(R.id.add_inflow);
                     inflow.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            //adding new event : starting new Event activity
                             Intent myIntent = new Intent(context, AddItem.class);
                             myIntent.putExtra("module",mModule);
                             myIntent.putExtra("id",id_module);
@@ -112,11 +147,10 @@ public class BudgetActivity extends Activity {
                         };
                     });
 
-                    // ajout d'une dépense
+                    // ADD AN EXPENSE (other activity)
                     Button expense = (Button) findViewById(R.id.add_expense);
                     expense.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            //adding new expense
                             Intent myIntent = new Intent(context, AddItem.class);
                             myIntent.putExtra("module",mModule);
                             myIntent.putExtra("type","expense");
@@ -124,31 +158,13 @@ public class BudgetActivity extends Activity {
                         };
                     });
 
-                    // ajout d'un type de dépense
+                    // ADD A TYPE EXPENSE (dialog)
                     Button type_expense = (Button) findViewById(R.id.add_type_expense);
                     type_expense.setOnClickListener(new View.OnClickListener(){
                         public void onClick(View v){
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.setTitle(R.string.add_type_expense);
-                            alert.setMessage("Nom");
-                            final EditText input = new EditText(context);
-                            alert.setView(input);
-
-                            alert.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    String value = input.getText().toString();
-                                    addTypeExpense(value);
-
-                                }
-                            });
-
-                            alert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            alert.show();
+                            Intent myIntent = new Intent(context, AddTypeBudget.class);
+                            myIntent.putExtra("id",id_module);
+                            startActivityForResult(myIntent, 4);
                         }
 
                     });
@@ -165,37 +181,9 @@ public class BudgetActivity extends Activity {
     }
 
 
-    private void addTypeExpense ( String v){
-        final String value = v;
-        JSONObject json = new JSONObject();
-        JSONObject typeExpenseJson = new JSONObject();
-        try {
-            typeExpenseJson.put("name",value);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("typeexpense_form",typeExpenseJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
-        service.addTypeExpense(id_module, in, new Callback<JSONObject>() {
-            @Override
-            public void success(JSONObject jsonObject, Response response) {
-                Toast.makeText(BudgetActivity.this, "Le type de dépense " + value +" a été ajouté!", Toast.LENGTH_SHORT).show();
-                createGroupList();
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
-    }
-
 
     private void createCollection() {
-        itemCollection = new LinkedHashMap<TypeBudget, List<Item>>();
+        itemCollection = new LinkedHashMap<TypeBudget, List<ItemBudget>>();
 
         for (TypeBudget type : groupList) {
             loadChild(type.getItems());
@@ -204,45 +192,18 @@ public class BudgetActivity extends Activity {
     }
 
 
-    private void loadChild(List<Item> laptopModels) {
-        childList = new ArrayList<Item>();
-        for (Item model : laptopModels)
+    private void loadChild(List<ItemBudget> laptopModels) {
+        childList = new ArrayList<ItemBudget>();
+        for (ItemBudget model : laptopModels)
             childList.add(model);
     }
 
-    private void setGroupIndicatorToRight() {
-        //* Get the screen width *//*
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-
-        expListView.setIndicatorBounds(width - getDipsFromPixel(35), width
-                - getDipsFromPixel(5));
-    }
-
-    // Convert pixel to dip
-    public int getDipsFromPixel(float pixels) {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
-    }
-
-
-
-
- /*   @Override
-    public void onResume(){
-        super.onResume();
-        createGroupList();
-    }*/
-
+    // refresh the view only if we come back from an add or a modify (not see)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        // check if the request code is same as what is passed  here it is 2
-        if(requestCode==1 || requestCode==2 || requestCode==3)
+        if(requestCode==1 || requestCode==2 || requestCode==3 || requestCode==4)
         {
             createGroupList();
         }

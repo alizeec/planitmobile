@@ -1,7 +1,5 @@
 package com.example.alizeecamarasa.planit.guest.Guest;
 
-import com.example.alizeecamarasa.planit.guest.GuestModuleService;
-
 import retrofit.RestAdapter;
 
 /**

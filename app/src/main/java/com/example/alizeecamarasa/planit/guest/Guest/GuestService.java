@@ -1,13 +1,10 @@
 package com.example.alizeecamarasa.planit.guest.Guest;
 
-import com.example.alizeecamarasa.planit.guest.GuestModule;
-
-import org.json.JSONObject;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
-import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -21,11 +18,11 @@ public interface GuestService {
     void deleteGuest(@Path("id_guest") String id_module, Callback<Guest> cb);
 
     @PUT("/guests/{id_guest}")
-    void modifyGuest(@Path("id_guest") String id_guest,@Body TypedInput data, Callback<JSONObject> cb);
+    void modifyGuest(@Path("id_guest") String id_guest,@Body TypedInput data, Callback<Response> cb);
 
     @POST("/guests/{id_guest}/mails")
-    void sendInvitGuest(@Path("id_guest") String id_guest,Callback<JSONObject> cb);
+    void sendInvitGuest(@Path("id_guest") String id_guest,Callback<Response> cb);
 
     @POST("/guests/{typeguest_id}")
-    void addGuest(@Path("typeguest_id") String typeguest_id,@Body TypedInput data, Callback<JSONObject> cb);
+    void addGuest(@Path("typeguest_id") String typeguest_id,@Body TypedInput data, Callback<Response> cb);
 }
