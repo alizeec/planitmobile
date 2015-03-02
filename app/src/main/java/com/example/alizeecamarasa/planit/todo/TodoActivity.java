@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -59,9 +60,19 @@ public class TodoActivity extends Activity {
         createGroupList();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int width = getResources().getDisplayMetrics().widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        } else {
+            expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        }
+    }
+
 
     private void createGroupList() {
-
         // get module from API
         service.getModule(id_module, new Callback<TodoModule>() {
             @Override

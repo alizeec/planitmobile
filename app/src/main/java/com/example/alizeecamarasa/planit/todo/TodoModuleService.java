@@ -21,7 +21,7 @@ public interface TodoModuleService {
     void getModule(@Path("id_module") String id_module, Callback<TodoModule> cb);
 
     @POST("/todomodules/{event_id}")
-    void addTodoModule(@Path("event_id") String id_event,@Body TypedInput in, Callback<Response> cb);
+    void addTodoModule(@Path("event_id") String id_event,Callback<Response> cb);
 
     @POST("/items/{list_id}")
     void addTask(@Path("list_id") int list_id,@Body TypedInput in, Callback<Response> cb);
@@ -31,7 +31,7 @@ public interface TodoModuleService {
 
     @FormUrlEncoded
     @PUT("/items/{id_item}/checked")
-    void changeChecked(@Path(value="id_item",encode=false) int id_item,@Field("checked") boolean checked, Callback<Response> cb);
+    void changeChecked(@Path(value="id_item",encode=false) int id_item,@Field("checked") int checked, Callback<Response> cb);
 
     @POST("/tasklists/{module_id}")
     void addCategoryTask(@Path("module_id") int id_module,@Body TypedInput in, Callback<Response> cb);

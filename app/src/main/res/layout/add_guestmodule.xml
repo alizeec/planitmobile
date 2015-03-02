@@ -91,6 +91,7 @@
                         android:background="@color/guest"
                         android:textColor="@color/white"
                         android:layout_weight="1"
+                        android:layout_marginRight="1dp"
                         />
                     <Button
                         style="@style/Button"
@@ -99,6 +100,7 @@
                         android:background="@color/guest"
                         android:textColor="@color/white"
                         android:layout_weight="1"
+                        android:layout_marginLeft="1dp"
                         />
                 </LinearLayout>
             </LinearLayout>

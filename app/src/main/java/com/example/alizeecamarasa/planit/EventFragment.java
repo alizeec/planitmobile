@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.ListFragment;
@@ -24,6 +23,7 @@ import com.example.alizeecamarasa.planit.events.EventService;
 import com.example.alizeecamarasa.planit.guest.GuestActivity;
 import com.example.alizeecamarasa.planit.module.AddModule;
 import com.example.alizeecamarasa.planit.module.Module;
+import com.example.alizeecamarasa.planit.place.PlaceActivity;
 import com.example.alizeecamarasa.planit.todo.TodoActivity;
 import com.squareup.picasso.Picasso;
 
@@ -155,7 +155,9 @@ public class EventFragment extends ListFragment {
                 break;
             // module Lieu
             case 3:
-                Toast.makeText(mContext, "Module Lieu à venir", Toast.LENGTH_SHORT).show();
+                intent= new Intent(mContext,PlaceActivity.class);
+                intent.putExtra("module_id",String.valueOf(selectedModule.getId()));
+                startActivity(intent);
                 break;
             // module Transport
             case 4:

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -71,6 +73,17 @@ public class BudgetActivity extends Activity {
 
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int width = getResources().getDisplayMetrics().widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        } else {
+            expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        }
+    }
+
 
     private void createGroupList() {
 
@@ -115,7 +128,7 @@ public class BudgetActivity extends Activity {
 
                     // DELETE MODULE
                     final ModuleService moduleService = ModuleAPI.getInstance();
-                    ImageView delete = (ImageView) findViewById(R.id.delete_module);
+                    ImageButton delete = (ImageButton) findViewById(R.id.delete_module);
                     delete.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             moduleService.deleteModule(id_module, new Callback<Response>() {

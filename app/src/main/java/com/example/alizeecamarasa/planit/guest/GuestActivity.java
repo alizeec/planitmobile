@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import android.widget.Button;
@@ -32,6 +33,7 @@ import com.example.alizeecamarasa.planit.utils.Utils;
 import android.app.Activity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -73,6 +75,17 @@ public class GuestActivity extends Activity {
         createGroupList();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int width = getResources().getDisplayMetrics().widthPixels;
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        } else {
+            expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
+        }
+    }
+
 
     private void createGroupList() {
 
@@ -85,7 +98,7 @@ public class GuestActivity extends Activity {
 
                     // DELETE MODULE
                     final ModuleService moduleService = ModuleAPI.getInstance();
-                    ImageView delete = (ImageView) findViewById(R.id.delete_module);
+                    ImageButton delete = (ImageButton) findViewById(R.id.delete_module);
                     delete.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             moduleService.deleteModule(id_module, new Callback<Response>() {
@@ -104,7 +117,7 @@ public class GuestActivity extends Activity {
                         };
                     });
                     // UPDATE MODULE
-                    ImageView update = (ImageView) findViewById(R.id.modify_module);
+                    ImageButton update = (ImageButton) findViewById(R.id.modify_module);
                     update.setOnClickListener(new View.OnClickListener() {
                           public void onClick(View v) {
                               updateModuleGuest();
@@ -116,7 +129,7 @@ public class GuestActivity extends Activity {
                     // inscription
                     Button action = (Button) findViewById(R.id.action);
                     TextView subtitle = (TextView) findViewById(R.id.subtitle);
-                    if (mModule.isModuletype() == true){
+                    if (mModule.isModuletype()){
                         action.setText(context.getResources().getString(R.string.get_url));
                         subtitle.setText(context.getResources().getString(R.string.suscribe));
 
@@ -198,7 +211,7 @@ public class GuestActivity extends Activity {
                         };
                     });
                     // if paying, checkbox is checked
-                    if(module.isPayable()==true){
+                    if(module.isPayable()){
                         CheckBox paying = (CheckBox)findViewById(R.id.checkbox_paying);
                         paying.setChecked(true);
                     }
@@ -241,17 +254,20 @@ public class GuestActivity extends Activity {
 
         final EditText nb_max_guest = (EditText) dialog.findViewById(R.id.nbmaxguest);
         final RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.type_moduleguest);
-        final CheckBox paying = (CheckBox) dialog.findViewById(R.id.paying);
+        final CheckBox cbPaying = (CheckBox) dialog.findViewById(R.id.paying);
 
         // put currents data
         nb_max_guest.setText(String.valueOf(mModule.getMax_guests()));
-        if (mModule.isModuletype() == true){
+        if (mModule.isModuletype()){
             radiogroup.check(R.id.suscribe);
         }
         else {
             radiogroup.check(R.id.invite);
         }
-        paying.setChecked(mModule.isPayable());
+        if(mModule.isPayable())
+            cbPaying.setChecked(true);
+        else
+            cbPaying.setChecked(false);
 
         Button cancel = (Button) dialog.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -265,13 +281,14 @@ public class GuestActivity extends Activity {
             @Override
             public void onClick(View v) {
                     RadioButton radioChosen = (RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId());
-                    Boolean choice;
+                    int choice;
                     if (radioChosen.getText().equals("Sur invitation"))
-                        choice = true;
+                        choice = 0;
                     else
-                        choice = false;
+                        choice = 1;
 
-                    JSONObject json = new JSONObject();
+
+                JSONObject json = new JSONObject();
                     JSONObject moduleJson = new JSONObject();
                     try {
                         moduleJson.put("moduletype",choice);
@@ -284,7 +301,7 @@ public class GuestActivity extends Activity {
                         e.printStackTrace();
                     }
                     try {
-                        moduleJson.put("payable",paying.isChecked());
+                        moduleJson.put("payable",cbPaying.isChecked());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -301,6 +318,7 @@ public class GuestActivity extends Activity {
                         @Override
                         public void success(Response s, Response response) {
                             Toast.makeText(GuestActivity.this, "Le module a bien été modifié!", Toast.LENGTH_SHORT).show();
+                            createGroupList();
                         }
 
                         @Override

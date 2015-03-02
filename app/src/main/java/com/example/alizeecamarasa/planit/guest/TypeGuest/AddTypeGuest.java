@@ -52,10 +52,10 @@ public class AddTypeGuest extends Activity {
         LinearLayout layoutMessage = (LinearLayout) findViewById(R.id.layoutMessage);
         LinearLayout layoutPrice = (LinearLayout) findViewById(R.id.layoutPrice);
         validate = (Button) findViewById(R.id.validatenewtypeguest);
-        if (module.isModuletype() == true){
+        if (module.isModuletype()){
             layoutMessage.setVisibility(View.INVISIBLE);
         }
-        if (module.isPayable() == false){
+        if (!module.isPayable()){
             layoutPrice.setVisibility(View.INVISIBLE);
         }
 
@@ -85,11 +85,11 @@ public class AddTypeGuest extends Activity {
                     Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (module.isPayable() == true && isEmptyEditText(price)){
+                if (module.isPayable() && isEmptyEditText(price)){
                     Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (module.isModuletype() == false && isEmptyTextView(message)){
+                if (!module.isModuletype() && isEmptyTextView(message)){
                     Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -103,14 +103,14 @@ public class AddTypeGuest extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if (module.isPayable() == true){
+                    if (module.isPayable()){
                         try {
                             typeguestJson.put("price",Float.parseFloat(price.getText().toString()));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                    if( module.isModuletype() == false){
+                    if( !module.isModuletype()){
                         try {
                             typeguestJson.put("message",message.getText().toString());
                         } catch (JSONException e) {

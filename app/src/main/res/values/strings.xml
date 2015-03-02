@@ -118,5 +118,24 @@
     <string name="add_cat_task">Ajouter une catégorie</string>
     <string name="task">Tâche</string>
     <string name="category">Catégorie</string>
+    <string name="no_infos">Aucune information requise</string>
+    <!-- END MODULE TO-DO -->
+
+    <!-- MODULE PLACE -->
+    <string name="name_module_place">Gestion du lieu</string>
+    <string name="place_name">Nom</string>
+    <string name="place_adress">Adresse: </string>
+    <string name="place_distance">Distance: </string>
+    <string name="place_price">Prix: </string>
+    <string name="place_capacity">Capacité: </string>
+    <string name="place_website">Site web: </string>
+    <string name="place_remark">Remarques: </string>
+    <string name="phone">Téléphone: </string>
+    <string name="place_state">État: </string>
+    <string name="place_image">Image</string>
+    <string name="add_place">Ajouter un lieu</string>
+    <string name="delete_place">Supprimer ce lieu</string>
+    <string name="change_place">Modifier ce lieu</string>
+    <!-- END MODULE PLACE -->
 
 </resources>

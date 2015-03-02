@@ -160,14 +160,6 @@
                     android:gravity="top|left"
                     android:text="Choisir une image"
                     android:id="@+id/inputImage"/>
-
-                <WebView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:id="@+id/comp"
-                    >
-
-                </WebView>
             </LinearLayout>
             <!--  END 4th input  -->
 

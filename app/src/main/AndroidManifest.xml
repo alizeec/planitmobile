@@ -14,6 +14,9 @@
         android:icon="@drawable/ic_launcher"
         android:name=".PlanItApplication"
     >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- GÉNÉRAL -->
         <activity android:name=".Hamburger"
@@ -96,6 +99,15 @@
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <!-- END MODULE TO_DO -->
+
+        <!-- MODULE PLACE -->
+        <activity android:name=".place.PlaceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".place.SeePlace"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END MODULE PLACE -->
 
 
 

@@ -26,7 +26,6 @@ public class Event implements Serializable {
     protected long counter_day;
     protected ArrayList<Module> modules;
     private String image;
-    private TypedFile imagefile;
 
     public Event(String id, String name,String slug, String description,Date begin_date, Date end_date, String image) {
         this.id = id;
@@ -142,11 +141,4 @@ public class Event implements Serializable {
         return dateDiff;
     }
 
-    public TypedFile getImagefile() {
-        return imagefile;
-    }
-
-    public void setImagefile(TypedFile imagefile) {
-        this.imagefile = imagefile;
-    }
 }

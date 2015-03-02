@@ -77,6 +77,8 @@ public class TodoArrayAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
+        final View view = convertView;
+        final ViewGroup viewgroup = parent;
         final String content = (String) getChildContent(groupPosition, childPosition);
         final boolean checked = (Boolean) isChildChecked(groupPosition, childPosition);
 
@@ -97,7 +99,9 @@ public class TodoArrayAdapter extends BaseExpandableListAdapter {
         // if checked, we pass the border in orange
         if (checked == true){
             layout_checkbox.setBackgroundColor(context.getResources().getColor(R.color.todo));
-
+        }
+        else {
+            layout_checkbox.setBackgroundColor(context.getResources().getColor(R.color.bg_list));
         }
         // ON CHECKBOX CHANGE
         cbChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -109,19 +113,20 @@ public class TodoArrayAdapter extends BaseExpandableListAdapter {
                    if (isChecked){
                        value = 1;
                    }
-                   service.changeChecked(id,isChecked,new Callback<Response>(){
+                   service.changeChecked(id,value,new Callback<Response>(){
                        @Override
                        public void success(Response response, Response response2) {
                            getChild(groupPosition,childPosition).setChecked(checked);
+                           // put the task at the end if it's checked and at the beginning if it's unchecked
+                           // call the function to reload colors
                            List<Task> childs = taskCollections.get(listCategories.get(groupPosition));
                            if (checked) {
-                               //layout_checkbox.setBackgroundColor(context.getResources().getColor(R.color.todo));
                                childs.add(childs.size()-1,childs.remove(childPosition));
-                               System.out.println(childPosition);
+                               getChildView(groupPosition,childs.size()-1,false,view,viewgroup);
                            }
                            else {
                                childs.add(0,childs.remove(childPosition));
-                               //layout_checkbox.setBackgroundColor(context.getResources().getColor(R.color.bg_list));
+                               getChildView(groupPosition,0,false,view,viewgroup);
                            }
                            notifyDataSetChanged();
                        }

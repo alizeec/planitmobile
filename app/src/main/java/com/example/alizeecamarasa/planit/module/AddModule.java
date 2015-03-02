@@ -1,8 +1,10 @@
 package com.example.alizeecamarasa.planit.module;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,8 +20,13 @@ import com.example.alizeecamarasa.planit.R;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleAPI;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleService;
 import com.example.alizeecamarasa.planit.events.Event;
+import com.example.alizeecamarasa.planit.guest.Guest.Guest;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
+import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
 import com.example.alizeecamarasa.planit.guest.GuestModuleAPI;
 import com.example.alizeecamarasa.planit.guest.GuestModuleService;
+import com.example.alizeecamarasa.planit.todo.TodoModuleAPI;
+import com.example.alizeecamarasa.planit.todo.TodoModuleService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -113,6 +120,9 @@ public class AddModule extends Activity {
                     case 1:
                         addModuleBudget();
                         break;
+                    case 4:
+                        addTodoModule();
+                        break;
                 }
             }
         });
@@ -144,7 +154,7 @@ public class AddModule extends Activity {
 
         final EditText nb_max_guest = (EditText) dialog.findViewById(R.id.nbmaxguest);
         final RadioGroup radiogroup = (RadioGroup) dialog.findViewById(R.id.type_moduleguest);
-        final CheckBox paying = (CheckBox) dialog.findViewById(R.id.paying);
+        final CheckBox cbPaying = (CheckBox) dialog.findViewById(R.id.paying);
 
         Button cancel = (Button) dialog.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -166,11 +176,16 @@ public class AddModule extends Activity {
                 else {
 
                     RadioButton radioChosen = (RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId());
-                    Boolean choice;
+                    int choice;
                     if (radioChosen.getText().equals("Sur invitation"))
-                        choice = true;
+                        choice = 1;
                     else
-                        choice = false;
+                        choice = 0;
+                    int paying;
+                    if (cbPaying.isChecked())
+                        paying = 1;
+                    else
+                        paying=0;
 
                     JSONObject json = new JSONObject();
                     JSONObject moduleJson = new JSONObject();
@@ -185,7 +200,7 @@ public class AddModule extends Activity {
                         e.printStackTrace();
                     }
                     try {
-                        moduleJson.put("payable",paying.isChecked());
+                        moduleJson.put("payable",paying);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -294,4 +309,42 @@ public class AddModule extends Activity {
     }
 
 
+    /* --------------------------------- ADD A TO-DO MODULE -------------------------------------*/
+    public void addTodoModule(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_todomodule);
+        dialog.setTitle(R.string.name_module_todo);
+
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            TodoModuleService service = TodoModuleAPI.getInstance();
+            service.addTodoModule(event.getId(),new Callback<Response>() {
+                @Override
+                public void success(Response s, Response response) {
+                    Toast.makeText(AddModule.this, "Le module a bien été ajouté!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    error.printStackTrace();
+                    finish();
+                }
+            });
+            dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
 }

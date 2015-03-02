@@ -16,17 +16,17 @@ import java.util.NoSuchElementException;
  * Created by alizeecamarasa on 02/02/15.
  */
 public class GuestModule extends Module implements Serializable {
-    private int max_guests;
+    private int maxguests;
     private boolean payable;
     private List<TypeGuest> typesguests;
     private boolean moduletype;
 
     public int getMax_guests() {
-        return max_guests;
+        return maxguests;
     }
 
     public void setMax_guests(int max_guests) {
-        this.max_guests = max_guests;
+        this.maxguests = max_guests;
     }
 
     public boolean isPayable() {

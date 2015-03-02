@@ -19,15 +19,18 @@
         android:textSize="18dp"
         />
 
-    <ImageView
+    <ImageButton
         style="@style/actions"
         android:src="@drawable/delete_moduleguest"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/bg_list"
         android:id="@+id/delete_module"/>
-    <ImageView
+    <ImageButton
         style="@style/actions"
         android:src="@drawable/modify_moduleguest"
-        android:layout_marginRight="10dp"
+        android:background="@color/bg_list"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:id="@+id/modify_module"/>
 
     <TextView

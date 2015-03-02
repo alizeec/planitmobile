@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.ygo.jobboard.ItemFragment"
+    android:background="@color/bg_list">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text ="@string/name_module_place"
+        android:textAllCaps="true"
+        android:textColor="@color/place"
+        android:gravity="center"
+        android:padding="5dp"
+        android:id="@+id/title"
+        android:background="@color/bg_list"
+        android:textSize="18dp"
+        />
+
+    <ImageButton
+        style="@style/actions"
+        android:src="@drawable/delete_moduleplace"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/bg_list"
+        android:id="@+id/delete_module"/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="50dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        >
+    </ListView>
+
+    <Button
+        android:id="@+id/add_place"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/add_place"
+        android:background="@color/place"
+        android:layout_gravity="center"
+        android:textAllCaps="true"
+        android:textColor="#FFF"
+        android:textSize="12dp"/>
+
+
+</RelativeLayout>
