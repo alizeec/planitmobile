@@ -43,7 +43,7 @@ public class SeeItem extends Activity {
         float unit_price = itemBudget.getPrice();
         float total_price = tobuy*unit_price;
         float consummate = itemBudget.getConsummate();
-        boolean bought = itemBudget.isBought();
+        int bought = itemBudget.isBought();
 
         txtName.setText(name);
         txtQuantity.setText(String.valueOf(quantity)+" "+unit);
@@ -52,7 +52,7 @@ public class SeeItem extends Activity {
         txtUnit_price.setText(String.valueOf(unit_price)+" €");
         txtTotal_price.setText(String.valueOf(total_price)+" €");
         txtConsummate.setText(String.valueOf(consummate)+" "+unit);
-        if (bought)
+        if (bought ==1)
             cbBought.setChecked(true);
         else
             cbBought.setChecked(false);

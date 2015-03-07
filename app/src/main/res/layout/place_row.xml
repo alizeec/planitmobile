@@ -13,13 +13,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/layout_checkbox"
-            android:background="@color/place"
+            android:background="@color/grey"
             android:gravity="center" >
             <CheckBox
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:focusable="false"
-                android:checked="true"
                 android:button="@drawable/checkbox_task"
                 android:layout_height="fill_parent" />
         </LinearLayout>

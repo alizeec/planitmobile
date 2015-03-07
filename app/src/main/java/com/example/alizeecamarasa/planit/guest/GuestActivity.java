@@ -277,6 +277,7 @@ public class GuestActivity extends Activity {
             }
         });
         Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setText("Modifier");
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -359,6 +360,7 @@ public class GuestActivity extends Activity {
                         @Override
                         public void success(Response module, Response response) {
                             Toast.makeText(context, "L'événement est payant!", Toast.LENGTH_SHORT).show();
+                            createGroupList();
                         }
 
                         @Override
@@ -373,6 +375,7 @@ public class GuestActivity extends Activity {
                         @Override
                         public void success(Response module, Response response) {
                             Toast.makeText(context, "L'événement est gratuit!", Toast.LENGTH_SHORT).show();
+                            createGroupList();
                         }
 
                         @Override

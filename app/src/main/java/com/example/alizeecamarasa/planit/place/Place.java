@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Place implements Serializable{
     private int id;
     private String name;
-    private String adress;
+    private String address;
     private String tel;
     private float distance;
     private float price;
@@ -19,6 +19,7 @@ public class Place implements Serializable{
     private String remark;
     private String image;
     private int state;
+    private int previous_state;
 
     public int getId() {
         return id;
@@ -36,12 +37,12 @@ public class Place implements Serializable{
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getTel() {
@@ -122,5 +123,13 @@ public class Place implements Serializable{
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getPrevious_state() {
+        return previous_state;
+    }
+
+    public void setPrevious_state(int previous_state) {
+        this.previous_state = previous_state;
     }
 }

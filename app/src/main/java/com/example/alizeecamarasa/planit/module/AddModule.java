@@ -178,14 +178,10 @@ public class AddModule extends Activity {
                     RadioButton radioChosen = (RadioButton) dialog.findViewById(radiogroup.getCheckedRadioButtonId());
                     int choice;
                     if (radioChosen.getText().equals("Sur invitation"))
-                        choice = 1;
-                    else
                         choice = 0;
-                    int paying;
-                    if (cbPaying.isChecked())
-                        paying = 1;
                     else
-                        paying=0;
+                        choice = 1;
+
 
                     JSONObject json = new JSONObject();
                     JSONObject moduleJson = new JSONObject();
@@ -200,7 +196,7 @@ public class AddModule extends Activity {
                         e.printStackTrace();
                     }
                     try {
-                        moduleJson.put("payable",paying);
+                        moduleJson.put("payable",cbPaying.isChecked());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -212,6 +208,7 @@ public class AddModule extends Activity {
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
 
+                    System.out.println(json);
                     GuestModuleService service = GuestModuleAPI.getInstance();
                     service.addGuestModule(event.getId(), in, new Callback<Response>() {
                         @Override

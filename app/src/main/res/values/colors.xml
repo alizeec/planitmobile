@@ -11,6 +11,7 @@
     <color name="app_color">#61c0a5</color>
     <color name="titleColor">#ffcecece</color>
     <color name="expenses">#e66454</color>
+    <color name="grey">#d0d0d0</color>
 
 
     <!--PROGRESS BAR-->

@@ -136,6 +136,12 @@
     <string name="add_place">Ajouter un lieu</string>
     <string name="delete_place">Supprimer ce lieu</string>
     <string name="change_place">Modifier ce lieu</string>
+    <string-array name="state_place">
+        <item>Refusé</item>
+        <item>Choisi</item>
+        <item>Contacté</item>
+        <item>A contacter</item>
+    </string-array>
     <!-- END MODULE PLACE -->
 
 </resources>

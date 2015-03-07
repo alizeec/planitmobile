@@ -14,7 +14,7 @@ public class ItemBudget implements Serializable{
     private float stock;
     private float quantity;
     private float consummate;
-    private boolean bought;
+    private int bought;
     private float amount;
 
     public int getId() {
@@ -73,11 +73,11 @@ public class ItemBudget implements Serializable{
         this.consummate = consummate;
     }
 
-    public boolean isBought() {
+    public int isBought() {
         return bought;
     }
 
-    public void setBought(boolean bought) {
+    public void setBought(int bought) {
         this.bought = bought;
     }
 

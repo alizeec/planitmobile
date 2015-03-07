@@ -118,6 +118,8 @@ public class ChangeItem extends Activity {
                         @Override
                         public void success(Response event, Response response) {
                             Toast.makeText(ChangeItem.this, "L'apport " + txtName.getText().toString() +" a été modifiée!", Toast.LENGTH_SHORT).show();
+                            setResult(3);
+                            finish();
                         }
 
                         @Override
@@ -126,8 +128,7 @@ public class ChangeItem extends Activity {
                         }
 
                     });
-                    setResult(3);
-                    finish();
+
                 }
             }
         });
@@ -156,7 +157,7 @@ public class ChangeItem extends Activity {
         float stock = itemBudget.getStock();
         float unit_price = itemBudget.getPrice();
         float consummate = itemBudget.getConsummate();
-        final boolean bought = itemBudget.isBought();
+        final int bought = itemBudget.isBought();
 
         // on met les valeurs actuelles
         txtName.setText(name);
@@ -164,7 +165,7 @@ public class ChangeItem extends Activity {
         txtStock.setText(String.valueOf(stock));
         txtPrice.setText(String.valueOf(unit_price));
         txtConsummate.setText(String.valueOf(consummate));
-        if (bought)
+        if (bought==1)
             cbBought.setChecked(true);
         else
             cbBought.setChecked(false);
@@ -190,6 +191,11 @@ public class ChangeItem extends Activity {
                 else {
 
                     // modif de la dépense
+                    int isBought;
+                    if (cbBought.isChecked())
+                        isBought =1;
+                    else
+                        isBought = 0;
 
                     JSONObject json = new JSONObject();
                     JSONObject expenseJson = new JSONObject();
@@ -219,7 +225,7 @@ public class ChangeItem extends Activity {
                         e.printStackTrace();
                     }
                     try {
-                        expenseJson.put("bought",cbBought.isChecked());
+                        expenseJson.put("bought",isBought);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -231,13 +237,14 @@ public class ChangeItem extends Activity {
                     }
 
                     TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
-                    System.out.println(json);
 
                     BudgetModuleService service = BudgetModuleAPI.getInstance();
                     service.changeExpense(the_itemBudget.getId(), in, new Callback<Response>() {
                         @Override
                         public void success(Response event, Response response) {
                             Toast.makeText(ChangeItem.this, "La dépense " + name +" a été modifiée!", Toast.LENGTH_SHORT).show();
+                            setResult(3);
+                            finish();
                         }
 
                         @Override
@@ -246,8 +253,7 @@ public class ChangeItem extends Activity {
                         }
 
                     });
-                    setResult(3);
-                    finish();
+
                 }
             }
         });

@@ -175,7 +175,9 @@ public class ChangeGuest extends Activity {
                         e.printStackTrace();
                     }
                     try {
-                        guestJson.put("paymentmean",guest.getPaymentmean().getId());
+                        if (guest.getPaymentmean() != null)
+                            guestJson.put("paymentmean",guest.getPaymentmean().getId());
+                        
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
