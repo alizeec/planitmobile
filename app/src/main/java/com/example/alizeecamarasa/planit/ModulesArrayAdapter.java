@@ -66,18 +66,22 @@ public class ModulesArrayAdapter extends BaseAdapter {
             case 2:
                 img = context.getResources().getDrawable( R.drawable.budget_picto);
                 holder.txtName.setBackgroundColor(context.getResources().getColor(R.color.budget));
+                holder.txtName.setTextColor(Color.rgb(255,255,255));
             break;
             case 3:
                 img = context.getResources().getDrawable( R.drawable.place_picto);
                 holder.txtName.setBackgroundColor(context.getResources().getColor(R.color.place));
+                holder.txtName.setTextColor(Color.rgb(255,255,255));
             break;
             case 4:
                img = context.getResources().getDrawable( R.drawable.transport_picto);
                 holder.txtName.setBackgroundColor(context.getResources().getColor(R.color.transport));
+                holder.txtName.setTextColor(Color.rgb(255,255,255));
             break;
             case 5:
                 img = context.getResources().getDrawable( R.drawable.toto_picto);
                 holder.txtName.setBackgroundColor(context.getResources().getColor(R.color.todo));
+                holder.txtName.setTextColor(Color.rgb(255,255,255));
             break;
             default:
                 img= context.getResources().getDrawable( R.drawable.add_module_picto);

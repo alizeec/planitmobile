@@ -35,4 +35,10 @@ public interface TodoModuleService {
 
     @POST("/tasklists/{module_id}")
     void addCategoryTask(@Path("module_id") int id_module,@Body TypedInput in, Callback<Response> cb);
+
+    @PUT("/tasklists/{list_id}")
+    void changeCategoryTask(@Path("list_id") int list_id, @Body TypedInput in, Callback<Response> cb);
+
+    @DELETE("/tasklists/{list_id}")
+    void deleteCategoryTask(@Path("list_id") int list_id,Callback<Response> cb);
 }

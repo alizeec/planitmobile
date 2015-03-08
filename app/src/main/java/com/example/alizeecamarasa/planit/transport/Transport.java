@@ -1,25 +1,18 @@
-package com.example.alizeecamarasa.planit.place;
-
-import java.io.Serializable;
+package com.example.alizeecamarasa.planit.transport;
 
 /**
- * Created by alizeecamarasa on 01/03/15.
+ * Created by alizeecamarasa on 08/03/15.
  */
-public class Place implements Serializable{
+public class Transport {
     private int id;
     private String name;
-    private String address;
     private String tel;
-    private float distance;
     private float price;
     private float capacity;
     private String website;
-    private float latitude;
-    private float longitude;
-    private String remark;
-    private String image;
     private int state;
     private int oldstate;
+    private String image;
 
     public int getId() {
         return id;
@@ -37,28 +30,12 @@ public class Place implements Serializable{
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getTel() {
         return tel;
     }
 
     public void setTel(String tel) {
         this.tel = tel;
-    }
-
-    public float getDistance() {
-        return distance;
-    }
-
-    public void setDistance(float distance) {
-        this.distance = distance;
     }
 
     public float getPrice() {
@@ -85,38 +62,6 @@ public class Place implements Serializable{
         this.website = website;
     }
 
-    public float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(float latitude) {
-        this.latitude = latitude;
-    }
-
-    public float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(float longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getState() {
         return state;
     }
@@ -131,5 +76,13 @@ public class Place implements Serializable{
 
     public void setOldstate(int oldstate) {
         this.oldstate = oldstate;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

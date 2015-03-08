@@ -1,10 +1,5 @@
 package com.example.alizeecamarasa.planit.events;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -18,18 +13,32 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.R;
+import com.example.alizeecamarasa.planit.place.Place;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedFile;
+import retrofit.mime.TypedInput;
 
-
-public class AddEvent extends Activity {
+/**
+ * Created by alizeecamarasa on 08/03/15.
+ */
+public class ChangeEvent extends Activity {
     private Calendar calendarBegin;
     private Calendar calendarEnd;
     private TextView dateEventBegin;
@@ -41,28 +50,36 @@ public class AddEvent extends Activity {
     private Button validate;
     private Bitmap imagefile;
     private TypedFile typedFile;
-
+    private Event event;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
+        event  = (Event)getIntent().getSerializableExtra("event");
 
+        // put current data
         eventName = (EditText) findViewById(R.id.inputEventName);
+        eventName.setText(event.getName());
         eventDescription = (EditText) findViewById(R.id.inputEventDescription);
+        eventDescription.setText(event.getDescription());
+
+        // hide the image button
+        LinearLayout image = (LinearLayout) findViewById(R.id.image_layout);
+        image.setVisibility(View.INVISIBLE);
+
+        // change the label of the button
         validate = (Button) findViewById(R.id.validateNewEvent);
+        validate.setText("Modifier");
 
         //manage date picker
         manageDatePicker();
 
         //validate + save new event
-        createEvent();
+        changeEvent();
 
     }
-
-
-
 
 
     private void manageDatePicker() {
@@ -73,8 +90,13 @@ public class AddEvent extends Activity {
         calendarIconBegin = (ImageButton) findViewById(R.id.dateCalendarBegin);
         calendarIconEnd = (ImageButton) findViewById(R.id.dateCalendarEnd);
 
-        final DatePickerDialog.OnDateSetListener dateBegin = new DatePickerDialog.OnDateSetListener() {
+        // put current data
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        dateEventBegin.setText(sdf.format(event.getBeginDate()));
+        dateEventEnd.setText(sdf.format(event.getEndDate()));
 
+        final DatePickerDialog.OnDateSetListener dateBegin = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendarBegin.set(Calendar.YEAR, year);
@@ -100,14 +122,14 @@ public class AddEvent extends Activity {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddEvent.this, dateBegin, calendarBegin.get(Calendar.YEAR), calendarBegin.get(Calendar.MONTH), calendarBegin.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(ChangeEvent.this, dateBegin, calendarBegin.get(Calendar.YEAR), calendarBegin.get(Calendar.MONTH), calendarBegin.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         calendarIconEnd.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(AddEvent.this, dateEnd, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(ChangeEvent.this, dateEnd, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH), calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -127,75 +149,57 @@ public class AddEvent extends Activity {
         }
     }
 
-    private boolean isEmptyEditText(EditText etText) {
-        return etText.getText().toString().trim().length() == 0;
-    }
 
-    private boolean isEmptyTextView(TextView textview) {
-        return textview.getText().toString().trim().length() == 0;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        String selectedImagePath = null;
-        Uri selectedImageUri = data.getData();
-        Cursor cursor = this.getContentResolver().query(selectedImageUri, null, null,null, null);
-        if (cursor == null) {
-            selectedImagePath = selectedImageUri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            selectedImagePath = cursor.getString(idx);
-        }
-        File photo = new File(selectedImagePath);
-        typedFile = new TypedFile("application/octet-stream", photo);
-
-
-    }
 
     //creation of the event : validation + add in BDD
-    private void createEvent() {
-        Button image = (Button) findViewById(R.id.inputImage);
-        image.setOnClickListener(new View.OnClickListener() {
-
-             @Override
-             public void onClick(View v) {
-                 Intent photoLibraryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                 photoLibraryIntent.setType("image/*");
-                 startActivityForResult(photoLibraryIntent, 1);
-             }
-         });
+    private void changeEvent() {
 
         validate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
-                //if one of the field is empty, do nothing
-                if (isEmptyEditText(eventName) || isEmptyTextView(dateEventBegin) || isEmptyTextView(dateEventEnd) ||  isEmptyEditText(eventDescription)) {
-                    Toast.makeText(AddEvent.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
-                    return;
+                JSONObject json = new JSONObject();
+                JSONObject eventJson = new JSONObject();
+                try {
+                    eventJson.put("name", eventName.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    eventJson.put("description", eventDescription.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    eventJson.put("begin_date", dateEventBegin.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    eventJson.put("end_date", dateEventEnd.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    json.put("event_form", eventJson);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                //else create event and enter it in database
-                else {
-                    EventService service = EventAPI.getInstance();
-                    service.addEvent("1",eventName.getText().toString(),eventDescription.getText().toString(),dateEventBegin.getText().toString(),dateEventEnd.getText().toString(),typedFile,  new Callback<Response>() {
-                        @Override
-                        public void success(Response response, Response response2) {
-                            finish();
-                        }
+                TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
+                EventService service = EventAPI.getInstance();
+                service.updateEvent(event.getId(), in, new Callback<Response>() {
+                    @Override
+                    public void success(Response s, Response response) {
+                        Toast.makeText(ChangeEvent.this, "L'événement a bien été modifié!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            finish();
-                            error.printStackTrace();
-                        }
-                    });
-                }
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
             }
         });
     }

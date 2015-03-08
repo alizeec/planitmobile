@@ -117,7 +117,7 @@ public class AddItem extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(name) || isEmptyEditText(amount) ) {
-                    Toast.makeText(AddItem.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItem.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -179,7 +179,7 @@ public class AddItem extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(name) || isEmptyEditText(unit) || isEmptyEditText(price) || isEmptyEditText(stock) || isEmptyEditText(quantity)) {
-                    Toast.makeText(AddItem.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddItem.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

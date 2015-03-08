@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import java.util.LinkedHashMap;
 import com.example.alizeecamarasa.planit.guest.Guest.AddGuest;
 import com.example.alizeecamarasa.planit.guest.Guest.Guest;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.AddTypeGuest;
+import com.example.alizeecamarasa.planit.guest.TypeGuest.ChangeTypeGuest;
 import com.example.alizeecamarasa.planit.guest.TypeGuest.TypeGuest;
 import com.example.alizeecamarasa.planit.module.ModuleAPI;
 import com.example.alizeecamarasa.planit.module.ModuleService;
@@ -187,7 +189,6 @@ public class GuestActivity extends Activity {
                     }
                     // if group is empty, we print message
                     expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
                         @Override
                         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                             if (expListAdapter.getChildrenCount(groupPosition) == 0){
@@ -195,6 +196,22 @@ public class GuestActivity extends Activity {
 
                             }
                                 return false;
+                        }
+                    });
+
+                    expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                                int positionGroup = ExpandableListView.getPackedPositionGroup(id);
+                                Intent intent = new Intent(context,ChangeTypeGuest.class);
+                                intent.putExtra("typeguest",expListAdapter.getGroup(positionGroup));
+                                intent.putExtra("module",mModule);
+                                context.startActivity(intent);
+                                return true;
+                            }
+
+                            return false;
                         }
                     });
 

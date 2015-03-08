@@ -21,17 +21,12 @@
         android:textSize="18dp"
         />
 
-    <ImageView
+    <ImageButton
         style="@style/actions"
         android:src="@drawable/delete_moduletodo"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/bg_list"
         android:id="@+id/delete_module"/>
-    <ImageView
-        style="@style/actions"
-        android:src="@drawable/modify_moduletodo"
-        android:layout_marginRight="10dp"
-        android:id="@+id/modify_module"/>
-
 
     <ExpandableListView
         android:id="@+id/todo_list"

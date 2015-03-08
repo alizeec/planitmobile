@@ -9,8 +9,12 @@ import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
+import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.mime.TypedFile;
 import retrofit.mime.TypedInput;
 
 /**
@@ -30,4 +34,15 @@ public interface PlaceModuleService {
 
     @PUT("/places/{id_place}")
     void modifyPlace(@Path("id_place") int id_place,@Body TypedInput data, Callback<Response> cb);
+
+    @POST("/placemodules/{event_id}")
+    void addPlaceModule(@Path("event_id") String id_event,@Body TypedInput in, Callback<Response> cb);
+
+    @POST("/placemodules/{module_id}/updates")
+    void updatePlaceModule(@Path("module_id") String module_id, @Body TypedInput in,Callback<Response> cb);
+
+    @Multipart
+    @POST("/places/{id_module}")
+    void addPlace(@Path("id_module") String id_module,@Part("name") String name,@Part("address") String address,@Part("tel") String tel,@Part("distance") String distance,@Part("price") String price,@Part("capacity") String capacity,@Part("website") String website,@Part("latitude") String latitude,@Part("longitude") String longitude,@Part("remark") String remark,@Part("image") TypedFile image,Callback<Response> cb);
+
 }

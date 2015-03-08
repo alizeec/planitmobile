@@ -23,9 +23,8 @@ public interface BudgetModuleService {
     @POST("/budgetmodules/{event_id}")
     void addBudgetModule(@Path("event_id") String id_event,@Body TypedInput in, Callback<Response> cb);
 
-    // A VENIR
-    //@POST("/guestsmodules/{module_id}/updates")
-    //void updateGuestModule(@Path("module_id") String module_id, @Body TypedInput in,Callback<Response> cb);
+    @POST("/budgetmodules/{module_id}/updates")
+    void updateBudgetModule(@Path("module_id") String module_id, @Body TypedInput in,Callback<Response> cb);
 
     @POST("/inflows/{id_module}")
     void addInflow(@Path("id_module") String id_module, @Body TypedInput data, Callback<Response> cb);
@@ -47,4 +46,8 @@ public interface BudgetModuleService {
 
     @DELETE("/expenses/{id_expense}")
     void deleteExpense(@Path("id_expense") int id_expense, Callback<Response> cb);
+
+    @DELETE("/typeexpenses/{type_id}")
+    void deleteTypeExpense(@Path("type_id") int type_id, Callback<Response> cb);
+
 }

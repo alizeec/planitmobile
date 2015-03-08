@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.budget.BudgetActivity;
+import com.example.alizeecamarasa.planit.events.ChangeEvent;
 import com.example.alizeecamarasa.planit.events.Event;
 import com.example.alizeecamarasa.planit.events.EventAPI;
 import com.example.alizeecamarasa.planit.events.EventResponse;
@@ -71,7 +73,17 @@ public class EventFragment extends ListFragment {
 
 
         id_event = getActivity().getIntent().getStringExtra("event_id");
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart (){
+        super.onStart();
         EventService service = EventAPI.getInstance();
         service.getEvent(id_event, new Callback<EventResponse>() {
             @Override
@@ -142,8 +154,8 @@ public class EventFragment extends ListFragment {
                 .into(imageview);
         nbdodos.setText(event.getEvent().getTimeDiff());
         nbguests.setText(event.getNb_guest() + " " + getString(R.string.guests));
-        expenses.setText(getString(R.string.expenses)+"\n"+event.getBalance());
-        inflows.setText(getString(R.string.inflow)+"\n"+event.getBalance());
+        expenses.setText(getString(R.string.expenses)+"\n"+event.getTotal_expenses()+" €");
+        inflows.setText(getString(R.string.inflow)+"\n"+event.getTotal_inflows()+" €");
 
         // add a module in order to add a row "Ajouter un module" in the list
         Module addModule = new Module();
@@ -158,5 +170,24 @@ public class EventFragment extends ListFragment {
             event.getEvent().setModules(newlist);
         }
         lv.setAdapter(new ModulesArrayAdapter(mContext, event.getEvent().getModules()));
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        EventService service = EventAPI.getInstance();
+        switch (item.getItemId()) {
+            case R.id.action_change_event:
+                Intent intent = new Intent(mContext,ChangeEvent.class);
+                intent.putExtra("event",mEvent);
+                startActivity(intent);
+                return true;
+            case R.id.action_delete_event:
+                // implemented in activity
+                return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

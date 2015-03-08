@@ -3,21 +3,16 @@ package com.example.alizeecamarasa.planit.budget.TypeBudget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.R;
-import com.example.alizeecamarasa.planit.budget.BudgetModule;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleAPI;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -64,7 +59,7 @@ public class AddTypeBudget extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(name)) {
-                    Toast.makeText(AddTypeBudget.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTypeBudget.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

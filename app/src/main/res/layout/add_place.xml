@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:text="@string/add_place"
+        android:textAllCaps="true"
+        android:textColor="@color/place"/>
+    <!--  END title of page -->
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbar">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <!--  first input : name -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_name"/>
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:hint="@string/mandatory"
+                        android:id="@+id/name"/>
+                </LinearLayout>
+                <!--  END first input  -->
+
+
+                <!--  2nd input : address -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    >
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_adress"
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/address"
+                        android:singleLine="false"
+                        android:lines="7"
+                        android:hint="@string/mandatory"
+                        android:gravity="top|left"/>
+                </LinearLayout>
+                <!--  END 2nd input -->
+
+                <!--  3rd input : tel -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/phone"
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/phone"
+                        android:inputType="numberDecimal"
+                        />
+                </LinearLayout>
+                <!--  END 3rd input -->
+
+                <!--  4th input : distance -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_distance"
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/distance"
+                        android:inputType="numberDecimal"
+                        android:hint="en km"
+                        />
+                </LinearLayout>
+                <!--  END 4th input -->
+
+                <!--  5th input : price -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_price"
+
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/price"
+                        android:inputType="numberDecimal"
+                        android:hint="@string/hint_unit_money"
+                        />
+                </LinearLayout>
+                <!--  END 5th input -->
+
+                <!--  6th input : capacity -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_capacity"
+
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/capacity"
+                        android:inputType="numberDecimal"
+                        />
+                </LinearLayout>
+                <!--  END 6th input -->
+
+                <!--  7th input : website -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_website"
+
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/website"
+                        />
+                </LinearLayout>
+                <!--  END 7th input -->
+
+                <!--  8th input : remark -->
+                <LinearLayout
+                    style="@style/inputStyle">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="@string/place_remark"
+
+                        />
+
+                    <EditText
+                        style="@style/inputValue"
+                        android:id="@+id/remark"
+                        android:singleLine="false"
+                        android:lines="7"
+                        />
+                </LinearLayout>
+                <!--  END 8th input -->
+
+                <!-- 9th input IMAGE -->
+                <LinearLayout
+                    style="@style/inputStyle"
+                    android:id="@+id/image_layout">
+
+                    <TextView
+                        style="@style/labelInput"
+                        android:text="Image"/>
+
+                    <Button
+                        style="@style/inputValue"
+                        android:singleLine="false"
+                        android:text="Choisir une image"
+                        android:id="@+id/inputImage"/>
+                </LinearLayout>
+                <!--  END 9th input  -->
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            style="@style/Button"
+            android:id="@+id/validatenewplace"
+            android:text="Ajouter"
+            android:background="@color/place"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

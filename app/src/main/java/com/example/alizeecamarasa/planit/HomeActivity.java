@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-
+import android.view.Menu;
 
 
 public class HomeActivity extends Hamburger {
@@ -20,7 +20,12 @@ public class HomeActivity extends Hamburger {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.content_frame,fragment).commit();
         }
+    }
 
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.removeItem(R.id.action_change_event);
+        menu.removeItem(R.id.action_delete_event);
+        return true;
     }
 
 

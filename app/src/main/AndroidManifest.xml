@@ -48,6 +48,10 @@
         </activity>
 
         <activity android:name=".events.AddEvent"
+        android:configChanges="orientation|screenSize|keyboardHidden">
+    </activity>
+
+        <activity android:name=".events.ChangeEvent"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
@@ -72,6 +76,10 @@
         </activity>
 
         <activity android:name=".guest.TypeGuest.AddTypeGuest"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+
+        <activity android:name=".guest.TypeGuest.ChangeTypeGuest"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <!-- END MODULE GUEST -->
@@ -102,10 +110,17 @@
         <activity android:name=".todo.TodoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
+
+        <activity android:name=".todo.ChangeTaskList"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
         <!-- END MODULE TO_DO -->
 
         <!-- MODULE PLACE -->
         <activity android:name=".place.PlaceActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".place.AddPlace"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity android:name=".place.SeePlace"

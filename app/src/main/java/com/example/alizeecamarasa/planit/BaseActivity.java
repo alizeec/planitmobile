@@ -27,7 +27,6 @@ public class BaseActivity extends Activity {
             case R.id.action_help:
                 Intent myIntent = new Intent(BaseActivity.this, Help.class);
                 BaseActivity.this.startActivity(myIntent);
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

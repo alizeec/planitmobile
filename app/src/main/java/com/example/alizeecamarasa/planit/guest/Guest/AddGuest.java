@@ -100,7 +100,7 @@ public class AddGuest extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(firstname) || isEmptyTextView(lastname) || isEmptyTextView(email) ) {
-                    Toast.makeText(AddGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddGuest.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!isValidEmail(email.getText().toString())){

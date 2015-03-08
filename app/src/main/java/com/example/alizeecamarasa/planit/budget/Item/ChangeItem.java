@@ -86,7 +86,7 @@ public class ChangeItem extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyTextView(txtName)  || isEmptyEditText(EditName) || isEmptyTextView(txtAmount) || isEmptyEditText(EditAmount) ) {
-                    Toast.makeText(ChangeItem.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangeItem.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -184,7 +184,7 @@ public class ChangeItem extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(txtName)  || isEmptyEditText(txtPrice) || isEmptyEditText(txtStock) || isEmptyEditText(txtQuantity) || isEmptyEditText(txtConsummate)) {
-                    Toast.makeText(ChangeItem.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangeItem.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

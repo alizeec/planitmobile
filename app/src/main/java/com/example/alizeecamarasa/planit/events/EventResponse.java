@@ -4,18 +4,20 @@ package com.example.alizeecamarasa.planit.events;
  * Created by alizeecamarasa on 13/02/15.
  */
 public class EventResponse {
-    private String nb_guest;
+    private String nbGuests;
     private String balance;
     private Event event;
+    private float total_expenses;
+    private float total_inflows;
 
     public String getNb_guest() {
-       if(nb_guest == null)
-           nb_guest = "0";
-        return nb_guest;
+       if(nbGuests == null)
+           nbGuests = "0";
+        return nbGuests;
     }
 
     public void setNb_guest(String nb_guest) {
-        this.nb_guest = nb_guest;
+        this.nbGuests = nb_guest;
     }
 
     public Event getEvent() {
@@ -38,5 +40,21 @@ public class EventResponse {
 
     public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public float getTotal_expenses() {
+        return total_expenses;
+    }
+
+    public void setTotal_expenses(float total_expenses) {
+        this.total_expenses = total_expenses;
+    }
+
+    public float getTotal_inflows() {
+        return total_inflows;
+    }
+
+    public void setTotal_inflows(float total_inflows) {
+        this.total_inflows = total_inflows;
     }
 }

@@ -7,34 +7,70 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <!--  first input : capacity max -->
             <LinearLayout
                 style="@style/inputStyle">
 
                 <TextView
                     style="@style/labelInput"
-                    android:text="@string/task"
+                    android:text="@string/max_capacity"
                     />
 
                 <EditText
                     style="@style/inputValue"
-                    android:id="@+id/task"
+                    android:id="@+id/maxcapacity"
+                    android:inputType="numberDecimal"
                 />
             </LinearLayout>
+            <!--  END first input  -->
 
+
+            <!-- 2nd input : price max -->
             <LinearLayout
                 style="@style/inputStyle">
 
                 <TextView
                     style="@style/labelInput"
-                    android:text="@string/category"
+                    android:text="@string/max_price"
                     />
 
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/spinner"
-                    />
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/maxPrice"
+                    android:inputType="numberDecimal"
+                    android:hint="en €"/>
             </LinearLayout>
+            <!-- END 2nd input -->
+
+            <!-- 3nd input : time max -->
+            <LinearLayout
+                style="@style/inputStyle">
+
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/max_time"
+                    />
+
+                <EditText
+                    style="@style/inputValue"
+                    android:id="@+id/maxTimeToGo"
+                    android:inputType="numberDecimal"
+                    android:hint="en km"/>
+            </LinearLayout>
+            <!-- END 3nd input -->
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,23 +80,23 @@
                 android:layout_alignParentBottom="true">
                 <Button
                     style="@style/Button"
-                    android:layout_height="50dp"
-                    android:id="@+id/validatenewtask"
+                    android:id="@+id/validatenewmodule"
                     android:text="Ajouter"
                     android:background="@color/guest"
                     android:textColor="@color/white"
-                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
+                    android:layout_marginRight="1dp"
                     />
                 <Button
                     style="@style/Button"
                     android:id="@+id/cancel"
-                    android:layout_height="50dp"
                     android:text="Annuler"
                     android:background="@color/guest"
                     android:textColor="@color/white"
-                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
+                    android:layout_marginLeft="1dp"
                     />
             </LinearLayout>
         </LinearLayout>
+    </ScrollView>
+</LinearLayout>

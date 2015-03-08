@@ -1,20 +1,18 @@
 package com.example.alizeecamarasa.planit.todo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alizeecamarasa.planit.R;
@@ -57,6 +55,11 @@ public class TodoActivity extends Activity {
         context = this;
         id_module = getIntent().getStringExtra("module_id");
         service = TodoModuleAPI.getInstance();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         createGroupList();
     }
 
@@ -143,6 +146,22 @@ public class TodoActivity extends Activity {
                             addtask();
                         }
                     });
+
+                    // on long click, modify the task category
+                    expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                                int positionGroup = ExpandableListView.getPackedPositionGroup(id);
+                                Intent intent = new Intent(context,ChangeTaskList.class);
+                                intent.putExtra("category",expListAdapter.getGroup(positionGroup));
+                                context.startActivity(intent);
+                                return true;
+                            }
+
+                            return false;
+                        }
+                    });
                 }
             }
 
@@ -176,7 +195,7 @@ public class TodoActivity extends Activity {
 
     /* ------------------------------ ADD CATEGORY TASK --------------------------------------- */
     public void addCategoryTask(){
-        final Dialog dialog = new Dialog(this,R.style.cust_dialog_todo);
+        final Dialog dialog = new Dialog(this);
         dialog.setTitle(R.string.add_cat_task);
         dialog.setContentView(R.layout.add_cat_task);
         final EditText category = (EditText) dialog.findViewById(R.id.category);
@@ -194,7 +213,7 @@ public class TodoActivity extends Activity {
             public void onClick(View v) {
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(category)) {
-                    Toast.makeText(TodoActivity.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TodoActivity.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -242,7 +261,7 @@ public class TodoActivity extends Activity {
 
     /* ------------------------------ ADD TASK --------------------------------------- */
     public void addtask(){
-        final Dialog dialog = new Dialog(this,R.style.cust_dialog_todo);
+        final Dialog dialog = new Dialog(this);
         dialog.setTitle(R.string.add_task);
         dialog.setContentView(R.layout.add_task);
         final EditText task = (EditText) dialog.findViewById(R.id.task);
@@ -266,7 +285,7 @@ public class TodoActivity extends Activity {
             public void onClick(View v) {
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(task)) {
-                    Toast.makeText(TodoActivity.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TodoActivity.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

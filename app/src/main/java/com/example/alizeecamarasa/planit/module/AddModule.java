@@ -1,10 +1,8 @@
 package com.example.alizeecamarasa.planit.module;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,11 +18,10 @@ import com.example.alizeecamarasa.planit.R;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleAPI;
 import com.example.alizeecamarasa.planit.budget.BudgetModuleService;
 import com.example.alizeecamarasa.planit.events.Event;
-import com.example.alizeecamarasa.planit.guest.Guest.Guest;
-import com.example.alizeecamarasa.planit.guest.Guest.GuestAPI;
-import com.example.alizeecamarasa.planit.guest.Guest.GuestService;
 import com.example.alizeecamarasa.planit.guest.GuestModuleAPI;
 import com.example.alizeecamarasa.planit.guest.GuestModuleService;
+import com.example.alizeecamarasa.planit.place.PlaceModuleAPI;
+import com.example.alizeecamarasa.planit.place.PlaceModuleService;
 import com.example.alizeecamarasa.planit.todo.TodoModuleAPI;
 import com.example.alizeecamarasa.planit.todo.TodoModuleService;
 
@@ -120,6 +117,9 @@ public class AddModule extends Activity {
                     case 1:
                         addModuleBudget();
                         break;
+                    case 2:
+                        addModulePlace();
+                        break;
                     case 4:
                         addTodoModule();
                         break;
@@ -169,7 +169,7 @@ public class AddModule extends Activity {
             public void onClick(View v) {
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(nb_max_guest)) {
-                    Toast.makeText(AddModule.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddModule.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -257,7 +257,7 @@ public class AddModule extends Activity {
             public void onClick(View v) {
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(budget_max) || isEmptyEditText(base)) {
-                    Toast.makeText(AddModule.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddModule.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -339,6 +339,84 @@ public class AddModule extends Activity {
                 }
             });
             dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    /* --------------------------------- ADD A PLACE MODULE -------------------------------------*/
+    public void addModulePlace(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_placemodule);
+        dialog.setTitle(R.string.name_module_place);
+
+        final EditText capacity_max = (EditText) dialog.findViewById(R.id.maxcapacity);
+        final EditText price_max = (EditText) dialog.findViewById(R.id.maxPrice);
+        final EditText time_max = (EditText) dialog.findViewById(R.id.maxTimeToGo);
+
+
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //if one of the field is empty, do nothing
+                if (isEmptyEditText(capacity_max) || isEmptyEditText(price_max) || isEmptyEditText(time_max)) {
+                    Toast.makeText(AddModule.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                else {
+
+                    JSONObject json = new JSONObject();
+                    JSONObject moduleJson = new JSONObject();
+                    try {
+                        moduleJson.put("max_capacity_p",Float.parseFloat(capacity_max.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        moduleJson.put("max_price_p",Float.parseFloat(price_max.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        moduleJson.put("max_time_to_go",Float.parseFloat(time_max.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        json.put("placemodule_form",moduleJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
+
+                    PlaceModuleService service = PlaceModuleAPI.getInstance();
+                    service.addPlaceModule(event.getId(), in, new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            Toast.makeText(AddModule.this, "Le module a bien été ajouté!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            finish();
+                        }
+                    });
+                }
+                dialog.dismiss();
             }
         });
 

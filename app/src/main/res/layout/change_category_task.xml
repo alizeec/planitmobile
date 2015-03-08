@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--  title of page -->
+    <TextView
+        style="@style/titlesPages"
+        android:id="@+id/title"
+        android:text="@string/change_cat"
+        android:textAllCaps="true"
+        android:textColor="@color/todo"/>
+    <!--  END title of page -->
+
+    <LinearLayout
+        style="@style/inputStyle"
+        android:layout_below="@+id/title">
+
+        <TextView
+            style="@style/labelInput"
+            android:text="@string/category"/>
+
+        <EditText
+            style="@style/inputValue"
+            android:id="@+id/name"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2">
+
+        <Button
+            style="@style/Button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/change"
+            android:text="Modifier"
+            android:background="@color/todo"
+            android:layout_marginRight="1dp"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+        <Button
+            style="@style/Button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/delete"
+            android:text="Supprimer"
+            android:layout_marginLeft="1dp"
+            android:background="@color/todo"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

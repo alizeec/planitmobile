@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -146,6 +147,13 @@ public class BudgetActivity extends Activity {
 
                         };
                     });
+                    // UPDATE MODULE
+                    ImageButton update = (ImageButton) findViewById(R.id.modify_module);
+                    update.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            updateModuleBudget();
+                        }
+                    });
 
                     // ADD AN INFLOW (other activity)
                     Button inflow = (Button) findViewById(R.id.add_inflow);
@@ -180,6 +188,47 @@ public class BudgetActivity extends Activity {
                             startActivityForResult(myIntent, 4);
                         }
 
+                    });
+
+                    // DELETE A TYPE EXPENSE
+                    expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP){
+                                int positionGroup = ExpandableListView.getPackedPositionGroup(id);
+                                final int id_type = expListAdapter.getGroup(positionGroup).getId();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setMessage("Voulez vous supprimer cette catégorie?");
+                                builder.setCancelable(false);
+                                builder.setPositiveButton("OUI",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                BudgetModuleService service = BudgetModuleAPI.getInstance();
+                                                service.deleteTypeExpense(id_type, new Callback<Response>() {
+                                                    @Override
+                                                    public void success(Response o, Response response) {
+                                                        Toast.makeText(BudgetActivity.this,"Catégorie supprimée",Toast.LENGTH_SHORT).show();
+                                                        createGroupList();
+                                                    }
+
+                                                    @Override
+                                                    public void failure(RetrofitError error) {
+                                                        error.printStackTrace();
+                                                    }
+                                                });
+                                            }
+                                        });
+                                builder.setNegativeButton("NON",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                AlertDialog alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                            return true;
+                        }
                     });
                 };
 
@@ -220,6 +269,71 @@ public class BudgetActivity extends Activity {
         {
             createGroupList();
         }
+    }
+
+    /* --------------------------------- UPDATE BUDGET MODULE -------------------------------------*/
+    public void updateModuleBudget(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_budgetmodule);
+        dialog.setTitle(R.string.name_module_budget);
+
+        final EditText max_budget = (EditText) dialog.findViewById(R.id.maxbudget);
+        final EditText base = (EditText) dialog.findViewById(R.id.base);
+
+        // put currents data
+        max_budget.setText(String.valueOf(mModule.getMax_budget()));
+        base.setText(String.valueOf(mModule.getBase()));
+
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setText("Modifier");
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                JSONObject json = new JSONObject();
+                JSONObject moduleJson = new JSONObject();
+                try {
+                    moduleJson.put("max_budget",Float.parseFloat(max_budget.getText().toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    moduleJson.put("base",Float.parseFloat(base.getText().toString()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    json.put("budgetmodule_form",moduleJson);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
+
+                service.updateBudgetModule(id_module, in, new Callback<Response>() {
+                    @Override
+                    public void success(Response s, Response response) {
+                        Toast.makeText(BudgetActivity.this, "Le module a bien été modifié!", Toast.LENGTH_SHORT).show();
+                        createGroupList();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
 

@@ -45,6 +45,7 @@ public class AddTypeGuest extends Activity {
         // get module in order to have his infos
         module = (GuestModule) getIntent().getSerializableExtra("module");
 
+
         // get fields
         label = (EditText) findViewById(R.id.inputTypeGuestLabel);
         price = (EditText) findViewById(R.id.inputTypeGuestPrice);
@@ -52,12 +53,19 @@ public class AddTypeGuest extends Activity {
         LinearLayout layoutMessage = (LinearLayout) findViewById(R.id.layoutMessage);
         LinearLayout layoutPrice = (LinearLayout) findViewById(R.id.layoutPrice);
         validate = (Button) findViewById(R.id.validatenewtypeguest);
+
         if (module.isModuletype()){
             layoutMessage.setVisibility(View.INVISIBLE);
         }
         if (!module.isPayable()){
             layoutPrice.setVisibility(View.INVISIBLE);
         }
+
+        // hide button which are for modify mode
+        Button change = (Button) findViewById(R.id.changetypeguest);
+        change.setVisibility(View.GONE);
+        Button delete = (Button) findViewById(R.id.deletetypeguest);
+        delete.setVisibility(View.GONE);
 
         //validate + save new type guest
         addTypeGuest();
@@ -82,15 +90,15 @@ public class AddTypeGuest extends Activity {
             public void onClick(View v) {
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(label)) {
-                    Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTypeGuest.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (module.isPayable() && isEmptyEditText(price)){
-                    Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTypeGuest.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!module.isModuletype() && isEmptyTextView(message)){
-                    Toast.makeText(AddTypeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddTypeGuest.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
 

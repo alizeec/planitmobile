@@ -121,7 +121,7 @@ public class ChangeGuest extends Activity {
 
                 //if one of the field is empty, do nothing
                 if (isEmptyEditText(firstname) || isEmptyTextView(lastname) || isEmptyTextView(email) ) {
-                    Toast.makeText(ChangeGuest.this, R.string.create_event_error_msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangeGuest.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!isValidEmail(email.getText().toString())){
@@ -140,7 +140,7 @@ public class ChangeGuest extends Activity {
                     JSONObject json = new JSONObject();
                     JSONObject guestJson = new JSONObject();
                     try {
-                        guestJson.put("type",type_guest);
+                        guestJson.put("typeguest",type_guest);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

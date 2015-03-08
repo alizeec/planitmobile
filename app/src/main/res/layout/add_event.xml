@@ -145,9 +145,10 @@
             </LinearLayout>
             <!--  END 4th input  -->
 
-            <!--  4th input : description -->
+            <!--  5th input : image -->
             <LinearLayout
-                style="@style/inputStyle">
+                style="@style/inputStyle"
+                android:id="@+id/image_layout">
 
                 <TextView
                     style="@style/labelInput"
@@ -156,12 +157,10 @@
                 <Button
                     style="@style/inputValue"
                     android:singleLine="false"
-                    android:lines="7"
-                    android:gravity="top|left"
                     android:text="Choisir une image"
                     android:id="@+id/inputImage"/>
             </LinearLayout>
-            <!--  END 4th input  -->
+            <!--  END 5th input  -->
 
         </LinearLayout>
     </ScrollView>

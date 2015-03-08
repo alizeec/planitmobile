@@ -1,13 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_help"
         android:icon="@drawable/ic_drawer"
-        android:title="Help"
+        android:title="Aide"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_change_event"
+        android:icon="@drawable/ic_drawer"
+        android:title="@string/change_event"
+        android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_delete_event"
+        android:icon="@drawable/ic_drawer"
+        android:title="@string/delete_event"
+        android:showAsAction="ifRoom" />
+
 
 </menu>

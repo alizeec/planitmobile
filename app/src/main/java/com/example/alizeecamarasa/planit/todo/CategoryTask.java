@@ -1,11 +1,12 @@
 package com.example.alizeecamarasa.planit.todo;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by alizeecamarasa on 26/02/15.
  */
-public class CategoryTask {
+public class CategoryTask implements Serializable {
     private int id;
     private String name;
     private List<Task> items;

@@ -11,6 +11,7 @@
     <!--  title of page -->
     <TextView
         style="@style/titlesPages"
+        android:id="@+id/title"
         android:text="@string/addtypeguest"
         android:textColor="@color/guest"/>
     <!--  END title of page -->
@@ -83,14 +84,42 @@
 
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+     >
     <Button
         style="@style/Button"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:id="@+id/validatenewtypeguest"
         android:text="Ajouter"
         android:background="@color/guest"
         android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        />
 
-</RelativeLayout>
+        />
+    <Button
+        style="@style/Button"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:id="@+id/changetypeguest"
+        android:text="Modifier"
+        android:layout_marginRight="1dp"
+        android:background="@color/guest"
+        android:textColor="@color/white"
+        />
+        <Button
+            style="@style/Button"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:id="@+id/deletetypeguest"
+            android:text="Supprimer"
+            android:layout_marginLeft="1dp"
+            android:background="@color/guest"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+    </RelativeLayout>
 </LinearLayout>
