@@ -26,6 +26,8 @@ import com.example.alizeecamarasa.planit.module.AddModule;
 import com.example.alizeecamarasa.planit.module.Module;
 import com.example.alizeecamarasa.planit.place.PlaceActivity;
 import com.example.alizeecamarasa.planit.todo.TodoActivity;
+import com.example.alizeecamarasa.planit.transport.TransportActivity;
+import com.example.alizeecamarasa.planit.transport.TransportModule;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -127,7 +129,9 @@ public class EventFragment extends ListFragment {
                 break;
             // module Transport
             case 4:
-                Toast.makeText(mContext, "Module Transport à venir", Toast.LENGTH_SHORT).show();
+                intent= new Intent(mContext,TransportActivity.class);
+                intent.putExtra("module_id",String.valueOf(selectedModule.getId()));
+                startActivity(intent);
                 break;
             // module liste de tâches
             case 5:

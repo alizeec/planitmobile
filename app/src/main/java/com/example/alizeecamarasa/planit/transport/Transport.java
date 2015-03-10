@@ -1,9 +1,11 @@
 package com.example.alizeecamarasa.planit.transport;
 
+import java.io.Serializable;
+
 /**
  * Created by alizeecamarasa on 08/03/15.
  */
-public class Transport {
+public class Transport implements Serializable{
     private int id;
     private String name;
     private String tel;
@@ -12,7 +14,7 @@ public class Transport {
     private String website;
     private int state;
     private int oldstate;
-    private String image;
+    private String contract;
 
     public int getId() {
         return id;
@@ -78,11 +80,11 @@ public class Transport {
         this.oldstate = oldstate;
     }
 
-    public String getImage() {
-        return image;
+    public String getContract() {
+        return contract;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setContract(String contract) {
+        this.contract = contract;
     }
 }

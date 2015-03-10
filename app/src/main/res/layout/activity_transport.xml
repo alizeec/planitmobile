@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.ygo.jobboard.ItemFragment"
+    android:background="@color/bg_list">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text ="@string/name_module_transport"
+        android:textAllCaps="true"
+        android:textColor="@color/transport"
+        android:gravity="center"
+        android:padding="5dp"
+        android:id="@+id/title"
+        android:background="@color/bg_list"
+        android:textSize="18dp"
+        />
+
+    <ImageButton
+        style="@style/actions"
+        android:src="@drawable/delete_moduletransport"
+        android:layout_marginLeft="20dp"
+        android:background="@color/bg_list"
+        android:id="@+id/delete_module"/>
+    <ImageButton
+        style="@style/actions"
+        android:src="@drawable/modify_moduletransport"
+        android:background="@color/bg_list"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:id="@+id/modify_module"/>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="50dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
+        >
+    </ListView>
+
+    <Button
+        android:id="@+id/add_transport"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/add_transport"
+        android:background="@color/transport"
+        android:layout_gravity="center"
+        android:textAllCaps="true"
+        android:textColor="#FFF"
+        android:textSize="12dp"/>
+
+
+</RelativeLayout>

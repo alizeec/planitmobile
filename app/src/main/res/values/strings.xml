@@ -143,7 +143,7 @@
     <string name="max_capacity">Capacité maximum</string>
     <string name="max_price">Prix maximum</string>
     <string name="max_time">Temps de trajet maximum</string>
-    <string-array name="state_place">
+    <string-array name="state_logistic">
         <item>Refusé</item>
         <item>Choisi</item>
         <item>Contacté</item>
@@ -153,5 +153,17 @@
     <string name="googlemaps">Voir sur Google Maps</string>
     <string name="contract">Télécharger le contrat</string>
     <!-- END MODULE PLACE -->
+
+    <!-- MODULE TRANSPORT -->
+    <string name="name_module_transport">Gestion de transport</string>
+    <string name="add_transport">Ajouter une compagnie</string>
+    <string name="delete_transport">Supprimer une compagnie</string>
+    <string name="change_transport">Modifier une compagnie</string>
+    <string name="transport_name">Nom</string>
+    <string name="transport_tel">Téléphone: </string>
+    <string name="transport_price">Prix</string>
+    <string name="transport_capacity">Capacité: </string>
+    <string name="transport_website">Site web: </string>
+
 
 </resources>

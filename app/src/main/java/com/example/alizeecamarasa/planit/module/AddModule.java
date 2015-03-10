@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ import com.example.alizeecamarasa.planit.place.PlaceModuleAPI;
 import com.example.alizeecamarasa.planit.place.PlaceModuleService;
 import com.example.alizeecamarasa.planit.todo.TodoModuleAPI;
 import com.example.alizeecamarasa.planit.todo.TodoModuleService;
+import com.example.alizeecamarasa.planit.transport.TransportModuleAPI;
+import com.example.alizeecamarasa.planit.transport.TransportModuleService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,6 +122,9 @@ public class AddModule extends Activity {
                         break;
                     case 2:
                         addModulePlace();
+                        break;
+                    case 3:
+                        addModuleTransport();
                         break;
                     case 4:
                         addTodoModule();
@@ -348,7 +354,7 @@ public class AddModule extends Activity {
     /* --------------------------------- ADD A PLACE MODULE -------------------------------------*/
     public void addModulePlace(){
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.add_placemodule);
+        dialog.setContentView(R.layout.add_logisticmodule);
         dialog.setTitle(R.string.name_module_place);
 
         final EditText capacity_max = (EditText) dialog.findViewById(R.id.maxcapacity);
@@ -403,6 +409,80 @@ public class AddModule extends Activity {
 
                     PlaceModuleService service = PlaceModuleAPI.getInstance();
                     service.addPlaceModule(event.getId(), in, new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            Toast.makeText(AddModule.this, "Le module a bien été ajouté!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            error.printStackTrace();
+                            finish();
+                        }
+                    });
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    /* --------------------------------- ADD A TRANSPORT MODULE -------------------------------------*/
+    public void addModuleTransport(){
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_logisticmodule);
+        dialog.setTitle(R.string.name_module_transport);
+
+        final EditText capacity_max = (EditText) dialog.findViewById(R.id.maxcapacity);
+        final EditText price_max = (EditText) dialog.findViewById(R.id.maxPrice);
+        final LinearLayout time_max = (LinearLayout) dialog.findViewById(R.id.timetogoLayout);
+        time_max.setVisibility(View.GONE);
+
+
+        Button cancel = (Button) dialog.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button validate = (Button) dialog.findViewById(R.id.validatenewmodule);
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //if one of the field is empty, do nothing
+                if (isEmptyEditText(capacity_max) || isEmptyEditText(price_max)) {
+                    Toast.makeText(AddModule.this, R.string.error_msg_all_fields, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                else {
+
+                    JSONObject json = new JSONObject();
+                    JSONObject moduleJson = new JSONObject();
+                    try {
+                        moduleJson.put("max_capacity_t",Float.parseFloat(capacity_max.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        moduleJson.put("max_price_t",Float.parseFloat(price_max.getText().toString()));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        json.put("transportationmodule_form",moduleJson);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
+
+                    TransportModuleService service = TransportModuleAPI.getInstance();
+                    service.addTransportModule(event.getId(), in, new Callback<Response>() {
                         @Override
                         public void success(Response s, Response response) {
                             Toast.makeText(AddModule.this, "Le module a bien été ajouté!", Toast.LENGTH_SHORT).show();

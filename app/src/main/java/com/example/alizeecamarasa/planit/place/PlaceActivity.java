@@ -6,15 +6,12 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.alizeecamarasa.planit.R;
-import com.example.alizeecamarasa.planit.guest.GuestActivity;
-import com.example.alizeecamarasa.planit.module.Module;
 import com.example.alizeecamarasa.planit.module.ModuleAPI;
 import com.example.alizeecamarasa.planit.module.ModuleService;
 
@@ -24,7 +21,6 @@ import retrofit.client.Response;
 import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedInput;
 
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -124,7 +120,7 @@ public class PlaceActivity extends ListActivity {
     /* --------------------------------- UPDATE PLACE MODULE -------------------------------------*/
     public void updateModulePlace(){
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.add_placemodule);
+        dialog.setContentView(R.layout.add_logisticmodule);
         dialog.setTitle(R.string.name_module_place);
 
         final EditText capacity_max = (EditText) dialog.findViewById(R.id.maxcapacity);

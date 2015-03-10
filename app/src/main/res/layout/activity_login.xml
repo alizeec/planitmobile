@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/login_bg"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_login"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Identifiez-vous:"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:layout_marginTop="5dp"
+            />
+
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="250dp"
+                android:layout_gravity="center"
+                android:hint="Adresse mail"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:textSize="12dp"
+                 >
+            </EditText>
+
+            <EditText
+                android:id="@+id/mdp"
+                android:layout_width="250dp"
+                android:layout_gravity="center"
+                android:hint="Mot de passe"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:textSize="12dp"
+                android:inputType="textPassword">
+            </EditText>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/remember_me"
+                android:layout_gravity="center"
+                android:text="Se souvenir de moi"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+            <Button
+                android:id="@+id/login"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@color/app_color"
+                android:textColor="@color/white"
+                android:layout_marginRight="10dp"
+                android:textSize="12dp"
+                android:text="Se connecter" />
+                <Button
+                    android:id="@+id/suscribe"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@color/app_color"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="12dp"
+                    android:text="S'inscrire" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

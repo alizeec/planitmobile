@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <!--  title of page -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/transport"
+                android:padding="10dp"
+                android:id="@+id/title"
+                android:textSize="20dp"
+                android:text="test"
+                android:textAllCaps="true"
+                />
+            <!--  END title of page -->
+
+            <!-- STATE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/place_state"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/state"/>
+            </LinearLayout>
+
+            <!-- WEBSITE -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/place_website"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/website"/>
+            </LinearLayout>
+            <!-- PHONE NUMBER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/phone"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tel"/>
+            </LinearLayout>
+            <!-- CAPACITY -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/labelInput"
+                    android:text="@string/place_capacity"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/capacity"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:id="@+id/remark"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/bg_list"
+                android:text="@string/contract"
+                android:id="@+id/contract"
+                android:textColor="@color/transport"/>
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="3">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Retour"
+            android:layout_weight="1"
+            android:id="@+id/back"
+            android:textAllCaps="true"
+            android:background="@color/transport"
+            android:textColor="@color/white"
+            android:layout_marginRight="1dp"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Modifier"
+            android:id="@+id/modify"
+            android:textAllCaps="true"
+            android:background="@color/transport"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Supprimer"
+            android:id="@+id/delete"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:layout_marginLeft="1dp"
+            android:background="@color/transport"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
+
+</RelativeLayout>
+

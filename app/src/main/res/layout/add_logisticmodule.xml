@@ -55,7 +55,8 @@
 
             <!-- 3nd input : time max -->
             <LinearLayout
-                style="@style/inputStyle">
+                style="@style/inputStyle"
+                android:id="@+id/timetogoLayout">
 
                 <TextView
                     style="@style/labelInput"

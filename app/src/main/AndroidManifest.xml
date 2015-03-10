@@ -27,18 +27,20 @@
         <activity android:name=".Hamburger"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-
-        <activity android:name="org.achartengine.GraphicalActivity" />
         <!-- END GÉNÉRAL -->
 
-        <!-- PAGE D'ACCUEIL -->
-        <activity
-            android:name=".HomeActivity"
+        <activity android:name=".ActivityLogin"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- PAGE D'ACCUEIL -->
+        <activity
+            android:name=".HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <!-- END PAGE D'ACCUEIL -->
 
@@ -131,6 +133,18 @@
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <!-- END MODULE PLACE -->
+
+        <!-- MODULE TRANSPORT -->
+        <activity android:name=".transport.TransportActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".transport.SeeTransport"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <activity android:name=".transport.ChangeTransport"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+        <!-- END MODULE TRANSPORT -->
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

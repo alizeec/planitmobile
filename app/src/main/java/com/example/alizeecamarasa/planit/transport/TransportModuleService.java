@@ -17,8 +17,8 @@ import retrofit.mime.TypedInput;
  */
 public interface TransportModuleService {
 
-    @GET("/transportationmodules/{event_id}")
-    void getModule(@Path("event_id") int event_id, Callback<TransportModule> cb);
+    @GET("/modules/{module_id}")
+    void getModule(@Path("module_id") String module_id, Callback<TransportModule> cb);
 
     @POST("/transportationmodules/{module_id}/updates")
     void updateTransportModule(@Path("module_id") String module_id, @Body TypedInput in,Callback<Response> cb);
