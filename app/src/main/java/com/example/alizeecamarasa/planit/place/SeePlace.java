@@ -2,13 +2,15 @@ package com.example.alizeecamarasa.planit.place;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
@@ -29,7 +30,6 @@ import com.squareup.picasso.Picasso;
 
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import retrofit.Callback;
@@ -44,8 +44,10 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
     double Coordlong;
     LatLng coordinates;
     String name;
+    String address;
     Place place;
     Activity context;
+    String contract_path;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,6 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void chargePlaceView(){
-
         TextView txtName = (TextView) findViewById(R.id.title);
         TextView txtAddress = (TextView) findViewById(R.id.adress);
         TextView txtDistance = (TextView) findViewById(R.id.distance);
@@ -70,26 +71,31 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
         TextView txtWebsite = (TextView) findViewById(R.id.website);
         TextView txtTel = (TextView) findViewById(R.id.tel);
         TextView txtCapacity = (TextView) findViewById(R.id.capacity);
+        TextView txtRemark = (TextView) findViewById(R.id.remark);
         ImageView imageview = (ImageView) findViewById(R.id.image);
 
         Button back = (Button) findViewById(R.id.back);
         Button modify = (Button) findViewById(R.id.modify);
         Button delete = (Button) findViewById(R.id.delete);
+        Button googlemaps= (Button) findViewById(R.id.googlemapsbutton);
+        Button contractButton = (Button) findViewById(R.id.contract);
 
         name = place.getName();
         float price = place.getPrice();
-        String adress = String.valueOf(place.getAddress());
+        address = String.valueOf(place.getAddress());
         float distance = place.getDistance();
         int state = place.getState();
         String website = place.getWebsite();
         String tel = place.getTel();
         Float capacity = place.getCapacity();
+        String remark = place.getRemark();
         Coordlat = place.getLatitude();
         Coordlong = place.getLongitude();
+        contract_path = place.getContract();
 
 
         txtName.setText(name+"   "+price+" €");
-        txtAddress.setText(adress);
+        txtAddress.setText(address);
 
         txtDistance.setText(String.valueOf(distance)+" km");
         if (state == 0)
@@ -104,6 +110,7 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
         txtWebsite.setText(website);
         txtTel.setText(tel);
         txtCapacity.setText(String.valueOf(capacity)+" personnes");
+        txtRemark.setText(remark);
 
         Picasso.with(this).load("http://planit.marion-lecorre.com/images/place/places_pictures/"+place.getImage())
                 .error(R.drawable.no_image_place)
@@ -121,7 +128,7 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
             Geocoder geocoder = new Geocoder(this);
             List<Address> addresses;
             try {
-                addresses = geocoder.getFromLocationName(adress, 1);
+                addresses = geocoder.getFromLocationName(address, 1);
                 if(addresses.size() > 0) {
                     Coordlat= addresses.get(0).getLatitude();
                     Coordlong= addresses.get(0).getLongitude();
@@ -156,12 +163,19 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
+        googlemaps.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + address));
+                startActivity(searchAddress);
+            }
+        });
 
-
-
-
-        //Intent searchAddress = new  Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + adress));
-        //startActivity(searchAddress);
+        contractButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DownloadContract mTask = new DownloadContract();
+                mTask.execute();
+            }
+        });
     }
 
     @Override
@@ -216,6 +230,27 @@ public class SeePlace extends FragmentActivity implements OnMapReadyCallback {
         if(requestCode==1)
         {
             finish();
+        }
+    }
+
+    class DownloadContract extends AsyncTask<Void, Void,String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            Uri myUri = Uri.parse("http://planit.marion-lecorre.com/web/files/place/contracts/"+contract_path);
+            DownloadManager.Request r = new DownloadManager.Request(myUri);
+            r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS+"/planit/", "contrat-"+contract_path);
+            r.allowScanningByMediaScanner();
+            r.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(r);
+            return "contract"+contract_path;
+        }
+
+        @Override
+        protected void onPostExecute(String contrat) {
+            if(contrat!=null)
+            Toast.makeText(SeePlace.this,"Le contrat "+contrat+" a été enregistré dans vos téléchargements",Toast.LENGTH_SHORT).show();
         }
     }
 }

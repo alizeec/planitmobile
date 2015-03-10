@@ -43,6 +43,6 @@ public interface PlaceModuleService {
 
     @Multipart
     @POST("/places/{id_module}")
-    void addPlace(@Path("id_module") String id_module,@Part("name") String name,@Part("address") String address,@Part("tel") String tel,@Part("distance") String distance,@Part("price") String price,@Part("capacity") String capacity,@Part("website") String website,@Part("latitude") String latitude,@Part("longitude") String longitude,@Part("remark") String remark,@Part("image") TypedFile image,Callback<Response> cb);
+    void addPlace(@Path("id_module") String id_module,@Part("name") String name,@Part("address") String address,@Part("tel") String tel,@Part("distance") String distance,@Part("price") String price,@Part("capacity") String capacity,@Part("website") String website,@Part("latitude") String latitude,@Part("longitude") String longitude,@Part("remark") String remark,@Part("image") TypedFile image,@Part("state") String state,Callback<Response> cb);
 
 }

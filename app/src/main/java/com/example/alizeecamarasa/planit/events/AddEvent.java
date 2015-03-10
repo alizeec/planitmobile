@@ -152,6 +152,7 @@ public class AddEvent extends Activity {
         }
         File photo = new File(selectedImagePath);
         typedFile = new TypedFile("application/octet-stream", photo);
+        System.out.println(typedFile);
 
 
     }

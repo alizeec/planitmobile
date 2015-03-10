@@ -59,7 +59,7 @@ public class EventActivity extends Hamburger {
         }
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         EventService service = EventAPI.getInstance();
         switch (item.getItemId()) {
@@ -85,5 +85,5 @@ public class EventActivity extends Hamburger {
         }
 
         return false;
-    }
+    }*/
 }

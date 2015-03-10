@@ -150,6 +150,8 @@
         <item>A contacter</item>
     </string-array>
     <string name="mandatory">Champ obligatoire</string>
+    <string name="googlemaps">Voir sur Google Maps</string>
+    <string name="contract">Télécharger le contrat</string>
     <!-- END MODULE PLACE -->
 
 </resources>

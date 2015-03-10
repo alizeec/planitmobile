@@ -141,6 +141,23 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:name="com.google.android.gms.maps.MapFragment"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_list"
+            android:text="@string/googlemaps"
+            android:id="@+id/googlemapsbutton"
+            android:textColor="@color/place"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/bg_list"
+            android:text="@string/contract"
+            android:id="@+id/contract"
+            android:textColor="@color/place"/>
+
         </LinearLayout>
     </ScrollView>
     <LinearLayout

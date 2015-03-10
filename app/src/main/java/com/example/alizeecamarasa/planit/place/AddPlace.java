@@ -96,6 +96,7 @@ public class AddPlace extends Activity {
         }
         File photo = new File(selectedImagePath);
         typedFile = new TypedFile("application/octet-stream", photo);
+        System.out.println(typedFile);
 
 
     }
@@ -138,8 +139,9 @@ public class AddPlace extends Activity {
 
                 //else create event and enter it in database
                 else {
+
                     PlaceModuleService service = PlaceModuleAPI.getInstance();
-                    service.addPlace(id,txtName.getText().toString(),txtAddress.getText().toString(),txtTel.getText().toString(),txtDistance.getText().toString(),txtPrice.getText().toString(),txtCapacity.getText().toString(),txtWebsite.getText().toString(),String.valueOf(latitude),String.valueOf(longitude),txtRemark.getText().toString(),typedFile,  new Callback<Response>() {
+                    service.addPlace(id,txtName.getText().toString(),txtAddress.getText().toString(),txtTel.getText().toString(),txtDistance.getText().toString(),txtPrice.getText().toString(),txtCapacity.getText().toString(),txtWebsite.getText().toString(),String.valueOf(latitude),String.valueOf(longitude),txtRemark.getText().toString(),typedFile,"3",  new Callback<Response>() {
                         @Override
                         public void success(Response response, Response response2) {
                             Toast.makeText(AddPlace.this,"Le lieu "+txtName.getText().toString()+" a bien été ajouté",Toast.LENGTH_SHORT).show();

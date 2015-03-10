@@ -19,7 +19,7 @@ public interface TypeGuestService {
     void addTypeGuest(@Path("id_module") int id_module,@Body TypedInput data, Callback<Response> cb);
 
     @PUT("/typeguests/{id_type}")
-    void changeTypeGuest(@Path(value="id_type",encode=false) String id_type,@Body TypedInput payable, Callback<Response> cb);
+    void changeTypeGuest(@Path(value="id_type",encode=false) String id_type,@Body TypedInput datasend, Callback<Response> cb);
 
     @DELETE("/typeguests/{id_type}")
     void deleteTypeGuest(@Path("id_type") String id_type, Callback<Response> cb);

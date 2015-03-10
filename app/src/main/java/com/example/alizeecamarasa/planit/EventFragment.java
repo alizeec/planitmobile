@@ -184,8 +184,19 @@ public class EventFragment extends ListFragment {
                 startActivity(intent);
                 return true;
             case R.id.action_delete_event:
-                // implemented in activity
-                return false;
+                service.deleteEvent(mEvent.getId(),new Callback<EventResponse>() {
+                    @Override
+                    public void success(EventResponse eventResponse, Response response) {
+                        Toast.makeText(mContext,"Événement supprimé",Toast.LENGTH_SHORT).show();
+                        mContext.finish();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -90,40 +90,46 @@ public class ChangeTypeGuest extends Activity {
             public void onClick(View v) {
 
             JSONObject json = new JSONObject();
-            //JSONObject typeguestJson = new JSONObject();
             try {
-                json.put("name",label.getText().toString());
+                json.put("payable",module.isPayable());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if (module.isPayable()){
+            if (module.isModuletype()){
                 try {
-                    json.put("price",Float.parseFloat(price.getText().toString()));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    json.put("type","payable");
+                    json.put("type",1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
             else {
                 try {
-                    json.put("type","notpayable");
+                    json.put("type",0);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-            /*if( !module.isModuletype()){
+            try {
+                json.put("name",label.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(module.isPayable()){
+                try {
+                    json.put("price",price.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            if( !module.isModuletype()){
                 try {
                     json.put("message",message.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
 
-
+            System.out.println(json);
             TypedInput in = new TypedByteArray("application/json", json.toString().getBytes());
 
             TypeGuestService service = TypeGuestAPI.getInstance();

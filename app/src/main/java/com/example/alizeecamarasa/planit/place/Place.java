@@ -20,6 +20,7 @@ public class Place implements Serializable{
     private String image;
     private int state;
     private int oldstate;
+    private String contract;
 
     public int getId() {
         return id;
@@ -131,5 +132,13 @@ public class Place implements Serializable{
 
     public void setOldstate(int oldstate) {
         this.oldstate = oldstate;
+    }
+
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contract) {
+        this.contract = contract;
     }
 }

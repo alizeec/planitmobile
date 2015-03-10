@@ -109,7 +109,7 @@ public class PlaceArrayAdapteur extends BaseAdapter {
                             notifyDataSetChanged();
                         }
                         else {
-                            placeList.get(mPosition).setState(3);
+                            placeList.get(mPosition).setState(placeList.get(mPosition).getOldstate());
                             notifyDataSetChanged();
                         }
 
