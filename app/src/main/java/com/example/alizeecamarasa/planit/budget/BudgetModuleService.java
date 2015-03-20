@@ -17,9 +17,6 @@ import retrofit.mime.TypedInput;
  */
 public interface BudgetModuleService {
 
-    @GET("/modules/{id_module}")
-    void getModule(@Path("id_module") String id_module, Callback<BudgetModule> cb);
-
     @POST("/budgetmodules/{event_id}")
     void addBudgetModule(@Path("event_id") String id_event,@Body TypedInput in, Callback<Response> cb);
 
@@ -49,5 +46,8 @@ public interface BudgetModuleService {
 
     @DELETE("/typeexpenses/{type_id}")
     void deleteTypeExpense(@Path("type_id") int type_id, Callback<Response> cb);
+
+    @GET("/infos/{module_id}")
+    void getModule(@Path("module_id") String module_id, Callback<ResponseBudgetModule> cb);
 
 }

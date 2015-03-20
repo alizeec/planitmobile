@@ -22,11 +22,22 @@
             android:background="@color/app_color"
             android:layout_alignParentTop="true"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addEvent"
+            android:id="@+id/empty_list"
+            android:text="@string/empty_event"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/app_color"/>
+
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/addEvent"
+            android:layout_below="@+id/empty_list"
             android:layout_marginTop="20dp"
             android:divider="@android:color/transparent"
             android:dividerHeight="10.0sp"

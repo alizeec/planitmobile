@@ -37,14 +37,6 @@ public class ChangeTransport extends Activity {
         changeTransport(transport);
     }
 
-    private boolean isEmptyEditText(EditText etText) {
-        return etText.getText().toString().trim().length() == 0;
-    }
-
-    private boolean isEmptyTextView(TextView textview) {
-        return textview.getText().toString().trim().length() == 0;
-    }
-
     // add items into spinner dynamically
     public void addItemsOnSpinner(Spinner spinner) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.state_logistic, android.R.layout.simple_spinner_item);
@@ -56,11 +48,11 @@ public class ChangeTransport extends Activity {
     public void changeTransport(Transport transport){
         final Transport mTransport = transport;
 
-        final TextView txtName = (TextView) findViewById(R.id.name);
-        final TextView txtPrice = (TextView) findViewById(R.id.price);
-        final TextView txtWebsite = (TextView) findViewById(R.id.website);
-        final TextView txtTel = (TextView) findViewById(R.id.tel);
-        final TextView txtCapacity = (TextView) findViewById(R.id.capacity);
+        final EditText txtName = (EditText) findViewById(R.id.name);
+        final EditText txtPrice = (EditText) findViewById(R.id.price);
+        final EditText txtWebsite = (EditText) findViewById(R.id.website);
+        final EditText txtTel = (EditText) findViewById(R.id.tel);
+        final EditText txtCapacity = (EditText) findViewById(R.id.capacity);
         final Spinner spinner = (Spinner) findViewById(R.id.spinner_state);
 
         Button back = (Button) findViewById(R.id.back);

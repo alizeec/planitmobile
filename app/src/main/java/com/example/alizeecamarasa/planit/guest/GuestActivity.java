@@ -97,6 +97,9 @@ public class GuestActivity extends Activity {
             public void success(final GuestModule module, Response response) {
                 if (module != null) {
                     mModule = module;
+                    if(mModule.getType_guest().size()!=0){
+                        findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                    }
 
                     // DELETE MODULE
                     final ModuleService moduleService = ModuleAPI.getInstance();

@@ -59,6 +59,11 @@ public class TransportActivity extends ListActivity {
             public void success(TransportModule transportModule, Response response) {
                 // put the selected place on top of list
                 mModule = transportModule;
+
+                if(mModule.getTransportations().size()!=0){
+                    findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                }
+
                 for (int i=0; i< transportModule.getTransportations().size(); i++){
                     if (transportModule.getTransportations().get(i).getState() == 1){
                         transportModule.getTransportations().add(0,transportModule.getTransportations().remove(i));
@@ -99,9 +104,9 @@ public class TransportActivity extends ListActivity {
                 Button add_transport = (Button) findViewById(R.id.add_transport);
                 add_transport.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        //Intent intent = new Intent (context, AddTransport.class);
-                        //intent.putExtra("id",id_module);
-                        //context.startActivity(intent);
+                        Intent intent = new Intent (context, AddTransport.class);
+                        intent.putExtra("id",id_module);
+                        context.startActivity(intent);
                     }
                 });
             }

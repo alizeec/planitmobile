@@ -26,6 +26,9 @@ public interface TransportModuleService {
     @POST("/transportationmodules/{event_id}")
     void addTransportModule(@Path("event_id") String id_event,@Body TypedInput in, Callback<Response> cb);
 
+    @POST("/transportations/{module_id}")
+    void addTransport(@Path("module_id") String module_id,@Body TypedInput in, Callback<Response> cb);
+
     @PUT("/transportations/{id_transport}")
     void modifyTransport(@Path("id_transport") int id_transport,@Body TypedInput data, Callback<Response> cb);
 

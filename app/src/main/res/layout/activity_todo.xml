@@ -28,12 +28,23 @@
         android:background="@color/bg_list"
         android:id="@+id/delete_module"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:id="@+id/empty_list"
+        android:text="@string/empty_todo"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/todo"/>
+
     <ExpandableListView
         android:id="@+id/todo_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:groupIndicator="@drawable/group_indicator"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/empty_list"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="50dp"
         >

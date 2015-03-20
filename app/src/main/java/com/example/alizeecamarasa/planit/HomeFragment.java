@@ -58,8 +58,13 @@ public class HomeFragment extends ListFragment {
         service.listEvents(((PlanItApplication) mContext.getApplicationContext()).USER_ID , new Callback<List<Event>>(){
             @Override
             public void success(List<Event> events, Response response){
-                if(events!=null)
+                if(events!=null){
+                    if(events.size()!=0){
+                        getView().findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                    }
                     setListAdapter(new EventsArrayAdapter(mContext,events));
+                }
+
             }
 
             @Override

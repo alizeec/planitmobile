@@ -1,69 +1,90 @@
 package com.example.alizeecamarasa.planit.module;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.util.List;
+import com.example.alizeecamarasa.planit.R;
+
 import java.util.Map;
 
 /**
- * Created by alizeecamarasa on 22/02/15.
+ * Created by alizeecamarasa on 16/03/15.
  */
 public class GridAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private Map<Integer,Boolean> list;
-    private List<Integer> mThumbIds;
+    private Context context;
+    private final String[] modulesValues;
+    private Map<Integer,Boolean> isAlreadyUsed;
+    private ImageButton image;
 
-    public GridAdapter(Context c,Map<Integer,Boolean> isEnabled,List<Integer> images) {
-        mContext = c;
-        list = isEnabled;
-        mThumbIds = images;
+    public GridAdapter(Context context, String[] modulesValues, Map<Integer, Boolean> isAlreadyUsed) {
+        this.context = context;
+        this.modulesValues = modulesValues;
+        this.isAlreadyUsed = isAlreadyUsed;
     }
 
-    public int getCount() {
-        return mThumbIds.size();
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public boolean isEnabled(int position){
-        if (list.get(position)== true){
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(3, 3, 3, 3);
+            imageView = new ImageView(context);
+            String feature = modulesValues[position];
+            Boolean isUsed = isAlreadyUsed.get(position);
+
+            if (feature.equals("Guest")) {
+                if (!isUsed)
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.guest));
+                else
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.guest_disable));
+            } else if (feature.equals("Budget")) {
+                if (!isUsed)
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.budget));
+                else
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.budget_disable));
+            } else if (feature.equals("Place")) {
+                if (!isUsed)
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.place));
+                else
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.place_disable));
+            } else if (feature.equals("Transport")) {
+                if (!isUsed)
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.transport));
+                else
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.transport_disable));
+            } else {
+                if (!isUsed)
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.todo));
+                else
+                    imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.todo_disable));
+            }
         } else {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds.get(position));
         return imageView;
     }
 
+    @Override
+    public int getCount() {
+        return modulesValues.length;
+    }
+
+    @Override
+    public String getItem(int position) {
+        return modulesValues[position];
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
 }
+

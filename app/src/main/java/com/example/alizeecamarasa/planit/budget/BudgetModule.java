@@ -7,6 +7,10 @@ import com.example.alizeecamarasa.planit.module.Module;
 import java.io.Serializable;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by alizeecamarasa on 18/02/15.
  */
@@ -41,7 +45,7 @@ public class BudgetModule extends Module implements Serializable {
         this.typesexpense = typeBudgetList;
     }
 
-    public List<ItemBudget> getInflows() {
+    public List<ItemBudget> getInflows(String id) {
         return inflows;
     }
 

@@ -51,11 +51,22 @@
         android:layout_marginTop="18dp"
     />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkbox_paying"
+        android:id="@+id/empty_list"
+        android:text="@string/empty_guest"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/guest"/>
+
     <ExpandableListView
         android:id="@+id/laptop_list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/checkbox_paying"
+        android:layout_below="@+id/empty_list"
         android:groupIndicator="@drawable/group_indicator"
         android:layout_marginTop="18dp"
     >

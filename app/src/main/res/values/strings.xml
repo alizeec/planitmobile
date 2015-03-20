@@ -31,6 +31,7 @@
     <string name="cost">Dépenses</string>
     <string name="total">Total</string>
     <string name="addmodule">Ajouter un module</string>
+    <string name="empty_event">Il n\'y a aucun événement pour le moment</string>
     <!-- END Event -->
 
     <!-- module guest -->
@@ -43,6 +44,7 @@
     <string name="suscribe">Mode inscription</string>
     <string name="invite">Mode invitation</string>
     <string name="nb_mx_guest">Nombre maximum d\'invités</string>
+    <string name="empty_guest">Il n\'y a aucun type d\'invité pour le moment</string>
 
 
         <!-- modif guest -->
@@ -71,7 +73,7 @@
         <string name="message"> Message</string>
         <string name="message_hint">(qui sera dans le mail d\'invitation)</string>
         <string name="price_typeguest"> Prix </string>
-        <string name="change_typeguest">MODIFIER OU SUPPRIMER LE TYPE D/INVITÉ</string>
+        <string name="change_typeguest">MODIFIER OU SUPPRIMER LE TYPE</string>
         <!-- end add typeguest -->
 
         <!-- get URL -->
@@ -93,6 +95,7 @@
     <string name="empty_list_budget">Il n\'y a aucun article de ce type</string>
     <string name="max_budget">Budget maximum</string>
     <string name="base">Apport personnel</string>
+    <string name="empty_budget">Il n\'y a aucune catégorie de dépense pour le moment</string>
 
     <!-- add expense -->
         <string name="label_expense">Nom</string>
@@ -118,11 +121,12 @@
     <string name="add_task">Ajouter une tâche</string>
     <string name="modify_task">Modifier une tâche</string>
     <string name="delete_task">Supprimer une tâche</string>
-    <string name="add_cat_task">Ajouter une catégorie</string>
+    <string name="add_cat_task">Ajouter une liste</string>
     <string name="task">Tâche</string>
-    <string name="category">Catégorie</string>
+    <string name="category">Liste</string>
     <string name="no_infos">Aucune information requise</string>
-    <string name="change_cat">Modifier une catégorie</string>
+    <string name="change_cat">Modifier une liste</string>
+    <string name="empty_todo">Il n\'y a aucune liste de tâche pour le moment</string>
     <!-- END MODULE TO-DO -->
 
     <!-- MODULE PLACE -->
@@ -152,6 +156,7 @@
     <string name="mandatory">Champ obligatoire</string>
     <string name="googlemaps">Voir sur Google Maps</string>
     <string name="contract">Télécharger le contrat</string>
+    <string name="empty_place">Il n\'y a aucun lieu pour le moment</string>
     <!-- END MODULE PLACE -->
 
     <!-- MODULE TRANSPORT -->
@@ -164,6 +169,31 @@
     <string name="transport_price">Prix</string>
     <string name="transport_capacity">Capacité: </string>
     <string name="transport_website">Site web: </string>
+    <string name="empty_transport">Il n\'y a aucune compagnie de transport pour le moment</string>
+    <!--  END MODULE TRANSPORT -->
 
+    <!-- AIDE -->
+    <string name="title_guest_help">2 modes du module \"Gestion des invités \"</string>
+    <string name="guest_help">Il y a deux modes: \"Inscription\" qui vous fournit l\'URL d\'un formulaire d\'inscription à diffuser comme vous le souhaitez
+    \"Invitation\" où vous pouvez ajouter vos invités un par un et envoyer le mail associé au type d\'invité automatiquement</string>
+    <string name="title_add_module_help">Ajouter un module</string>
+    <string name="add_module_help">Vous pouvez ajouter le module de votre choix en touchant l\'icone. Un module ne peux être installé qu\'une seule fois.</string>
+    <string name="title_supp_cat_help">Supprimer ou modifier une catégorie</string>
+    <string name="supp_cat_help">Dans les modules \"Gestion des invités\", \"Gestion du budget\" et \"Gestion des tâches\" vous devez créer des catégories. Pour les modifier ou les supprimer, appuyez longtemps sur le nom de la catégorie.</string>
+    <string name="title_change_delete_event_help">Modifier ou supprimer un événement</string>
+    <string name="change_delete_event_help">Les boutons de modifications et de suppression d\'événements sont dans le menu en haut à droite, quand vous vous trouvez sur un événement.</string>
+    <string name="title_infos_help">Informations d\'un événement</string>
+    <string name="infos_help">Sur la page d\'un événement, vous avez différentes informations : le nombre de dodos restant, le nombre de participants (il faut que le module \"Gestion des invités\" soit activé, ce sont les invités ayant accepté), total des dépenses et total des apports (il faut que le module \"Gestion du budget\" soit activé)</string>
+    <string name="title_budget_help">Module \"Gestion du budget\"</string>
+    <string name="budget_help">A la création du module, vous trouverez dans les apports votre apport de base (si spécifié) et l\'argent reçu par les participants ayant payé (si le module \"Gestion des invités\" est activé)</string>
+    <string name="title_logistic_help">Modules \"Gestion du lieu\" et \"Gestion du transport\"</string>
+    <string name="logistic_help">Vous ne pouvez choisir qu\'un seul lieu ou compagnie de transport à la fois. Si vous choisissez de télécharger un contrat, vous le retrouverez dans vos téléchargements.</string>
+    <string name="title_map_help">Module \"Gestion du lieu \" : la map</string>
+    <string name="map_help"> Si l\'adresse renseignée est valide, la map se configure automatiquement. Vous pouvez ouvrir la map avec l\'application Google Maps.</string>
+    <string name="title_change_module_help">Modifier ou supprimer un module</string>
+    <string name="change_module_help">Touchez les icones de poubelles et de crayon autour du nom du module pour le modifier/supprimer</string>
+    <string name="title_state_guest_help">Changer l\'état d\'un invité</string>
+    <string name="state_guest_help">Lorsque vous modifiez un invité, déplacez le curseur de \"Confirmation\" pour passer de A décliné - A accepté - En attende de réponse</string>
+    <!-- END AIDE -->
 
 </resources>

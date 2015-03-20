@@ -49,12 +49,22 @@
         android:id="@+id/add_type_expense"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_type_expense"
+        android:id="@+id/empty_list"
+        android:text="@string/empty_budget"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/budget"/>
 
     <ExpandableListView
         android:id="@+id/budget_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/add_type_expense"
+        android:layout_below="@+id/empty_list"
         android:groupIndicator="@drawable/group_indicator"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="50dp"

@@ -3,8 +3,10 @@ package com.example.alizeecamarasa.planit;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 
 public class HomeActivity extends Hamburger {
@@ -26,6 +28,19 @@ public class HomeActivity extends Hamburger {
         menu.removeItem(R.id.action_change_event);
         menu.removeItem(R.id.action_delete_event);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_help:
+                Intent myIntent = new Intent(this, Help.class);
+                this.startActivity(myIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

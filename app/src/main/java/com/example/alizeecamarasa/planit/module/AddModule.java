@@ -31,9 +31,7 @@ import com.example.alizeecamarasa.planit.transport.TransportModuleService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -58,61 +56,26 @@ public class AddModule extends Activity {
 
         // Map<position,isAlreadyUsed>
         Map<Integer,Boolean> isAlreadyUsed = new HashMap<Integer, Boolean>();
-        // Images
-        List<Integer> mThumbIds = new ArrayList<Integer>();
+
 
         for (int i=0;i<=4; i++){
             isAlreadyUsed.put(i,isInList(i));
-            // is the module is available
-            if (isInList(i)== false){
-                switch (i){
-                    case 0:
-                        mThumbIds.add(R.drawable.guest);
-                    break;
-                    case 1:
-                        mThumbIds.add(R.drawable.budget);
-                        break;
-                    case 2:
-                        mThumbIds.add(R.drawable.place);
-                        break;
-                    case 3:
-                        mThumbIds.add(R.drawable.transport);
-                        break;
-                    case 4:
-                        mThumbIds.add(R.drawable.todo);
-                        break;
-                }
-            }
-            // if the module is already used
-            else {
-                switch (i){
-                    case 0:
-                        mThumbIds.add(R.drawable.guest_disable);
-                        break;
-                    case 1:
-                        mThumbIds.add(R.drawable.budget_disable);
-                        break;
-                    case 2:
-                        mThumbIds.add(R.drawable.place_disable);
-                        break;
-                    case 3:
-                        mThumbIds.add(R.drawable.transport_disable);
-                        break;
-                    case 4:
-                        mThumbIds.add(R.drawable.todo_disable);
-                        break;
-                }
-
-            }
-
         }
 
+        String[] list = new String[5];
+        list[0]= "Guest";
+        list[1]= "Budget";
+        list[2] = "Place";
+        list[3] = "Transport";
+        list[4] = "Todo";
+
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new GridAdapter(this, isAlreadyUsed, mThumbIds));
+        gridview.setAdapter(new GridAdapter(this,list,isAlreadyUsed));
 
         // on click -> open the dialog and add the right module
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                System.out.println(position);
                 switch (position){
                     case 0:
                         addModuleGuest();

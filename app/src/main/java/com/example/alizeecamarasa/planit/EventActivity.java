@@ -58,32 +58,4 @@ public class EventActivity extends Hamburger {
 
         }
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        EventService service = EventAPI.getInstance();
-        switch (item.getItemId()) {
-            case R.id.action_change_event:
-                // implemented in fragment
-                return false;
-            case R.id.action_delete_event:
-                service.deleteEvent(id,new Callback<EventResponse>() {
-                    @Override
-                    public void success(EventResponse eventResponse, Response response) {
-                        Toast.makeText(EventActivity.this,"Événement supprimé",Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
-                });
-                return true;
-            default:
-                break;
-        }
-
-        return false;
-    }*/
 }

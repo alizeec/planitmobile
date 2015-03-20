@@ -182,6 +182,10 @@ public class EventFragment extends ListFragment {
         // Handle presses on the action bar items
         EventService service = EventAPI.getInstance();
         switch (item.getItemId()) {
+            case R.id.action_help:
+                Intent myIntent = new Intent(mContext, Help.class);
+                this.startActivity(myIntent);
+                return true;
             case R.id.action_change_event:
                 Intent intent = new Intent(mContext,ChangeEvent.class);
                 intent.putExtra("event",mEvent);

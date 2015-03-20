@@ -85,6 +85,10 @@ public class TodoActivity extends Activity {
 
                     groupList = mModule.getListCategories();
 
+                    if(groupList.size()!=0){
+                        findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                    }
+
                     createCollection();
 
                     expListView = (ExpandableListView) findViewById(R.id.todo_list);

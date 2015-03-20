@@ -7,17 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
@@ -26,8 +21,6 @@ import com.example.alizeecamarasa.planit.budget.Item.AddItem;
 import com.example.alizeecamarasa.planit.budget.Item.ItemBudget;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.AddTypeBudget;
 import com.example.alizeecamarasa.planit.budget.TypeBudget.TypeBudget;
-import com.example.alizeecamarasa.planit.guest.GuestModuleAPI;
-import com.example.alizeecamarasa.planit.guest.GuestModuleService;
 import com.example.alizeecamarasa.planit.module.ModuleAPI;
 import com.example.alizeecamarasa.planit.module.ModuleService;
 import com.example.alizeecamarasa.planit.utils.Utils;
@@ -89,30 +82,46 @@ public class BudgetActivity extends Activity {
     private void createGroupList() {
 
         // get module from API
-        service.getModule(id_module, new Callback<BudgetModule>() {
+        service.getModule(id_module, new Callback<ResponseBudgetModule>() {
             @Override
-            public void success(BudgetModule module, Response response) {
-                if (module != null) {
-                    mModule = module;
-
+            public void success(ResponseBudgetModule responsemodule, Response response) {
+                if (responsemodule != null) {
+                    mModule = responsemodule.getModule();
                     groupList = mModule.getTypeBudgetList();
+
+                    if(groupList.size()!=0){
+                        findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                    }
 
                     // add inflows at the end of the list
                     TypeBudget apports = new TypeBudget();
                     apports.setName("Apports");
-                    apports.setItems(mModule.getInflows());
+                    if (responsemodule.getGuestsInflow() != 0) {
+                        ItemBudget inflowGuest = new ItemBudget();
+                        inflowGuest.setName("Inscription");
+                        inflowGuest.setAmount(responsemodule.getGuestsInflow());
+                        mModule.getInflows(id_module).add(inflowGuest);
+                    }
+                    if (mModule.getBase() != 0) {
+                        ItemBudget base = new ItemBudget();
+                        base.setName("Apport personnel");
+                        base.setAmount(mModule.getBase());
+                        mModule.getInflows(id_module).add(base);
+                    }
+
+                    apports.setItems(mModule.getInflows(id_module));
                     groupList.add(apports);
 
                     createCollection();
 
                     expListView = (ExpandableListView) findViewById(R.id.budget_list);
-                    final BudgetArrayAdapter expListAdapter = new BudgetArrayAdapter(context, groupList, itemCollection, module);
+                    final BudgetArrayAdapter expListAdapter = new BudgetArrayAdapter(context, groupList, itemCollection, mModule);
                     expListView.setAdapter(expListAdapter);
                     int width = getResources().getDisplayMetrics().widthPixels;
                     if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10,context));
+                        expListView.setIndicatorBounds(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
                     } else {
-                        expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40,context), width - Utils.getPixelValue(10,context));
+                        expListView.setIndicatorBoundsRelative(width - Utils.getPixelValue(40, context), width - Utils.getPixelValue(10, context));
                     }
 
                     // if group is empty, we print a message
@@ -120,81 +129,18 @@ public class BudgetActivity extends Activity {
 
                         @Override
                         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                            if (expListAdapter.getChildrenCount(groupPosition) == 0){
+                            if (expListAdapter.getChildrenCount(groupPosition) == 0) {
                                 Toast.makeText(BudgetActivity.this, R.string.empty_list_budget, Toast.LENGTH_SHORT).show();
                             }
                             return false;
                         }
                     });
 
-                    // DELETE MODULE
-                    final ModuleService moduleService = ModuleAPI.getInstance();
-                    ImageButton delete = (ImageButton) findViewById(R.id.delete_module);
-                    delete.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            moduleService.deleteModule(id_module, new Callback<Response>() {
-                                @Override
-                                public void success(Response budgetModule, Response response) {
-                                    finish();
-                                }
-
-                                @Override
-                                public void failure(RetrofitError error) {
-                                    finish();
-                                    error.printStackTrace();
-                                }
-                            });
-
-                        };
-                    });
-                    // UPDATE MODULE
-                    ImageButton update = (ImageButton) findViewById(R.id.modify_module);
-                    update.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            updateModuleBudget();
-                        }
-                    });
-
-                    // ADD AN INFLOW (other activity)
-                    Button inflow = (Button) findViewById(R.id.add_inflow);
-                    inflow.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent myIntent = new Intent(context, AddItem.class);
-                            myIntent.putExtra("module",mModule);
-                            myIntent.putExtra("id",id_module);
-                            myIntent.putExtra("type","inflow");
-                            startActivityForResult(myIntent,1);
-
-                        };
-                    });
-
-                    // ADD AN EXPENSE (other activity)
-                    Button expense = (Button) findViewById(R.id.add_expense);
-                    expense.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            Intent myIntent = new Intent(context, AddItem.class);
-                            myIntent.putExtra("module",mModule);
-                            myIntent.putExtra("type","expense");
-                            startActivityForResult(myIntent,2);
-                        };
-                    });
-
-                    // ADD A TYPE EXPENSE (dialog)
-                    Button type_expense = (Button) findViewById(R.id.add_type_expense);
-                    type_expense.setOnClickListener(new View.OnClickListener(){
-                        public void onClick(View v){
-                            Intent myIntent = new Intent(context, AddTypeBudget.class);
-                            myIntent.putExtra("id",id_module);
-                            startActivityForResult(myIntent, 4);
-                        }
-
-                    });
-
                     // DELETE A TYPE EXPENSE
                     expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                         @Override
                         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP){
+                            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
                                 int positionGroup = ExpandableListView.getPackedPositionGroup(id);
                                 final int id_type = expListAdapter.getGroup(positionGroup).getId();
                                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -207,7 +153,7 @@ public class BudgetActivity extends Activity {
                                                 service.deleteTypeExpense(id_type, new Callback<Response>() {
                                                     @Override
                                                     public void success(Response o, Response response) {
-                                                        Toast.makeText(BudgetActivity.this,"Catégorie supprimée",Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(BudgetActivity.this, "Catégorie supprimée", Toast.LENGTH_SHORT).show();
                                                         createGroupList();
                                                     }
 
@@ -230,7 +176,8 @@ public class BudgetActivity extends Activity {
                             return true;
                         }
                     });
-                };
+                }
+                ;
 
             }
 
@@ -239,6 +186,73 @@ public class BudgetActivity extends Activity {
                 error.printStackTrace();
             }
         });
+
+
+        // DELETE MODULE
+        final ModuleService moduleService = ModuleAPI.getInstance();
+        ImageButton delete = (ImageButton) findViewById(R.id.delete_module);
+        delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                moduleService.deleteModule(id_module, new Callback<Response>() {
+                    @Override
+                    public void success(Response budgetModule, Response response) {
+                        finish();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        finish();
+                        error.printStackTrace();
+                    }
+                });
+
+            };
+        });
+
+        // UPDATE MODULE
+        ImageButton update = (ImageButton) findViewById(R.id.modify_module);
+        update.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                updateModuleBudget();
+            }
+        });
+
+        // ADD AN INFLOW (other activity)
+        Button inflow = (Button) findViewById(R.id.add_inflow);
+        inflow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, AddItem.class);
+                myIntent.putExtra("module",mModule);
+                myIntent.putExtra("id",id_module);
+                myIntent.putExtra("type","inflow");
+                startActivityForResult(myIntent,1);
+
+            };
+        });
+
+        // ADD AN EXPENSE (other activity)
+        Button expense = (Button) findViewById(R.id.add_expense);
+        expense.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(context, AddItem.class);
+                myIntent.putExtra("module",mModule);
+                myIntent.putExtra("type","expense");
+                startActivityForResult(myIntent,2);
+            };
+        });
+
+        // ADD A TYPE EXPENSE (dialog)
+        Button type_expense = (Button) findViewById(R.id.add_type_expense);
+        type_expense.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent myIntent = new Intent(context, AddTypeBudget.class);
+                myIntent.putExtra("id",id_module);
+                startActivityForResult(myIntent, 4);
+            }
+
+        });
+
+
 
     }
 

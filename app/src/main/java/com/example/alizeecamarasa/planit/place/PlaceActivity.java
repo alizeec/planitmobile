@@ -54,6 +54,10 @@ public class PlaceActivity extends ListActivity {
             public void success(PlaceModule placeModule, Response response) {
                 // put the selected place on top of list
                 mModule = placeModule;
+                if(mModule.getPlaces().size()!=0){
+                    findViewById(R.id.empty_list).setVisibility(View.INVISIBLE);
+                }
+
                 for (int i=0; i< placeModule.getPlaces().size(); i++){
                     if (placeModule.getPlaces().get(i).getState() == 1){
                         placeModule.getPlaces().add(0,placeModule.getPlaces().remove(i));
